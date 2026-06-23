@@ -18,6 +18,17 @@ Plans serve as the single source of truth for:
 - **Index file:** `{{workspace_dir}}/plans/index.md` tracks all plans and their status
 - **Directory creation:** Create `{{workspace_dir}}/plans/` lazily when the first plan is needed
 
+## Integration with Other Assets
+
+Plans should be created in consultation with:
+- **[Contexts]({{workspace_dir}}/.devin/assets/contexts.md)** - Use domain language in plan descriptions, API routes, and component names
+- **[ADRs]({{workspace_dir}}/.devin/assets/adrs.md)** - Respect existing architectural decisions and consider if new decisions are needed
+- **[Plans Index]({{workspace_dir}}/plans/index.md)** - Check existing plans to avoid conflicts, register new plans, and update status
+- **[Repo Fingerprint]({{workspace_dir}}/.devin/assets/repo-fingerprint.md)** - Align specifications with current technology stack and frameworks
+- **[Tech Preferences]({{workspace_dir}}/.devin/assets/tech-preferences.md)** - Use preferred technologies when introducing new components
+- **[Design Principles]({{workspace_dir}}/.devin/assets/design-principles.md)** - Apply deep module, interface design, and dependency injection patterns
+- **[Testing Principles]({{workspace_dir}}/.devin/assets/testing-principles.md)** - Consider test tier requirements and design for testability
+
 ## Test Tier Classification
 
 Each plan must specify a `Test Tier` to indicate the level of automated testing required:
@@ -114,7 +125,7 @@ Update milestone statuses as work progresses to enable the orchestrator to ident
 - ⏳ **Milestone 2 (ID: 2, Dependencies: [])**: [Short Title] - Independent milestone (can run in parallel with Milestone 1).
 - ⏳ **Milestone 3 (ID: 3, Dependencies: [1, 2])**: [Short Title] - Integration milestone (requires both Milestone 1 and 2 to be completed first).
 - ⏳ **Milestone 4 (ID: 4, Dependencies: [3])**: [E2E Test Creation] - Spawn `e2e_test_developer` to write Playwright test cases covering the integrated user flow.
-- ⏳ **Milestone 5 (ID: 5, Dependencies: [4])**: [E2E Test Execution] - Spawn `e2e_test_runner` to execute Playwright specs and verify visual rendering.
+- ⏳ **Milestone 5 (ID: 5, Dependencies: [4])**: [E2E Test Execution] - Invoke `audition` skill to execute test specs and capture results.
 - ⏳ **Milestone 6 (ID: 6, Dependencies: [5])**: [Documentation Update] - Spawn `doc_processor` to update manuals, Readmes, or API descriptions under `docs/` based on final layout and E2E visual captures.
 - ...
 
@@ -177,7 +188,7 @@ Implement JWT-based authentication with login, registration, and password reset 
 - ⏳ **Milestone 4 (ID: 4, Dependencies: [3])**: [Frontend Login Form] - Build login component at `src/components/auth/LoginForm.tsx` with email/password fields and form validation.
 - ⏳ **Milestone 5 (ID: 5, Dependencies: [3, 4])**: [Frontend Registration Form] - Build registration component at `src/components/auth/RegisterForm.tsx` with email/password/confirm-password fields.
 - ⏳ **Milestone 6 (ID: 6, Dependencies: [5])**: [E2E Test Creation] - Spawn `e2e_test_developer` to write Playwright test cases covering the complete auth flow (registration → login → logout).
-- ⏳ **Milestone 7 (ID: 7, Dependencies: [6])**: [E2E Test Execution] - Spawn `e2e_test_runner` to execute Playwright specs and verify visual rendering of auth forms.
+- ⏳ **Milestone 7 (ID: 7, Dependencies: [6])**: [E2E Test Execution] - Invoke `audition` skill to execute test specs and capture results of auth forms.
 - ⏳ **Milestone 8 (ID: 8, Dependencies: [7])**: [Documentation Update] - Spawn `doc_processor` to update API documentation under `docs/api/auth.md` with authentication endpoints and JWT usage.
 
 ## Development Specifications

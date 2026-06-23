@@ -2,6 +2,17 @@
 
 These are the preferred technologies, frameworks, libraries, and versions to use when creating new projects or making technology choices. These preferences guide agents and skills in their decisions, ensuring consistency across workspaces.
 
+## ⚡ Priority: Free and Lightweight
+
+**Free and lightweight frameworks are prioritized** over commercial or heavy alternatives. When choosing technologies, prefer:
+- **Open source** with active communities
+- **Minimal dependencies** and small bundle sizes
+- **Fast execution** and low resource requirements
+- **No licensing costs** or restrictions
+- **Simple setup** and configuration
+
+Commercial tools should only be considered when they provide essential functionality not available in free alternatives.
+
 ## File Location and Naming
 
 - **Directory:** None. This file is just for reference, it's not part of the workspace.
@@ -23,9 +34,17 @@ When an agent or skill needs to:
 - Choose a framework for a new project
 - Select a library for a specific task
 - Determine package manager or runtime
-- Pick testing or build tools
+- Pick build tools
 
-They should consult this file first and use the preferred options unless there's a compelling reason to deviate.
+They should consult this file first and use the preferred options unless there's a compelling reason to deviate. For testing technology decisions, consult [Testing Tech Preferences]({{workspace_dir}}/.devin/assets/testing-tech-preferences.md).
+
+## Integration with Other Assets
+
+These technology preferences work alongside:
+- **[Testing Tech Preferences]({{workspace_dir}}/.devin/assets/testing-tech-preferences.md)** - Detailed testing framework preferences and guidance
+- **[Repo Fingerprint]({{workspace_dir}}/.devin/assets/repo-fingerprint.md)** - Current technology stack in use
+
+The tech preferences provide general technology guidance, while testing-tech-preferences provides specialized testing guidance. When making testing technology decisions, consult testing-tech-preferences first.
 
 ## Preferences
 
@@ -67,16 +86,6 @@ They should consult this file first and use the preferred options unless there's
   - Svelte: Skeleton UI (lightweight)
 - **Icons:** Lucide (tree-shakeable, modern)
 - **Note:** Prefer framework-agnostic UI (knadh/oat) over framework-specific components. Only use framework-specific libraries when framework features are required.
-
-### Testing
-
-- **Unit Testing:**
-  - JavaScript/TypeScript: Vitest (preferred, faster and lighter) or Jest
-  - Python: pytest
-  - .NET: xUnit
-- **E2E Testing:** Playwright - cross-browser, modern
-- **Visual Regression:** Playwright with screenshot comparison
-- **Note:** Vitest is significantly faster and lighter than Jest for JavaScript/TypeScript
 
 ### Database
 
@@ -147,8 +156,8 @@ When deviating, document the reason in the ADR or project documentation.
 - **Frontend:** SvelteKit
 - **UI:** knadh/oat or Tailwind CSS + Skeleton UI + Lucide icons
 - **Database:** SQLite + Drizzle ORM (or PostgreSQL for scale)
-- **Testing:** Vitest + Playwright
 - **Build:** Vite
+- **Testing:** See [Testing Tech Preferences]({{workspace_dir}}/.devin/assets/testing-tech-preferences.md)
 
 ### Full-Stack JavaScript (Full-Featured)
 
@@ -157,21 +166,21 @@ When deviating, document the reason in the ADR or project documentation.
 - **Frontend:** SvelteKit or Next.js with App Router (when SSR needed)
 - **UI:** knadh/oat or Tailwind CSS + shadcn/ui + Lucide icons
 - **Database:** PostgreSQL + Prisma
-- **Testing:** Vitest + Playwright
 - **Build:** Vite
+- **Testing:** See [Testing Tech Preferences]({{workspace_dir}}/.devin/assets/testing-tech-preferences.md)
 
 ### Python Web (Lightweight)
 
 - **Runtime:** Python (3.x)
 - **Backend:** FastAPI
 - **Database:** SQLite + SQLAlchemy (or PostgreSQL for scale)
-- **Testing:** pytest + Playwright
 - **Dependency Management:** Poetry
+- **Testing:** See [Testing Tech Preferences]({{workspace_dir}}/.devin/assets/testing-tech-preferences.md)
 
 ### .NET
 
 - **Runtime:** .NET (LTS)
 - **Backend:** ASP.NET Core
 - **Database:** PostgreSQL + Entity Framework Core
-- **Testing:** xUnit + Playwright
 - **Frontend:** Next.js or Blazor (if using .NET-only stack)
+- **Testing:** See [Testing Tech Preferences]({{workspace_dir}}/.devin/assets/testing-tech-preferences.md)

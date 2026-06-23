@@ -46,7 +46,25 @@ Last updated: {timestamp}
 
 ## Testing
 
-{testing frameworks and tools}
+### Unit Testing Framework
+
+{unit testing framework and version}
+
+### E2E Testing Framework
+
+{E2E testing framework and version}
+
+### Mocking Libraries
+
+{mocking libraries and versions}
+
+### Coverage Tools
+
+{code coverage tools and versions}
+
+### Additional Testing Tools
+
+{other testing tools like visual regression, performance testing, etc.}
 
 ## Database
 
@@ -94,6 +112,14 @@ Only update the fingerprint when:
 - New frameworks or tools are introduced
 - CI/CD configuration changes significantly
 
+## Integration with Other Assets
+
+The repo fingerprint works alongside:
+- **[Testing Tech Preferences]({{workspace_dir}}/.devin/assets/testing-tech-preferences.md)** - Preferred testing frameworks and tools
+- **[Tech Preferences]({{workspace_dir}}/.devin/assets/tech-preferences.md)** - General technology preferences
+
+The repo fingerprint captures what IS currently in use, while the preference assets guide what SHOULD be used for new choices.
+
 ## Example
 
 ```markdown
@@ -123,7 +149,25 @@ Tailwind CSS 3.4.0
 
 ## Testing
 
-Jest 29.7.0, Playwright 1.40.0
+### Unit Testing Framework
+
+Vitest 1.2.0
+
+### E2E Testing Framework
+
+Playwright 1.40.0
+
+### Mocking Libraries
+
+MSW 2.0.0, vi.mock (Vitest built-in)
+
+### Coverage Tools
+
+c8 9.0.0
+
+### Additional Testing Tools
+
+axe-core for accessibility testing
 
 ## Database
 

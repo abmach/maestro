@@ -8,6 +8,14 @@ ADRs capture significant architectural decisions, their context, and their conse
 - **Naming convention:** Sequential numbering with descriptive slug: `0001-slug.md`, `0002-slug.md`, etc.
 - **Directory creation:** Create `{{workspace_dir}}/knowledge/adrs/` lazily when the first ADR is needed
 
+## Integration with Other Assets
+
+ADRs should be created in consultation with:
+- **[Contexts]({{workspace_dir}}/.devin/assets/contexts.md)** - Use established domain language in decision descriptions and rationale
+- **[Repo Fingerprint]({{workspace_dir}}/.devin/assets/repo-fingerprint.md)** - Consider current technology stack when documenting architectural decisions
+- **[Tech Preferences]({{workspace_dir}}/.devin/assets/tech-preferences.md)** - Reference preferred technologies when explaining technology choices
+- **[Design Principles]({{workspace_dir}}/.devin/assets/design-principles.md)** - Align decisions with established design patterns and principles
+
 ## Core Template
 
 An ADR can be as simple as a single paragraph. The value lies in recording that a decision was made and why—not in filling out bureaucratic sections.
