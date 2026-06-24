@@ -1,13 +1,13 @@
 #!/usr/bin/env pwsh
 <#
 .SYNOPSIS
-Install init-maestro skill to user's Devin skills directory
+Install init-maestro skill to user's .agents directory
 
 .DESCRIPTION
 This script copies the init-maestro skill from the current directory to the user's
-Devin skills directory in AppData, making it available for use. It also creates
-a zip file of the Maestro bundle (skills, assets) to make the skill
-self-contained and independent of the source directory.
+.agents directory in their home folder, making it available for use across different
+clients. It also creates a zip file of the Maestro bundle (skills, assets) to make
+the skill self-contained and independent of the source directory.
 
 .EXAMPLE
 .\install-init-maestro.ps1
@@ -19,7 +19,8 @@ $ErrorActionPreference = "Stop"
 $ScriptPath = $PSScriptRoot
 $SkillName = "init-maestro"
 $SourceSkillPath = Join-Path $ScriptPath "skills\$SkillName"
-$DestSkillsPath = "$env:APPDATA\devin\skills"
+$DestAgentsPath = Join-Path $env:USERPROFILE ".agents"
+$DestSkillsPath = Join-Path $DestAgentsPath "skills"
 $DestSkillPath = Join-Path $DestSkillsPath $SkillName
 $BundleZipPath = Join-Path $DestSkillPath "bundle.zip"
 
@@ -29,7 +30,7 @@ if (-not (Test-Path $SourceSkillPath)) {
     exit 1
 }
 
-# Create destination skills directory if it doesn't exist
+# Create destination .agents/skills directory if it doesn't exist
 if (-not (Test-Path $DestSkillsPath)) {
     Write-Host "Creating destination directory: $DestSkillsPath" -ForegroundColor Yellow
     New-Item -ItemType Directory -Path $DestSkillsPath -Force | Out-Null
@@ -91,4 +92,4 @@ if ($ItemPaths.Count -gt 0) {
 Remove-Item -Path $TempDir -Recurse -Force
 
 Write-Host "Successfully installed $SkillName skill to: $DestSkillPath" -ForegroundColor Cyan
-Write-Host "Skill is now self-contained with bundle.zip" -ForegroundColor Cyan
+Write-Host "Maestro bundle is now available in: $DestAgentsPath" -ForegroundColor Cyan

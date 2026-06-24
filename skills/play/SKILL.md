@@ -12,7 +12,7 @@ allowed-tools:
 permissions:
   allow:
     - Read(./plans/**/*)
-    - Read(./.devin/assets/**/*)
+    - Read(./.agents/assets/**/*)
     - Write(./**/*)
     - Edit(./**/*)
     - Exec(yarn add *)
@@ -43,13 +43,13 @@ Implement plan milestones using test-driven development methodology with red-gre
 
 ## Specifications & Methodologies
 
-Read the following asset specification files from `{{workspace_dir}}/.devin/assets/` to understand TDD methodology and design patterns before implementing the milestone:
+Read the following asset specification files from `{{workspace_dir}}/.agents/assets/` to understand TDD methodology and design patterns before implementing the milestone:
 
-- **Testing Principles:** [testing-principles.md]({{workspace_dir}}/.devin/assets/testing-principles.md) - TDD methodology and test philosophy
-- **Design Principles:** [design-principles.md]({{workspace_dir}}/.devin/assets/design-principles.md) - Interface design and dependency patterns
-- **Repo Fingerprint:** [repo-fingerprint.md]({{workspace_dir}}/.devin/assets/repo-fingerprint.md) - Current technology stack and testing frameworks
-- **Plan Structure:** [plan.md]({{workspace_dir}}/.devin/assets/plan.md) - Plan format and milestone specifications
-- **Plans Index:** [plans-index.md]({{workspace_dir}}/.devin/assets/plans-index.md) - Plans index file format and management
+- **Testing Principles:** [testing-principles.md]({{workspace_dir}}/.agents/assets/testing-principles.md) - TDD methodology and test philosophy
+- **Design Principles:** [design-principles.md]({{workspace_dir}}/.agents/assets/design-principles.md) - Interface design and dependency patterns
+- **Repo Fingerprint:** [repo-fingerprint.md]({{workspace_dir}}/.agents/assets/repo-fingerprint.md) - Current technology stack and testing frameworks
+- **Plan Structure:** [plan.md]({{workspace_dir}}/.agents/assets/plan.md) - Plan format and milestone specifications
+- **Plans Index:** [plans-index.md]({{workspace_dir}}/.agents/assets/plans-index.md) - Plans index file format and management
 - **Working Files:** Located in `{{workspace_dir}}/plans/` following specifications
 
 ## Validation

@@ -36,13 +36,13 @@ When an agent or skill needs to:
 - Determine package manager or runtime
 - Pick build tools
 
-They should consult this file first and use the preferred options unless there's a compelling reason to deviate. For testing technology decisions, consult [Testing Tech Preferences]({{workspace_dir}}/.devin/assets/testing-tech-preferences.md).
+They should consult this file first and use the preferred options unless there's a compelling reason to deviate. For testing technology decisions, consult [Testing Tech Preferences]({{workspace_dir}}/.agents/assets/testing-tech-preferences.md).
 
 ## Integration with Other Assets
 
 These technology preferences work alongside:
-- **[Testing Tech Preferences]({{workspace_dir}}/.devin/assets/testing-tech-preferences.md)** - Detailed testing framework preferences and guidance
-- **[Repo Fingerprint]({{workspace_dir}}/.devin/assets/repo-fingerprint.md)** - Current technology stack in use
+- **[Testing Tech Preferences]({{workspace_dir}}/.agents/assets/testing-tech-preferences.md)** - Detailed testing framework preferences and guidance
+- **[Repo Fingerprint]({{workspace_dir}}/.agents/assets/repo-fingerprint.md)** - Current technology stack in use
 
 The tech preferences provide general technology guidance, while testing-tech-preferences provides specialized testing guidance. When making testing technology decisions, consult testing-tech-preferences first.
 
@@ -157,7 +157,7 @@ When deviating, document the reason in the ADR or project documentation.
 - **UI:** knadh/oat or Tailwind CSS + Skeleton UI + Lucide icons
 - **Database:** SQLite + Drizzle ORM (or PostgreSQL for scale)
 - **Build:** Vite
-- **Testing:** See [Testing Tech Preferences]({{workspace_dir}}/.devin/assets/testing-tech-preferences.md)
+- **Testing:** See [Testing Tech Preferences]({{workspace_dir}}/.agents/assets/testing-tech-preferences.md)
 
 ### Full-Stack JavaScript (Full-Featured)
 
@@ -167,7 +167,7 @@ When deviating, document the reason in the ADR or project documentation.
 - **UI:** knadh/oat or Tailwind CSS + shadcn/ui + Lucide icons
 - **Database:** PostgreSQL + Prisma
 - **Build:** Vite
-- **Testing:** See [Testing Tech Preferences]({{workspace_dir}}/.devin/assets/testing-tech-preferences.md)
+- **Testing:** See [Testing Tech Preferences]({{workspace_dir}}/.agents/assets/testing-tech-preferences.md)
 
 ### Python Web (Lightweight)
 
@@ -175,7 +175,7 @@ When deviating, document the reason in the ADR or project documentation.
 - **Backend:** FastAPI
 - **Database:** SQLite + SQLAlchemy (or PostgreSQL for scale)
 - **Dependency Management:** Poetry
-- **Testing:** See [Testing Tech Preferences]({{workspace_dir}}/.devin/assets/testing-tech-preferences.md)
+- **Testing:** See [Testing Tech Preferences]({{workspace_dir}}/.agents/assets/testing-tech-preferences.md)
 
 ### .NET
 
@@ -183,4 +183,4 @@ When deviating, document the reason in the ADR or project documentation.
 - **Backend:** ASP.NET Core
 - **Database:** PostgreSQL + Entity Framework Core
 - **Frontend:** Next.js or Blazor (if using .NET-only stack)
-- **Testing:** See [Testing Tech Preferences]({{workspace_dir}}/.devin/assets/testing-tech-preferences.md)
+- **Testing:** See [Testing Tech Preferences]({{workspace_dir}}/.agents/assets/testing-tech-preferences.md)

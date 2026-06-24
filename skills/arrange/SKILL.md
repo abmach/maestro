@@ -29,11 +29,11 @@ Create and update clean, reliable, and maintainable integration and E2E test sui
 
 ## Specifications & Methodologies
 
-Read the following asset specification files from `{{workspace_dir}}/.devin/assets/` to understand formats, rules, and methodologies before creating tests:
+Read the following asset specification files from `{{workspace_dir}}/.agents/assets/` to understand formats, rules, and methodologies before creating tests:
 
-- **Plan:** [plan.md]({{workspace_dir}}/.devin/assets/plan.md) - plan structure and metadata specification
-- **Testing Tech Preferences:** [testing-tech-preferences.md]({{workspace_dir}}/.devin/assets/testing-tech-preferences.md) - preferred testing frameworks and tools for different test types
-- **Testing Principles:** [testing-principles.md]({{workspace_dir}}/.devin/assets/testing-principles.md) - testing philosophy and TDD methodology
+- **Plan:** [plan.md]({{workspace_dir}}/.agents/assets/plan.md) - plan structure and metadata specification
+- **Testing Tech Preferences:** [testing-tech-preferences.md]({{workspace_dir}}/.agents/assets/testing-tech-preferences.md) - preferred testing frameworks and tools for different test types
+- **Testing Principles:** [testing-principles.md]({{workspace_dir}}/.agents/assets/testing-principles.md) - testing philosophy and TDD methodology
 - **Working Files:** Located in `{{workspace_dir}}/plans/` following specifications
 
 ## Validation
@@ -51,7 +51,7 @@ Read the following asset specification files from `{{workspace_dir}}/.devin/asse
 ### Phase 1: Test Design & Creation
 
 1. **Test Type Determination:** Based on the plan specifications, determine the types of integration and E2E tests needed
-2. **Framework Selection:** Consult [Testing Tech Preferences]({{workspace_dir}}/.devin/assets/testing-tech-preferences.md}) to select appropriate testing frameworks for integration and E2E testing
+2. **Framework Selection:** Consult [Testing Tech Preferences]({{workspace_dir}}/.agents/assets/testing-tech-preferences.md}) to select appropriate testing frameworks for integration and E2E testing
 3. **Test Design:** Apply the test design cycle based on plan specifications and selected frameworks:
    - **Test Structure:** Organize integration and E2E tests in appropriate directories
    - **Test Isolation:** Ensure tests are independent and can run in any order
@@ -63,7 +63,7 @@ Read the following asset specification files from `{{workspace_dir}}/.devin/asse
    - Set up code coverage collection if required
    - Configure test databases or test environments if needed
    - Ensure proper `.gitignore` entries for test artifacts
-   - For Playwright specifically, apply the configuration settings from [Testing Tech Preferences]({{workspace_dir}}/.devin/assets/testing-tech-preferences.md})
+   - For Playwright specifically, apply the configuration settings from [Testing Tech Preferences]({{workspace_dir}}/.agents/assets/testing-tech-preferences.md})
 5. **Test Creation:** Create or update test files inside the `{{workspace_dir}}/tests/` directory following the plan specifications and test design principles
 
 ## 🔌 Input & Output Interface
@@ -79,7 +79,7 @@ Before completing the test writing:
 
 - [ ] Plan file successfully read and understood
 - [ ] Integration and E2E test types determined correctly
-- [ ] Appropriate testing frameworks selected per [Testing Tech Preferences]({{workspace_dir}}/.devin/assets/testing-tech-preferences.md})
+- [ ] Appropriate testing frameworks selected per [Testing Tech Preferences]({{workspace_dir}}/.agents/assets/testing-tech-preferences.md})
 - [ ] Test files created/updated according to plan specifications
 - [ ] Tests are properly organized by type (integration, E2E) in appropriate directories
 - [ ] Test isolation ensured (tests can run independently)

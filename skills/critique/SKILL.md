@@ -51,11 +51,11 @@ Collaborate with user to identify and diagnose screenshot regressions against ex
 
 ## Specifications & Methodologies
 
-Read the following asset specification files from `{{workspace_dir}}/.devin/assets/` to understand formats, rules, and methodologies before analyzing screenshots:
+Read the following asset specification files from `{{workspace_dir}}/.agents/assets/` to understand formats, rules, and methodologies before analyzing screenshots:
 
-- **Testing Principles:** [testing-principles.md]({{workspace_dir}}/.devin/assets/testing-principles.md) - testing philosophy and methodology
-- **Design Principles:** [design-principles.md]({{workspace_dir}}/.devin/assets/design-principles.md) - interface design and dependency patterns
-- **Plan Structure:** [plan.md]({{workspace_dir}}/.devin/assets/plan.md) - Plan format and milestone specifications
+- **Testing Principles:** [testing-principles.md]({{workspace_dir}}/.agents/assets/testing-principles.md) - testing philosophy and methodology
+- **Design Principles:** [design-principles.md]({{workspace_dir}}/.agents/assets/design-principles.md) - interface design and dependency patterns
+- **Plan Structure:** [plan.md]({{workspace_dir}}/.agents/assets/plan.md) - Plan format and milestone specifications
 
 ## 🔌 Input & Output Interface
 

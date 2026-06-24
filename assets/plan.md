@@ -21,13 +21,13 @@ Plans serve as the single source of truth for:
 ## Integration with Other Assets
 
 Plans should be created in consultation with:
-- **[Contexts]({{workspace_dir}}/.devin/assets/contexts.md)** - Use domain language in plan descriptions, API routes, and component names
-- **[ADRs]({{workspace_dir}}/.devin/assets/adrs.md)** - Respect existing architectural decisions and consider if new decisions are needed
+- **[Contexts]({{workspace_dir}}/.agents/assets/contexts.md)** - Use domain language in plan descriptions, API routes, and component names
+- **[ADRs]({{workspace_dir}}/.agents/assets/adrs.md)** - Respect existing architectural decisions and consider if new decisions are needed
 - **[Plans Index]({{workspace_dir}}/plans/index.md)** - Check existing plans to avoid conflicts, register new plans, and update status
-- **[Repo Fingerprint]({{workspace_dir}}/.devin/assets/repo-fingerprint.md)** - Align specifications with current technology stack and frameworks
-- **[Tech Preferences]({{workspace_dir}}/.devin/assets/tech-preferences.md)** - Use preferred technologies when introducing new components
-- **[Design Principles]({{workspace_dir}}/.devin/assets/design-principles.md)** - Apply deep module, interface design, and dependency injection patterns
-- **[Testing Principles]({{workspace_dir}}/.devin/assets/testing-principles.md)** - Consider test tier requirements and design for testability
+- **[Repo Fingerprint]({{workspace_dir}}/.agents/assets/repo-fingerprint.md)** - Align specifications with current technology stack and frameworks
+- **[Tech Preferences]({{workspace_dir}}/.agents/assets/tech-preferences.md)** - Use preferred technologies when introducing new components
+- **[Design Principles]({{workspace_dir}}/.agents/assets/design-principles.md)** - Apply deep module, interface design, and dependency injection patterns
+- **[Testing Principles]({{workspace_dir}}/.agents/assets/testing-principles.md)** - Consider test tier requirements and design for testability
 
 ## Test Tier Classification
 

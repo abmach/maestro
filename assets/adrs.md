@@ -11,10 +11,10 @@ ADRs capture significant architectural decisions, their context, and their conse
 ## Integration with Other Assets
 
 ADRs should be created in consultation with:
-- **[Contexts]({{workspace_dir}}/.devin/assets/contexts.md)** - Use established domain language in decision descriptions and rationale
-- **[Repo Fingerprint]({{workspace_dir}}/.devin/assets/repo-fingerprint.md)** - Consider current technology stack when documenting architectural decisions
-- **[Tech Preferences]({{workspace_dir}}/.devin/assets/tech-preferences.md)** - Reference preferred technologies when explaining technology choices
-- **[Design Principles]({{workspace_dir}}/.devin/assets/design-principles.md)** - Align decisions with established design patterns and principles
+- **[Contexts]({{workspace_dir}}/.agents/assets/contexts.md)** - Use established domain language in decision descriptions and rationale
+- **[Repo Fingerprint]({{workspace_dir}}/.agents/assets/repo-fingerprint.md)** - Consider current technology stack when documenting architectural decisions
+- **[Tech Preferences]({{workspace_dir}}/.agents/assets/tech-preferences.md)** - Reference preferred technologies when explaining technology choices
+- **[Design Principles]({{workspace_dir}}/.agents/assets/design-principles.md)** - Align decisions with established design patterns and principles
 
 ## Core Template
 

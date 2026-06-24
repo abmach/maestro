@@ -115,8 +115,8 @@ Only update the fingerprint when:
 ## Integration with Other Assets
 
 The repo fingerprint works alongside:
-- **[Testing Tech Preferences]({{workspace_dir}}/.devin/assets/testing-tech-preferences.md)** - Preferred testing frameworks and tools
-- **[Tech Preferences]({{workspace_dir}}/.devin/assets/tech-preferences.md)** - General technology preferences
+- **[Testing Tech Preferences]({{workspace_dir}}/.agents/assets/testing-tech-preferences.md)** - Preferred testing frameworks and tools
+- **[Tech Preferences]({{workspace_dir}}/.agents/assets/tech-preferences.md)** - General technology preferences
 
 The repo fingerprint captures what IS currently in use, while the preference assets guide what SHOULD be used for new choices.
 

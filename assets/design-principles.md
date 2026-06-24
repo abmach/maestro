@@ -22,10 +22,10 @@ Skills and agents should consult these principles when:
 ## Integration with Other Assets
 
 These design principles work alongside:
-- **[Repo Fingerprint]({{workspace_dir}}/.devin/assets/repo-fingerprint.md)** - Primary reference for actual technology stack in use - design patterns should align with current frameworks, databases, and tools
-- **[Tech Preferences]({{workspace_dir}}/.devin/assets/tech-preferences.md)** - Secondary reference for preferred technologies when making new choices
-- **[ADRs]({{workspace_dir}}/.devin/assets/adrs.md)** - Document significant architectural decisions that deviate from these principles
-- **[Contexts]({{workspace_dir}}/.devin/assets/contexts.md)** - Use domain language when designing interfaces and modules
+- **[Repo Fingerprint]({{workspace_dir}}/.agents/assets/repo-fingerprint.md)** - Primary reference for actual technology stack in use - design patterns should align with current frameworks, databases, and tools
+- **[Tech Preferences]({{workspace_dir}}/.agents/assets/tech-preferences.md)** - Secondary reference for preferred technologies when making new choices
+- **[ADRs]({{workspace_dir}}/.agents/assets/adrs.md)** - Document significant architectural decisions that deviate from these principles
+- **[Contexts]({{workspace_dir}}/.agents/assets/contexts.md)** - Use domain language when designing interfaces and modules
 
 ## Core Principles
 

@@ -32,15 +32,15 @@ Analyze requirements and create structured technical plans with precise specific
 
 ## Specifications & Methodologies
 
-Read the following asset specification files from `{{workspace_dir}}/.devin/assets/` to understand formats, rules, and methodologies before creating the plan:
+Read the following asset specification files from `{{workspace_dir}}/.agents/assets/` to understand formats, rules, and methodologies before creating the plan:
 
-- **Repo Fingerprint:** [repo-fingerprint.md]({{workspace_dir}}/.devin/assets/repo-fingerprint.md) - technical stack documentation specification
-- **Tech Preferences:** [tech-preferences.md]({{workspace_dir}}/.devin/assets/tech-preferences.md) - preferred technologies specification
-- **Testing Tech Preferences:** [testing-tech-preferences.md]({{workspace_dir}}/.devin/assets/testing-tech-preferences.md) - preferred testing frameworks and tools
-- **Contexts:** [contexts.md]({{workspace_dir}}/.devin/assets/contexts.md) - domain language documentation specification
-- **ADRs:** [adrs.md]({{workspace_dir}}/.devin/assets/adrs.md) - architectural decision records specification
-- **Plan:** [plan.md]({{workspace_dir}}/.devin/assets/plan.md) - plan structure and metadata specification
-- **Plans Index:** [plans-index.md]({{workspace_dir}}/.devin/assets/plans-index.md) - plans index specification
+- **Repo Fingerprint:** [repo-fingerprint.md]({{workspace_dir}}/.agents/assets/repo-fingerprint.md) - technical stack documentation specification
+- **Tech Preferences:** [tech-preferences.md]({{workspace_dir}}/.agents/assets/tech-preferences.md) - preferred technologies specification
+- **Testing Tech Preferences:** [testing-tech-preferences.md]({{workspace_dir}}/.agents/assets/testing-tech-preferences.md) - preferred testing frameworks and tools
+- **Contexts:** [contexts.md]({{workspace_dir}}/.agents/assets/contexts.md) - domain language documentation specification
+- **ADRs:** [adrs.md]({{workspace_dir}}/.agents/assets/adrs.md) - architectural decision records specification
+- **Plan:** [plan.md]({{workspace_dir}}/.agents/assets/plan.md) - plan structure and metadata specification
+- **Plans Index:** [plans-index.md]({{workspace_dir}}/.agents/assets/plans-index.md) - plans index specification
 - **Working Files:** Created in `{{workspace_dir}}/knowledge/` and `{{workspace_dir}}/plans/` following their respective specifications
 
 ## Validation

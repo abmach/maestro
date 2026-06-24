@@ -25,10 +25,10 @@ Skills and agents should consult these principles when:
 ## Integration with Other Assets
 
 These testing principles work alongside:
-- **[Repo Fingerprint]({{workspace_dir}}/.devin/assets/repo-fingerprint.md)** - Primary reference for actual testing frameworks and tools in use - test patterns should align with current testing setup
-- **[Design Principles]({{workspace_dir}}/.devin/assets/design-principles.md)** - Apply design patterns that make testing natural
-- **[Tech Preferences]({{workspace_dir}}/.devin/assets/tech-preferences.md)** - Secondary reference for preferred testing tools when making new choices
-- **[Contexts]({{workspace_dir}}/.devin/assets/contexts.md)** - Use domain language in test names and assertions
+- **[Repo Fingerprint]({{workspace_dir}}/.agents/assets/repo-fingerprint.md)** - Primary reference for actual testing frameworks and tools in use - test patterns should align with current testing setup
+- **[Design Principles]({{workspace_dir}}/.agents/assets/design-principles.md)** - Apply design patterns that make testing natural
+- **[Tech Preferences]({{workspace_dir}}/.agents/assets/tech-preferences.md)** - Secondary reference for preferred testing tools when making new choices
+- **[Contexts]({{workspace_dir}}/.agents/assets/contexts.md)** - Use domain language in test names and assertions
 
 ## Core Philosophy
 
@@ -197,8 +197,8 @@ Before writing any code:
 
 - [ ] Confirm with user what interface changes are needed
 - [ ] Confirm with user which behaviors to test (prioritize)
-- [ ] Identify opportunities for [deep modules]({{workspace_dir}}/.devin/assets/design-principles.md#deep-modules) (small interface, deep implementation)
-- [ ] Design interfaces for [testability]({{workspace_dir}}/.devin/assets/design-principles.md#interface-design-for-testability)
+- [ ] Identify opportunities for [deep modules]({{workspace_dir}}/.agents/assets/design-principles.md#deep-modules) (small interface, deep implementation)
+- [ ] Design interfaces for [testability]({{workspace_dir}}/.agents/assets/design-principles.md#interface-design-for-testability)
 - [ ] List the behaviors to test (not implementation steps)
 - [ ] Get user approval on the plan
 
@@ -235,7 +235,7 @@ Rules:
 
 #### 4. Refactor Phase
 
-After all tests pass, look for [refactor candidates]({{workspace_dir}}/.devin/assets/design-principles.md#refactoring-candidates):
+After all tests pass, look for [refactor candidates]({{workspace_dir}}/.agents/assets/design-principles.md#refactoring-candidates):
 
 - [ ] Extract duplication
 - [ ] Deepen modules (move complexity behind simple interfaces)
