@@ -1,7 +1,6 @@
 ---
 name: init-maestro
 description: Initialize Maestro config by copying skills (except init-maestro) and assets to .agents folder
-argument-hint: ""
 allowed-tools:
   - ask_user_question
   - read

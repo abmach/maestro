@@ -33,7 +33,9 @@ Read the following asset specification files from `{{workspace_dir}}/.agents/ass
 
 - **Plans Index:** [plans-index.md]({{workspace_dir}}/.agents/assets/plans-index.md) - plans index file format and management
 - **Plan:** [plan.md]({{workspace_dir}}/.agents/assets/plan.md) - plan structure and metadata specification
-- **Working Files:** Located in `{{workspace_dir}}/plans/` following specifications
+- **Issue:** [issue.md]({{workspace_dir}}/.agents/assets/issue.md) - issue tracking and problem documentation specification
+- **Issues Index:** [issues-index.md]({{workspace_dir}}/.agents/assets/issues-index.md) - issues index specification
+- **Working Files:** Located in `{{workspace_dir}}/plans/` and `{{workspace_dir}}/issues/` following specifications
 
 ## Validation
 
@@ -56,15 +58,20 @@ Execute the plan as a Directed Acyclic Graph (DAG) of development milestones to 
 1. **Parse Dependency Graph:** Analyze the milestones, their unique IDs, and their `dependencies` lists defined in the active plan
 2. **Identify Ready Milestones:** Determine which milestones are currently "Ready" (i.e., all of their listed dependency IDs are successfully completed, or their dependency list is empty `[]`)
 3. **Execute in Parallel:** Spawn the `play` skill in **parallel** for each currently Ready milestone to implement them simultaneously
+   - **Set Environment Variable:** Set `MAESTRO_ORCHESTRATED=true` when invoking the skill tool to indicate orchestrated execution context
    - **No Artificial Constraints:** You must spawn as many `play` skill instances in parallel as there are currently Ready milestones (e.g., if 4 independent milestones are Ready, spawn 4 instances simultaneously)
    - Each `play` instance is given **only** its specific, active milestone context to implement (narrow step boundary)
 4. **Milestone Gates & Handoff:**
-   - Once an agent completes its milestone, run the local `verify_cmd` for its specific scope
-   - If a milestone passes, mark it as completed, resolve it in the dependency graph, and immediately identify the next set of Ready milestones to execute in the next parallel batch
+   - Once an agent completes its milestone, collect the structured status returned by the play instance
+   - Update the plan file with milestone status based on returned status (Done/Failed)
+   - Update the plans index with milestone status
+   - If a milestone passes, run the local `verify_cmd` for its specific scope
+   - Mark it as completed, resolve it in the dependency graph, and immediately identify the next set of Ready milestones to execute in the next parallel batch
 5. **Discard & Mark Failed on Failure:** If a `play` skill instance fails compilation or loops 3 times on a specific milestone:
    - Terminate that `play` instance
    - Discard all of their code modifications in `{{workspace_dir}}` to restore a clean compiling state
    - Mark the milestone as `❌ Failed` in the active plan and plans index
+   - If play instance returned error details, create appropriate issue for tracking
    - Halt any downstream dependencies of this milestone in the DAG (as they depend on a failed milestone)
    - Other parallel milestone threads continue running unaffected
 
@@ -82,6 +89,7 @@ Execute the plan as a Directed Acyclic Graph (DAG) of development milestones to 
 
 1. Invoke the `score` skill with the plan ID/code if `docs_affected` is `true`
 2. Update the `{{workspace_dir}}/plans/index.md` status to `✅ Done`
+3. If any issues were created during execution, ensure they are properly documented in `{{workspace_dir}}/issues/` and indexed in `{{workspace_dir}}/issues/index.md`
 
 ## � Critical Boundaries
 
@@ -93,11 +101,12 @@ Execute the plan as a Directed Acyclic Graph (DAG) of development milestones to 
 
 ### Skills (Invoke with /skill-name or skill tool)
 
-- **play**: Implements plan milestones using test-driven development
+- **play**: Implements plan milestones using test-driven development (set `MAESTRO_ORCHESTRATED=true` environment variable when invoking)
 - **audition**: Executes test suites and captures results
 - **arrange**: Creates integration and E2E test specifications
 - **critique**: Performs visual regression analysis
 - **score**: Updates documentation based on completed features
+- **tune**: Resolves issues through systematic debugging and fixes (manual invocation recommended for issue resolution, not automatically called during orchestration)
 
 ## 🧠 Operational Approach
 

@@ -23,6 +23,8 @@ Plans serve as the single source of truth for:
 Plans should be created in consultation with:
 - **[Contexts]({{workspace_dir}}/.agents/assets/contexts.md)** - Use domain language in plan descriptions, API routes, and component names
 - **[ADRs]({{workspace_dir}}/.agents/assets/adrs.md)** - Respect existing architectural decisions and consider if new decisions are needed
+- **[Issue]({{workspace_dir}}/.agents/assets/issue.md)** - Consider existing issues that the plan might resolve or need to address
+- **[Issues Index]({{workspace_dir}}/issues/index.md)** - Check existing issues to understand current problems and prioritize work
 - **[Plans Index]({{workspace_dir}}/plans/index.md)** - Check existing plans to avoid conflicts, register new plans, and update status
 - **[Repo Fingerprint]({{workspace_dir}}/.agents/assets/repo-fingerprint.md)** - Align specifications with current technology stack and frameworks
 - **[Tech Preferences]({{workspace_dir}}/.agents/assets/tech-preferences.md)** - Use preferred technologies when introducing new components

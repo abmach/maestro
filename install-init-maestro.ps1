@@ -6,8 +6,8 @@ Install init-maestro skill to user's .agents directory
 .DESCRIPTION
 This script copies the init-maestro skill from the current directory to the user's
 .agents directory in their home folder, making it available for use across different
-clients. It also creates a zip file of the Maestro bundle (skills, assets) to make
-the skill self-contained and independent of the source directory.
+clients. It also creates a zip file of the Maestro bundle (skills, assets, excluding
+init-maestro) to make the skill self-contained and independent of the source directory.
 
 .EXAMPLE
 .\install-init-maestro.ps1

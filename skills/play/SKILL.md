@@ -9,10 +9,12 @@ allowed-tools:
   - grep
   - write
   - edit
+  - skill
 permissions:
   allow:
     - Read(./plans/**/*)
     - Read(./.agents/assets/**/*)
+    - Read(./issues/**/*)
     - Write(./**/*)
     - Edit(./**/*)
     - Exec(yarn add *)
@@ -50,7 +52,9 @@ Read the following asset specification files from `{{workspace_dir}}/.agents/ass
 - **Repo Fingerprint:** [repo-fingerprint.md]({{workspace_dir}}/.agents/assets/repo-fingerprint.md) - Current technology stack and testing frameworks
 - **Plan Structure:** [plan.md]({{workspace_dir}}/.agents/assets/plan.md) - Plan format and milestone specifications
 - **Plans Index:** [plans-index.md]({{workspace_dir}}/.agents/assets/plans-index.md) - Plans index file format and management
-- **Working Files:** Located in `{{workspace_dir}}/plans/` following specifications
+- **Issue:** [issue.md]({{workspace_dir}}/.agents/assets/issue.md) - Issue tracking and problem documentation specification
+- **Issues Index:** [issues-index.md]({{workspace_dir}}/.agents/assets/issues-index.md) - Issues index specification
+- **Working Files:** Located in `{{workspace_dir}}/plans/` and `{{workspace_dir}}/issues/` following specifications
 
 ## Validation
 
@@ -78,6 +82,9 @@ Read the following asset specification files from `{{workspace_dir}}/.agents/ass
   - API routes or components to implement
   - Business logic requirements
   - Test specifications from the plan
+- **Check Execution Context:** Check if `MAESTRO_ORCHESTRATED` environment variable is set to "true"
+  - If orchestrated: Skip plan file updates (orchestrate will handle them)
+  - If solo: Update plan file with milestone status (In Progress) and plans index
 
 ### 2. Apply TDD Methodology
 
@@ -98,6 +105,31 @@ After completing the TDD cycles for the milestone:
 - Ensure all milestone-specific tests pass
 - Fix any failures before considering milestone complete
 
+### 4. Update Plan and Index
+
+After milestone verification is complete:
+
+- **Check Execution Context:** Check if `MAESTRO_ORCHESTRATED` environment variable is set to "true"
+  - If orchestrated: Return structured status to orchestrate (milestone ID, status, notes, errors)
+  - If solo:
+    - **Update Plan Status:** Update milestone status to "Done" in the plan file with completion timestamp and implementation notes
+    - **Update Plans Index:** Update milestone status in plans index to reflect "Done" for this specific milestone
+    - **Add Implementation Notes:** Document any important implementation details, deviations from plan, or technical decisions in the plan file
+
+### 5. Error Handling
+
+If milestone implementation fails:
+
+- **Check Execution Context:** Check if `MAESTRO_ORCHESTRATED` environment variable is set to "true"
+  - If orchestrated: Return structured failure status to orchestrate (milestone ID, error details, failure type)
+  - If solo:
+    - **Update Plan Status:** Update milestone status to "Failed" in the plan file with error details and failure timestamp
+    - **Update Plans Index:** Update milestone status in plans index to reflect "Failed" for this specific milestone
+    - **Document Failure:** Add error details, reproduction steps, and investigation notes to the plan file
+    - **Automatic Issue Creation:** Create a new issue file in `{{workspace_dir}}/issues/` with appropriate type (BUG/BUILD/TEST/PERF) based on failure type
+    - **Link to Plan:** Reference the plan ID and milestone in the issue for traceability
+    - **Update Issues Index:** Add the new issue to the issues index with status "Open"
+
 ## Quality Checklist
 
 Before considering the milestone complete:
@@ -108,6 +140,11 @@ Before considering the milestone complete:
 - [ ] Code follows `Design Principles` specification (deep modules, testable interfaces)
 - [ ] No linting warnings on modified files
 - [ ] Code is minimal and focused (no speculative features)
+- [ ] Milestone status updated appropriately (based on execution context)
+  - If solo: Updated in plan file and plans index
+  - If orchestrated: Returned structured status to orchestrate
+- [ ] Implementation notes added (solo) or included in status return (orchestrated)
+- [ ] If failed, issue automatically created with appropriate type (solo) or error details returned (orchestrated)
 
 ## Error Handling
 
