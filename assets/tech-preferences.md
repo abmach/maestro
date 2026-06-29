@@ -19,7 +19,7 @@ Commercial tools should only be considered when they provide essential functiona
 
 ## ⚠️ Important: Always Check Online
 
-When selecting technologies, always search online for the current latest stable versions. Use web search to verify current versions before making technology choices.
+When selecting technologies, always search online for the current latest stable versions. **Do not rely on your internal training data or pre-existing knowledge**, as it may be outdated. Use web search to verify current versions before making technology choices.
 
 ## Purpose
 
@@ -141,7 +141,8 @@ When deviating, document the reason in the ADR or project documentation.
 
 ## Version Strategy
 
-- **Always Verify Online:** Before selecting any version, search online for the current latest stable release
+- **Always Verify Online:** Before selecting any version, search online for the current latest stable release. **Never trust your internal training data for version numbers.**
+- **Latest Preferred:** Generally prefer the latest stable version of libraries and tools to ensure access to modern features, bug fixes, and security patches.
 - **Stable Only:** Use stable releases, never alpha/beta unless explicitly required
 - **LTS for Runtimes:** Prefer Long Term Support versions for Node.js and .NET
 - **Security Updates:** Always use versions that receive security updates

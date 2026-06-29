@@ -88,6 +88,44 @@ When defining milestones in the Steps section, incorporate these mandatory miles
 
 Ambiguity leads to implementation delays and rework. If something is unclear, specify it explicitly.
 
+### Optional Milestone Elaboration
+
+Milestones may include optional elaboration to provide additional implementation guidance for complex tasks. Elaboration is typically added by the `elaborate` skill and can include:
+
+- **Implementation Guidance:** Detailed step-by-step breakdowns, specific file paths, prerequisite checks, integration points
+- **Code Patterns:** Relevant code snippets following project conventions, interface implementations, configuration examples
+- **Testing Strategy:** Specific test cases, edge cases to cover, mock data requirements, test file locations
+- **Error Handling:** Common error scenarios, validation requirements, failure modes, recovery strategies
+- **Best Practices:** Performance considerations, security considerations, code organization patterns
+- **Common Pitfalls:** Mistakes to avoid, anti-patterns to watch for, debugging hints
+
+Elaboration format example:
+
+```markdown
+- ⏳ **Milestone 1 (ID: 1, Dependencies: [])**: [Short Title] - Specific detailed task description.
+  **Implementation Guidance:**
+  - Step 1: [Detailed step with file paths]
+  - Step 2: [Detailed step with specific actions]
+  - Follow the pattern in [existing-file](path/to/existing-file)
+  **Code Pattern:**
+    ```typescript
+    // Example following project conventions
+    interface Example {
+      // Specific implementation
+    }
+    ```
+  **Testing Strategy:**
+  - Create test file at `tests/path/to/test.spec.ts`
+  - Test cases: [specific cases]
+  - Mock data: [specific mock requirements]
+```
+
+Elaboration is optional but recommended for:
+- Complex technical implementations
+- Milestones involving unfamiliar technologies
+- High-risk or critical-path milestones
+- Tasks where the team has limited experience
+
 ### Status Management
 
 Use the standard status legend for both the overall plan and individual milestones:
@@ -130,6 +168,38 @@ Update milestone statuses as work progresses to enable the orchestrator to ident
 - ⏳ **Milestone 5 (ID: 5, Dependencies: [4])**: [E2E Test Execution] - Invoke `audition` skill to execute test specs and capture results.
 - ⏳ **Milestone 6 (ID: 6, Dependencies: [5])**: [Documentation Update] - Spawn `doc_processor` to update manuals, Readmes, or API descriptions under `docs/` based on final layout and E2E visual captures.
 - ...
+
+**Optional Elaboration Example:**
+
+```markdown
+- ⏳ **Milestone 1 (ID: 1, Dependencies: [])**: Implement JWT authentication service
+  **Implementation Guidance:**
+  - Create `src/auth/jwt-authenticator.ts` following the pattern in `src/auth/base-authenticator.ts`
+  - Implement `generateToken()` and `validateToken()` methods
+  - Use RS256 algorithm with keys from `config/auth.keys.json`
+  - Add error handling for expired tokens and invalid signatures
+  **Code Pattern:**
+
+    ```typescript
+    class JWTAuthenticator implements Authenticator {
+      async generateToken(user: User): Promise<string> {
+        // Implementation following existing pattern
+      }
+      async validateToken(token: string): Promise<User | null> {
+        // Implementation following existing pattern
+      }
+    }
+    ```
+  **Testing Strategy:**
+  - Create `tests/auth/jwt-authenticator.spec.ts`
+  - Test token generation with valid user data
+  - Test token validation with valid and expired tokens
+  - Test error handling for malformed tokens
+  **Common Pitfalls:**
+  - Don't store secrets in frontend code
+  - Ensure token expiration is properly validated
+  - Handle clock skew in token validation
+```
 
 ## Development Specifications
 
