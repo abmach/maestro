@@ -62,3 +62,7 @@ For how references relate to each other, see `references-map.md`.
 ## Documentation Constraints
 
 - **Contexts** (`{{workspace_dir}}/knowledge/contexts.md`) should be totally devoid of implementation details. Do not treat it as a spec, a scratch pad, or a repository for implementation decisions. It is a glossary and nothing else
+
+## Execution
+
+Use the plan or feature description from the invocation, then proceed with Phase 0: Setup.

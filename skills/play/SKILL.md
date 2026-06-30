@@ -1,7 +1,7 @@
 ---
 name: play
 description: Implement plan milestones using test-driven development - apply red-green-refactor workflow to build features with comprehensive test coverage
-argument-hint: "[plan code+number] [milestone ID]"
+argument-hint: "[plan ID/code] [milestone ID]"
 allowed-tools:
   - read
   - find_file_by_name
@@ -40,7 +40,7 @@ Implement `Plan` milestones using test-driven development methodology with red-g
 
 - Working folder: `{{workspace_dir}}` - the root of the project/workspace
 - Target folders: `{{workspace_dir}}/plans/` (read-only) and code files in the project (read/write)
-- Required input: `Plan` code+number (e.g., "AUTH-001") and milestone ID to implement
+- Required input: `Plan` ID/code (e.g., "AUTH-001") and milestone ID to implement
 
 ## References
 
@@ -72,13 +72,13 @@ For how references relate to each other, see `references-map.md`.
 
 ### Phase 0: Setup
 
-1. Read the `Plans Index` at `{{workspace_dir}}/plans/index.md` to find the full `Plan` filename for the given code+number
+1. Read the `Plans Index` at `{{workspace_dir}}/plans/index.md` to find the full `Plan` filename for the given `Plan` ID/code
 2. Construct `Plan` file path: `{{workspace_dir}}/plans/{full_filename}.md`
 3. Read the `Plan` file to understand milestone requirements and test specifications
 
-### 1. Extract Milestone Requirements
+### Phase 1: Extract Milestone Requirements
 
-- Read the `Plans Index` at `{{workspace_dir}}/plans/index.md` to find the full filename for the given `Plan` code+number
+- Read the `Plans Index` at `{{workspace_dir}}/plans/index.md` to find the full filename for the given `Plan` ID/code
 - Read the `Plan` file at `{{workspace_dir}}/plans/{full_filename}.md`
 - Extract the milestone with the specified ID
 - Understand the specific requirements from the milestone's development specifications:
@@ -90,7 +90,7 @@ For how references relate to each other, see `references-map.md`.
   - If orchestrated: Skip `Plan` file updates (orchestrate will handle them)
   - If solo: Update `Plan` file with milestone status (In Progress) and `Plans Index`
 
-### 2. Apply TDD Methodology
+### Phase 2: Apply TDD Methodology
 
 Follow the TDD methodology from the `Testing Principles` specification to implement the milestone:
 
@@ -100,7 +100,7 @@ Follow the TDD methodology from the `Testing Principles` specification to implem
 - Follow the incremental loop: RED → GREEN for each behavior
 - Apply refactor phase after all tests pass, using `Design Principles` for guidance
 
-### 3. Milestone-Specific Verification
+### Phase 3: Milestone-Specific Verification
 
 After completing the TDD cycles for the milestone:
 
@@ -109,7 +109,7 @@ After completing the TDD cycles for the milestone:
 - Ensure all milestone-specific tests pass
 - Fix any failures before considering milestone complete
 
-### 4. Update Plan and Index
+### Phase 4: Update Plan and Index
 
 After milestone verification is complete:
 
@@ -120,7 +120,7 @@ After milestone verification is complete:
     - **Update Plans Index:** Update milestone status in `Plans Index` to reflect "Done" for this specific milestone
     - **Add Implementation Notes:** Document any important implementation details, deviations from `Plan`, or technical decisions in the `Plan` file
 
-### 5. Error Handling
+### Phase 5: Error Handling
 
 If milestone implementation fails:
 
@@ -174,3 +174,7 @@ The milestone is complete when:
 - Code follows `Testing Principles` and `Design Principles` specifications
 - No linting warnings on modified files
 - No background processes remain running
+
+## Execution
+
+Use the `Plan` ID/code and milestone ID from the invocation, then proceed with Phase 0: Setup.

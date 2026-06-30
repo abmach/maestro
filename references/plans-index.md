@@ -33,6 +33,10 @@ Use these status indicators for each plan:
 - **Title**: Concise, descriptive name of the feature or change
 - **Link**: Markdown link to the specific plan file
 - **Description**: One to two sentences explaining what the plan implements
+- **Docs marker** (optional): Documentation status indicator appended immediately after the status emoji:
+  - `⏳` — Documentation needed but not yet updated (`Docs Affected: true`, `Docs Updated: false`)
+  - `📝` — Documentation has been updated (`Docs Affected: true`, `Docs Updated: true`)
+  - No marker — No documentation needed (`Docs Affected: false`)
 
 ### Ordering
 
@@ -51,8 +55,11 @@ Use these status indicators for each plan:
 
 ## Done
 
-- ✅ **User Authentication System** *([AUTH-001-user-authentication.md](AUTH-001-user-authentication.md))*
+- ✅📝 **User Authentication System** *([AUTH-001-user-authentication.md](AUTH-001-user-authentication.md))*
   Implemented JWT-based authentication with login, registration, and password reset flows.
+
+- ✅⏳ **Search API** *([API-002-search-endpoints.md](API-002-search-endpoints.md))*
+  Added full-text search endpoints with pagination and filtering.
 
 - ✅ **Database Migration System** *([DB-001-migration-framework.md](DB-001-migration-framework.md))*
   Created automated database migration framework with rollback capabilities.
@@ -97,6 +104,13 @@ When plan status changes during orchestration:
 1. Move entry to appropriate status section
 2. Update status emoji
 3. Maintain position within section (newest first)
+
+### Marking Documentation Status
+
+- **When a plan is marked as Done** (`✅`): If `Docs Affected` is `true`, append `⏳` after the status emoji (e.g., `✅⏳`) to indicate documentation is pending
+- **When documentation is completed**: Replace `⏳` with `📝` (e.g., `✅⏳` → `✅📝`)
+- **When `Docs Affected` is `false`**: No docs marker is appended (e.g., `✅`)
+- Batch mode scans for `✅⏳` entries to find plans needing documentation
 
 ### Cleaning Up
 

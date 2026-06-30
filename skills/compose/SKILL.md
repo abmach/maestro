@@ -82,3 +82,7 @@ Before completing the `Plan`:
 6. **Index Updated:** Ensure `{{workspace_dir}}/plans/index.md` includes the new `Plan` (following `Plans Index` specification)
 7. **Issues Considered:** Relevant existing `Issue`s from `{{workspace_dir}}/issues/index.md` are considered in `Plan` design
 8. **Fingerprint Updated:** If `{{workspace_dir}}/knowledge/repo-fingerprint.md` exists, update it if `Plan` introduces new technologies
+
+## Execution
+
+Use the feature request from the invocation, then proceed with Step 0: Input Validation.

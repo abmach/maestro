@@ -101,4 +101,6 @@ Before completing the test writing task, execute and verify these steps:
 3. **Framework-Specific Validation:** Verify that framework-specific configurations and best practices are properly applied
 4. **Common Checklist Compliance:** Run the common pre-handoff checks from your general instructions
 
-Read the specified `Plan` file to understand the testing requirements, then create or update test files following the specifications and best practices outlined above.
+## Execution
+
+Use the `Plan` ID/code from the invocation, then proceed with Phase 0: Setup.

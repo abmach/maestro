@@ -1,7 +1,7 @@
 ---
 name: critique
 description: Critique visual issues - collaborate with user to identify screenshot regressions against expected styling and layout requirements
-argument-hint: "[screenshot paths and plan reference]"
+argument-hint: "[plan ID/code] [screenshot paths]"
 allowed-tools:
   - read
   - ask_user_question
@@ -41,7 +41,7 @@ Collaborate with user to identify and diagnose screenshot regressions against ex
 
 - Working folder: `{{workspace_dir}}` - the root of the project/workspace
 - Target folders: Framework-specific screenshot directories (read-only access)
-- Required input: Screenshot paths (provided by the testing framework) and `Plan` reference from orchestrate/audition
+- Required input: `Plan` ID/code and screenshot paths (provided by the testing framework) from orchestrate/audition
 - **Framework Flexibility:** This skill works with any testing framework that provides screenshot comparison (Playwright, Cypress, Selenium, custom solutions, etc.) - screenshot paths are provided as input rather than assumed
 
 ## Validation
@@ -54,7 +54,8 @@ Collaborate with user to identify and diagnose screenshot regressions against ex
 Reference specs are in `{{workspace_dir}}/.agents/references/`. Read them on-demand when the workflow requires them — do NOT read all upfront.
 
 ### Always needed
-- **`Plan` (quick):** Read `plan-quick.md` — to parse the Plan's QA Testing Specifications and intended changes
+- **`Plan` (quick):** Read `plan-quick.md` — to parse the `Plan`'s QA Testing Specifications and intended changes
+- **`Plans Index`:** Read `plans-index.md` — for `Plan` lookup from ID/code
 
 ### Cross-references
 For how references relate to each other, see `references-map.md`.
@@ -62,15 +63,14 @@ For how references relate to each other, see `references-map.md`.
 ## 🔌 Input & Output Interface
 
 - **Inputs (from orchestrate/audition):**
+  - `Plan ID/code:` The plan identifier (e.g., "AUTH-001") — resolved via `Plans Index`
   - **Option A: Visual Regression Diff**
     - `Baseline Screenshot Path:` Path to the expected/baseline screenshot (framework-specific location)
     - `Actual Screenshot Path:` Path to the current/actual screenshot (framework-specific location)
     - `Diff Screenshot Path:` Path to the diff/comparison screenshot (optional, framework-specific)
-    - `Plan Reference:` `{{workspace_dir}}/plans/{feature-slug}.md`
   - **Option B: Single-Screenshot Crash Diagnosis**
     - `Diagnostic Screenshot Path:` Path to a screenshot captured during test failure (framework-specific location)
     - `Failure Log / Error Message:` Exact string of the test error (e.g. element click intercepted, timeout, or assertion failure).
-    - `Plan Reference:` `{{workspace_dir}}/plans/{feature-slug}.md`
 - **Outputs / Execution Prompt Pattern (returned to orchestrate/audition):**
   When passed an evaluation payload, output the analysis in this exact format:
   - **Defect Diagnosis:** What is visually wrong, broken, or in a crash state (and where on the screen).
@@ -81,12 +81,28 @@ For how references relate to each other, see `references-map.md`.
 ## Strict File Routing Rules
 
 1. **Image Isolation:** Read visual artifacts from the paths provided by the testing framework (framework-agnostic)
-2. **Context Intake:** Read the active `Plan`s in `{{workspace_dir}}/plans/` to determine if a layout change is intended or an accidental regression
+2. **Context Intake:** Resolve the `Plan` ID/code via `Plans Index`, then read the `Plan` file to determine if a layout change is intended or an accidental regression
 3. **Code Analysis:** Read relevant styling, layout, component, and configuration files to understand implementation and identify root causes
 
 ## Core Workflow
 
-### Phase 1: User Visual Inspection
+### Invocation Mode
+
+This skill operates in two modes depending on how it's invoked:
+
+- **Direct mode (user-invoked):** Full collaborative workflow with user visual inspection via `ask_user_question`. Use when a user runs `/critique` directly.
+- **AI-only mode (subagent-invoked):** Skip Phase 1 (User Visual Inspection) entirely. Proceed directly to AI-only analysis using the Aesthetic & Spatial Audit Guidelines. Use when invoked by `orchestrate` or another skill as a subagent, where `ask_user_question` is not available to the subagent.
+
+Determine the mode:
+- If invoked as a subagent (e.g., by `orchestrate` with `MAESTRO_ORCHESTRATED=true` or similar context), use AI-only mode
+- If invoked directly by the user, use the full collaborative workflow
+
+### Phase 0: Setup
+
+1. **Resolve Plan:** Read the `Plans Index` at `{{workspace_dir}}/plans/index.md` to find the full `Plan` filename for the given `Plan` ID/code
+2. **Read Plan:** Read the `Plan` file to understand the QA Testing Specifications and intended visual changes
+
+### Phase 1: User Visual Inspection (Direct mode only — skip in AI-only mode)
 
 1. **Read Screenshots:** Load the provided screenshots using the paths supplied (baseline, actual, diff, or diagnostic - depending on what the testing framework provides)
 2. **Display Context:** Present the screenshots to the user with relevant context:
@@ -120,8 +136,8 @@ For how references relate to each other, see `references-map.md`.
 3. **Baseline Update Recommendation:** If appropriate, recommend updating the baseline snapshot
 4. **Final Verdict:** Provide `APPROVE` with explanation
 
-#### If User Skips:
-1. **AI-Only Analysis:** Proceed with the original automated analysis workflow
+#### If User Skips (or AI-only mode):
+1. **AI-Only Analysis:** Proceed with the automated analysis workflow (this is the default path in AI-only mode)
 2. **Comprehensive Audit:** Conduct full spatial analysis following the audit guidelines
 3. **Provide Diagnosis:** Output defect diagnosis, root cause, and remediation based on AI analysis alone
 
@@ -141,4 +157,6 @@ When evaluating screenshots (either in AI-only mode or to supplement user input)
 3. **Code-Level Verification:** Always inspect the actual styling/layout code or configuration to confirm root cause analysis before providing remediation
 4. **Technology Agnosticism:** Ensure all analysis and remediation works regardless of the testing framework, CSS system, or UI framework being used
 
-Execute the collaborative workflow: present screenshots to the user, capture their visual observations, analyze the relevant code and configuration, and provide the verdict in the required output format with specific, code-backed remediation.
+## Execution
+
+Use the `Plan` ID/code and screenshot paths from the invocation, then proceed with the workflow in the appropriate invocation mode.

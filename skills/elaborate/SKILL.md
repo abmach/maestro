@@ -225,3 +225,7 @@ The elaborate skill integrates with:
 - Elaborate only high-risk or complex milestones
 - Focus on areas where the team has less experience
 - Target milestones that have failed in previous execution attempts
+
+## Execution
+
+Use the `Plan` ID or file path from the invocation, then proceed with Phase 0: Setup.

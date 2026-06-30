@@ -12,6 +12,7 @@
 
 - **Test Tier:** `e2e` | `smoke` | `none`
 - **Docs Affected:** `true` | `false`
+- **Docs Updated:** `true` | `false` (set to `true` after documentation is complete)
 - **Status:** `✅ Done` | `🔄 In progress` | `⏳ Pending` | `⚠️ Blocked` | `❌ Failed`
 
 ## DAG Milestone Rules
@@ -31,6 +32,8 @@
 ## Test Tier: e2e/smoke/none
 
 ## Docs Affected: true/false
+
+## Docs Updated: true/false
 
 ## Status: ⏳ Pending
 

@@ -82,18 +82,26 @@ Execute the `Plan` as a Directed Acyclic Graph (DAG) of development milestones t
 
 ### Phase 2: Integration Testing
 
-1. Read the `Plan`'s `test_tier` metadata
-2. If `test_tier` is `smoke` or `none`, run the local `verify_cmd` from the `Plan`
-3. If `test_tier` is `e2e`:
+1. **User Gate:** Ask the user: "All development milestones are complete. Run integration testing? [Yes / No]"
+   - If "No", skip to Phase 3
+2. Read the `Plan`'s `test_tier` metadata
+3. If `test_tier` is `smoke` or `none`, run the local `verify_cmd` from the `Plan`
+4. If `test_tier` is `e2e`:
    - First, invoke the `arrange` skill to write or update the required test files based on the `Plan` specifications
    - Second, invoke the `audition` skill to execute the tests and capture results
-   - Third, if visual regression testing is applicable, invoke the `critique` skill to analyze screenshots and provide verdict
-4. If testing fails, route error logs back to the appropriate `play` skill instance for resolution
+   - Third, if visual regression screenshots are produced:
+     - If the current model is **image-capable**: invoke the `critique` skill with the `Plan` ID/code and screenshot paths, in AI-only analysis mode (no user interaction required)
+     - If the current model is **not image-capable**: pause and present the screenshot paths to the user. Ask them to inspect the screenshots and report any visual issues. Then either proceed or route back to `play` for fixes based on user feedback
+5. If testing fails, route error logs back to the appropriate `play` skill instance for resolution
 
 ### Phase 3: Finalization & Documentation
 
-1. Invoke the `score` skill with the `Plan` ID/code if `docs_affected` is `true`
-2. Update the `{{workspace_dir}}/plans/index.md` status to `✅ Done`
+1. **Update plan status:** Update the `{{workspace_dir}}/plans/index.md` status to `✅ Done`
+   - If `Docs Affected` is `true`: append `⏳` after the status emoji (e.g., `✅⏳`) to indicate documentation is pending
+   - If `Docs Affected` is `false`: no docs marker (e.g., `✅`)
+2. **User Gate:** If `Docs Affected` is `true`, ask the user: "Documentation update is needed. Run the `score` skill now? [Yes / No]"
+   - If "Yes": Invoke the `score` skill with the `Plan` ID/code (this will update `⏳` → `📝` in the index)
+   - If "No": Inform the user they can run `/score {plan-id}` later, or run `/score` without arguments to process all pending finished plans at once
 3. If any `Issue`s were created during execution, ensure they are properly documented in `{{workspace_dir}}/issues/` and indexed in `{{workspace_dir}}/issues/index.md`
 
 ## 🚫 Critical Boundaries
@@ -128,4 +136,6 @@ Before declaring workflow complete:
 4. No background processes are left running
 5. User is informed of final status and any blockers
 
-Ask for the `Plan` ID/code, then proceed with Phase 1: Development.
+## Execution
+
+Use the `Plan` ID/code from the invocation, then proceed with Phase 0: Setup.

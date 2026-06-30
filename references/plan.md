@@ -24,6 +24,11 @@ Each plan must specify `Docs Affected` to indicate whether the change requires d
 - **true** — The change affects user-facing behavior, API contracts, or requires manual updates
 - **false** — The change is internal, refactoring, or doesn't impact user documentation
 
+When `Docs Affected` is `true`, the plan must also track `Docs Updated` to indicate whether documentation has been completed:
+
+- **true** — Documentation has been updated
+- **false** — Documentation not yet updated, or not applicable (when `Docs Affected` is `false`)
+
 ## Writing Rules
 
 ### Use Relative Paths
@@ -118,6 +123,8 @@ Use the standard status legend for both the overall plan and individual mileston
 
 ## Docs Affected: true/false
 
+## Docs Updated: true/false
+
 ## Status: ✅ Done/🔄 In progress/⏳ Pending/⚠️ Blocked/❌ Failed
 
 ## Steps
@@ -209,6 +216,8 @@ Implement JWT-based authentication with login, registration, and password reset 
 ## Test Tier: e2e
 
 ## Docs Affected: true
+
+## Docs Updated: false
 
 ## Status: ⏳ Pending
 

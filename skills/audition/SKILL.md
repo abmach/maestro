@@ -51,13 +51,13 @@ For how references relate to each other, see `references-map.md`.
 
 ## Core Workflow
 
-### 1. Test Discovery
+### Phase 1: Test Discovery
 
 1. **Read Asset Specifications:** Load `Testing Tech Preferences` and `Repo Fingerprint` to understand the testing stack
 2. **Locate Test Files:** Find test files matching the specified scope using `find_file_by_name` and `grep`
 3. **Identify Test Framework:** Determine which testing framework is in use (Vitest, Jest, pytest, xUnit, etc.)
 
-### 2. Test Execution
+### Phase 2: Test Execution
 
 1. **Select Execution Command:** Choose appropriate command based on testing framework:
    - **Vitest:** `yarn test` or `npm run test`
@@ -68,7 +68,7 @@ For how references relate to each other, see `references-map.md`.
 3. **Capture Results:** Collect test output, exit codes, and any generated artifacts
 4. **Generate Screenshots:** For E2E tests, ensure screenshots are captured to `test-results/` or framework-specific location
 
-### 3. Result Processing
+### Phase 3: Result Processing
 
 1. **Analyze Test Output:** Parse test results to identify:
    - Pass/fail status
@@ -123,4 +123,6 @@ If test execution fails:
 - **References:** Test files created by `arrange` skill
 - **Context:** Implementation from `play` skill milestones
 
-Execute the test suite, capture comprehensive results and artifacts, and provide structured output for visual analysis and debugging.
+## Execution
+
+Use the test scope from the invocation, then proceed with Phase 1: Test Discovery.

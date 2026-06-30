@@ -177,3 +177,7 @@ The tune skill may need to:
 - **Invoke audition** to run test suites for verification
 - **Invoke compose** if fix requires broader architectural changes
 - **Invoke rehearse** if `Issue` reveals domain language ambiguities
+
+## Execution
+
+Use the `Issue` ID from the invocation, then proceed with Phase 0: Setup.
