@@ -32,17 +32,17 @@ Analyze requirements and create structured technical `Plan`s with precise specif
 
 ## Specifications & Methodologies
 
-Read the following asset specification files from `{{workspace_dir}}/.agents/assets/` to understand formats, rules, and methodologies before creating the `Plan`:
+Read the following reference specification files from `{{workspace_dir}}/.agents/references/` to understand formats, rules, and methodologies before creating the `Plan`:
 
-- **Repo Fingerprint:** [repo-fingerprint.md]({{workspace_dir}}/.agents/assets/repo-fingerprint.md) - technical stack documentation specification
-- **Tech Preferences:** [tech-preferences.md]({{workspace_dir}}/.agents/assets/tech-preferences.md) - preferred technologies specification
-- **Testing Tech Preferences:** [testing-tech-preferences.md]({{workspace_dir}}/.agents/assets/testing-tech-preferences.md) - preferred testing frameworks and tools
-- **Contexts:** [contexts.md]({{workspace_dir}}/.agents/assets/contexts.md) - domain language documentation specification
-- **ADRs:** [adrs.md]({{workspace_dir}}/.agents/assets/adrs.md) - architectural decision records specification
-- **Issue:** [issue.md]({{workspace_dir}}/.agents/assets/issue.md) - issue tracking and problem documentation specification
-- **Issues Index:** [issues-index.md]({{workspace_dir}}/.agents/assets/issues-index.md) - issues index specification
-- **Plan:** [plan.md]({{workspace_dir}}/.agents/assets/plan.md) - plan structure and metadata specification
-- **Plans Index:** [plans-index.md]({{workspace_dir}}/.agents/assets/plans-index.md) - plans index specification
+- **Repo Fingerprint:** [repo-fingerprint.md]({{workspace_dir}}/.agents/references/repo-fingerprint.md) - technical stack documentation specification
+- **Tech Preferences:** [tech-preferences.md]({{workspace_dir}}/.agents/references/tech-preferences.md) - preferred technologies specification
+- **Testing Tech Preferences:** [testing-tech-preferences.md]({{workspace_dir}}/.agents/references/testing-tech-preferences.md) - preferred testing frameworks and tools
+- **Contexts:** [contexts.md]({{workspace_dir}}/.agents/references/contexts.md) - domain language documentation specification
+- **ADRs:** [adrs.md]({{workspace_dir}}/.agents/references/adrs.md) - architectural decision records specification
+- **Issue:** [issue.md]({{workspace_dir}}/.agents/references/issue.md) - issue tracking and problem documentation specification
+- **Issues Index:** [issues-index.md]({{workspace_dir}}/.agents/references/issues-index.md) - issues index specification
+- **Plan:** [plan.md]({{workspace_dir}}/.agents/references/plan.md) - plan structure and metadata specification
+- **Plans Index:** [plans-index.md]({{workspace_dir}}/.agents/references/plans-index.md) - plans index specification
 - **Working Files:** Created in `{{workspace_dir}}/knowledge/`, `{{workspace_dir}}/plans/`, and `{{workspace_dir}}/issues/` following their respective specifications
 
 ## Validation

@@ -12,7 +12,7 @@ allowed-tools:
 permissions:
   allow:
     - Read(./plans/**/*)
-    - Read(./.agents/assets/**/*)
+    - Read(./.agents/references/**/*)
     - Read(./issues/**/*)
     - Write(./**/*)
     - Edit(./**/*)
@@ -44,15 +44,15 @@ Implement `Plan` milestones using test-driven development methodology with red-g
 
 ## Specifications & Methodologies
 
-Read the following asset specification files from `{{workspace_dir}}/.agents/assets/` to understand TDD methodology and design patterns before implementing the milestone:
+Read the following reference specification files from `{{workspace_dir}}/.agents/references/` to understand TDD methodology and design patterns before implementing the milestone:
 
-- **Testing Principles:** [testing-principles.md]({{workspace_dir}}/.agents/assets/testing-principles.md) - TDD methodology and test philosophy
-- **Design Principles:** [design-principles.md]({{workspace_dir}}/.agents/assets/design-principles.md) - Interface design and dependency patterns
-- **Repo Fingerprint:** [repo-fingerprint.md]({{workspace_dir}}/.agents/assets/repo-fingerprint.md) - Current technology stack and testing frameworks
-- **Plan Structure:** [plan.md]({{workspace_dir}}/.agents/assets/plan.md) - Plan format and milestone specifications
-- **Plans Index:** [plans-index.md]({{workspace_dir}}/.agents/assets/plans-index.md) - Plans index file format and management
-- **Issue:** [issue.md]({{workspace_dir}}/.agents/assets/issue.md) - Issue tracking and problem documentation specification
-- **Issues Index:** [issues-index.md]({{workspace_dir}}/.agents/assets/issues-index.md) - Issues index specification
+- **Testing Principles:** [testing-principles.md]({{workspace_dir}}/.agents/references/testing-principles.md) - TDD methodology and test philosophy
+- **Design Principles:** [design-principles.md]({{workspace_dir}}/.agents/references/design-principles.md) - Interface design and dependency patterns
+- **Repo Fingerprint:** [repo-fingerprint.md]({{workspace_dir}}/.agents/references/repo-fingerprint.md) - Current technology stack and testing frameworks
+- **Plan Structure:** [plan.md]({{workspace_dir}}/.agents/references/plan.md) - Plan format and milestone specifications
+- **Plans Index:** [plans-index.md]({{workspace_dir}}/.agents/references/plans-index.md) - Plans index file format and management
+- **Issue:** [issue.md]({{workspace_dir}}/.agents/references/issue.md) - Issue tracking and problem documentation specification
+- **Issues Index:** [issues-index.md]({{workspace_dir}}/.agents/references/issues-index.md) - Issues index specification
 - **Working Files:** Located in `{{workspace_dir}}/plans/` and `{{workspace_dir}}/issues/` following specifications
 
 ## Validation

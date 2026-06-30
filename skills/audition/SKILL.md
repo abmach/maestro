@@ -35,11 +35,11 @@ Execute test suites to validate implementation, capture results, and generate ar
 
 ## Specifications & Methodologies
 
-Read the following asset specification files from `{{workspace_dir}}/.agents/assets/` to understand formats, rules, and methodologies before executing tests:
+Read the following reference specification files from `{{workspace_dir}}/.agents/references/` to understand formats, rules, and methodologies before executing tests:
 
-- **Testing Tech Preferences:** [testing-tech-preferences.md]({{workspace_dir}}/.agents/assets/testing-tech-preferences.md) - preferred testing frameworks and tools
-- **Testing Principles:** [testing-principles.md]({{workspace_dir}}/.agents/assets/testing-principles.md) - testing philosophy and methodology
-- **Repo Fingerprint:** [repo-fingerprint.md]({{workspace_dir}}/.agents/assets/repo-fingerprint.md) - Current testing stack in use
+- **Testing Tech Preferences:** [testing-tech-preferences.md]({{workspace_dir}}/.agents/references/testing-tech-preferences.md) - preferred testing frameworks and tools
+- **Testing Principles:** [testing-principles.md]({{workspace_dir}}/.agents/references/testing-principles.md) - testing philosophy and methodology
+- **Repo Fingerprint:** [repo-fingerprint.md]({{workspace_dir}}/.agents/references/repo-fingerprint.md) - Current testing stack in use
 
 ## Validation
 

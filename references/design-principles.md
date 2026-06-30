@@ -19,13 +19,13 @@ Skills and agents should consult these principles when:
 - Planning refactoring work
 - Evaluating code quality and structure
 
-## Integration with Other Assets
+## Integration with Other References
 
 These design principles work alongside:
-- **[Repo Fingerprint]({{workspace_dir}}/.agents/assets/repo-fingerprint.md)** - Primary reference for actual technology stack in use - design patterns should align with current frameworks, databases, and tools
-- **[Tech Preferences]({{workspace_dir}}/.agents/assets/tech-preferences.md)** - Secondary reference for preferred technologies when making new choices
-- **[ADRs]({{workspace_dir}}/.agents/assets/adrs.md)** - Document significant architectural decisions that deviate from these principles
-- **[Contexts]({{workspace_dir}}/.agents/assets/contexts.md)** - Use domain language when designing interfaces and modules
+- **[Repo Fingerprint]({{workspace_dir}}/.agents/references/repo-fingerprint.md)** - Primary reference for actual technology stack in use - design patterns should align with current frameworks, databases, and tools
+- **[Tech Preferences]({{workspace_dir}}/.agents/references/tech-preferences.md)** - Secondary reference for preferred technologies when making new choices
+- **[ADRs]({{workspace_dir}}/.agents/references/adrs.md)** - Document significant architectural decisions that deviate from these principles
+- **[Contexts]({{workspace_dir}}/.agents/references/contexts.md)** - Use domain language when designing interfaces and modules
 
 ## Core Principles
 
@@ -35,7 +35,7 @@ From "A Philosophy of Software Design":
 
 **Deep module** = small interface + lots of implementation
 
-```
+```text
 ┌─────────────────────┐
 │   Small Interface   │  ← Few methods, simple params
 ├─────────────────────┤
@@ -49,7 +49,7 @@ From "A Philosophy of Software Design":
 
 **Shallow module** = large interface + little implementation (avoid)
 
-```
+```text
 ┌─────────────────────────────────┐
 │       Large Interface           │  ← Many methods, complex params
 ├─────────────────────────────────┤
@@ -114,7 +114,7 @@ Good interfaces make testing natural:
 
 At system boundaries, design interfaces that are easy to mock:
 
-**1. Use dependency injection**
+##### 1. Use dependency injection
 
 Pass external dependencies in rather than creating them internally:
 
@@ -131,7 +131,7 @@ function processPayment(order) {
 }
 ```
 
-**2. Prefer SDK-style interfaces over generic fetchers**
+##### 2. Prefer SDK-style interfaces over generic fetchers
 
 Create specific functions for each external operation instead of one generic function with conditional logic:
 

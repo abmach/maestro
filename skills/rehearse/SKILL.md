@@ -28,10 +28,10 @@ Interview relentlessly about every aspect of a plan to reach shared understandin
 
 ## Specifications & Methodologies
 
-Read the following asset specification files from `{{workspace_dir}}/.agents/assets/` to understand documentation formats and guidelines before refining the plan:
+Read the following reference specification files from `{{workspace_dir}}/.agents/references/` to understand documentation formats and guidelines before refining the plan:
 
-- **Contexts:** [contexts.md]({{workspace_dir}}/.agents/assets/contexts.md) - domain language and terminology specification
-- **ADRs:** [adrs.md]({{workspace_dir}}/.agents/assets/adrs.md) - architectural decision records specification
+- **Contexts:** [contexts.md]({{workspace_dir}}/.agents/references/contexts.md) - domain language and terminology specification
+- **ADRs:** [adrs.md]({{workspace_dir}}/.agents/references/adrs.md) - architectural decision records specification
 - **Working Files:** Created in `{{workspace_dir}}/knowledge/` following specifications
 
 ## Validation

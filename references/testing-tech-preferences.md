@@ -39,12 +39,12 @@ When an agent or skill needs to:
 
 They should consult this file first and use the preferred options unless there's a compelling reason to deviate.
 
-## Integration with Other Assets
+## Integration with Other References
 
 These testing technology preferences work alongside:
-- **[Testing Principles]({{workspace_dir}}/.agents/assets/testing-principles.md)** - Testing philosophy and TDD methodology
-- **[Tech Preferences]({{workspace_dir}}/.agents/assets/tech-preferences.md)** - General technology preferences
-- **[Repo Fingerprint]({{workspace_dir}}/.agents/assets/repo-fingerprint.md)** - Current testing stack in use
+- **[Testing Principles]({{workspace_dir}}/.agents/references/testing-principles.md)** - Testing philosophy and TDD methodology
+- **[Tech Preferences]({{workspace_dir}}/.agents/references/tech-preferences.md)** - General technology preferences
+- **[Repo Fingerprint]({{workspace_dir}}/.agents/references/repo-fingerprint.md)** - Current testing stack in use
 
 The testing-tech-preferences provide specialized testing framework guidance, while tech-preferences provides general technology guidance. When making testing technology decisions, consult testing-tech-preferences first. For general technology choices (runtimes, frameworks, databases), consult tech-preferences.
 

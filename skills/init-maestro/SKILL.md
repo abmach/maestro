@@ -1,6 +1,6 @@
 ---
 name: init-maestro
-description: Initialize Maestro config by copying skills (except init-maestro) and assets to .agents folder
+description: Initialize Maestro config by copying skills (except init-maestro) and references to .agents folder
 allowed-tools:
   - ask_user_question
   - read
@@ -14,7 +14,7 @@ permissions:
 
 # Initialize Maestro Config
 
-Initializes the Maestro configuration by extracting the Maestro bundle (skills, assets) from bundle.zip and copying them to a new `.agents` folder in `{{workspace_dir}}`
+Initializes the Maestro configuration by extracting the Maestro bundle (skills, references) from bundle.zip and copying them to a new `.agents` folder in `{{workspace_dir}}`
 
 ## Pre-flight
 

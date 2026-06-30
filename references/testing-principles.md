@@ -22,13 +22,13 @@ Skills and agents should consult these principles when:
 - Applying TDD methodology for feature development
 - Designing interfaces for testability
 
-## Integration with Other Assets
+## Integration with Other References
 
 These testing principles work alongside:
-- **[Repo Fingerprint]({{workspace_dir}}/.agents/assets/repo-fingerprint.md)** - Primary reference for actual testing frameworks and tools in use - test patterns should align with current testing setup
-- **[Design Principles]({{workspace_dir}}/.agents/assets/design-principles.md)** - Apply design patterns that make testing natural
-- **[Tech Preferences]({{workspace_dir}}/.agents/assets/tech-preferences.md)** - Secondary reference for preferred testing tools when making new choices
-- **[Contexts]({{workspace_dir}}/.agents/assets/contexts.md)** - Use domain language in test names and assertions
+- **[Repo Fingerprint]({{workspace_dir}}/.agents/references/repo-fingerprint.md)** - Primary reference for actual testing frameworks and tools in use - test patterns should align with current testing setup
+- **[Design Principles]({{workspace_dir}}/.agents/references/design-principles.md)** - Apply design patterns that make testing natural
+- **[Tech Preferences]({{workspace_dir}}/.agents/references/tech-preferences.md)** - Secondary reference for preferred testing tools when making new choices
+- **[Contexts]({{workspace_dir}}/.agents/references/contexts.md)** - Use domain language in test names and assertions
 
 ## Core Philosophy
 
@@ -135,16 +135,19 @@ These testing principles work best when combined with the design principles:
 ## When to Apply Different Test Approaches
 
 ### Unit Tests
+
 - Test individual functions/methods in isolation
 - Use for business logic, algorithms, utility functions
 - Fast execution, focused scope
 
 ### Integration Tests
+
 - Test through real interfaces between components
 - Use for component interactions, API contracts
 - Slower but more realistic
 
 ### End-to-End Tests
+
 - Test complete user workflows
 - Use for critical paths, user-facing features
 - Slowest but highest confidence
@@ -162,7 +165,7 @@ This produces **crap tests**:
 
 **Correct approach**: Vertical slices via tracer bullets. One test → one implementation → repeat. Each test responds to what you learned from the previous cycle.
 
-```
+```text
 WRONG (horizontal):
   RED:   test1, test2, test3, test4, test5
   GREEN: impl1, impl2, impl3, impl4, impl5
@@ -197,8 +200,8 @@ Before writing any code:
 
 - [ ] Confirm with user what interface changes are needed
 - [ ] Confirm with user which behaviors to test (prioritize)
-- [ ] Identify opportunities for [deep modules]({{workspace_dir}}/.agents/assets/design-principles.md#deep-modules) (small interface, deep implementation)
-- [ ] Design interfaces for [testability]({{workspace_dir}}/.agents/assets/design-principles.md#interface-design-for-testability)
+- [ ] Identify opportunities for [deep modules]({{workspace_dir}}/.agents/references/design-principles.md#deep-modules) (small interface, deep implementation)
+- [ ] Design interfaces for [testability]({{workspace_dir}}/.agents/references/design-principles.md#interface-design-for-testability)
 - [ ] List the behaviors to test (not implementation steps)
 - [ ] Get user approval on the plan
 
@@ -210,7 +213,7 @@ Ask: "What should the public interface look like? Which behaviors are most impor
 
 Write ONE test that confirms ONE thing about the system:
 
-```
+```text
 RED:   Write test for first behavior → test fails
 GREEN: Write minimal code to pass → test passes
 ```
@@ -221,7 +224,7 @@ This is your tracer bullet - proves the path works end-to-end.
 
 For each remaining behavior:
 
-```
+```text
 RED:   Write next test → fails
 GREEN: Minimal code to pass → passes
 ```
@@ -235,7 +238,7 @@ Rules:
 
 #### 4. Refactor Phase
 
-After all tests pass, look for [refactor candidates]({{workspace_dir}}/.agents/assets/design-principles.md#refactoring-candidates):
+After all tests pass, look for [refactor candidates]({{workspace_dir}}/.agents/references/design-principles.md#refactoring-candidates):
 
 - [ ] Extract duplication
 - [ ] Deepen modules (move complexity behind simple interfaces)
@@ -247,7 +250,7 @@ After all tests pass, look for [refactor candidates]({{workspace_dir}}/.agents/a
 
 ### TDD Checklist Per Cycle
 
-```
+```text
 [ ] Test describes behavior, not implementation
 [ ] Test uses public interface only
 [ ] Test would survive internal refactor

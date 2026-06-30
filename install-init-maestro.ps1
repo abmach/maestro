@@ -6,7 +6,7 @@ Install init-maestro skill to user's .agents directory
 .DESCRIPTION
 This script copies the init-maestro skill from the current directory to the user's
 .agents directory in their home folder, making it available for use across different
-clients. It also creates a zip file of the Maestro bundle (skills, assets, excluding
+clients. It also creates a zip file of the Maestro bundle (skills, references, excluding
 init-maestro) to make the skill self-contained and independent of the source directory.
 
 .EXAMPLE
@@ -50,7 +50,7 @@ Write-Host "Copying skill from: $SourceSkillPath" -ForegroundColor Green
 Write-Host "Copying skill to: $DestSkillPath" -ForegroundColor Green
 Copy-Item -Path "$SourceSkillPath\*" -Destination $DestSkillPath -Recurse -Force
 
-# Create zip file of the Maestro bundle (skills, assets)
+# Create zip file of the Maestro bundle (skills, references)
 Write-Host "Creating bundle.zip from Maestro directory" -ForegroundColor Green
 
 # Create a temporary directory to build the correct folder structure
@@ -71,21 +71,21 @@ if (Test-Path $TempInitMaestroPath) {
     Remove-Item -Path $TempInitMaestroPath -Recurse -Force
 }
 
-# Copy assets folder if it exists
-$SourceAssetsPath = Join-Path $ScriptPath "assets"
-if (Test-Path $SourceAssetsPath) {
-    Copy-Item -Path $SourceAssetsPath -Destination $TempDir -Recurse -Force
+# Copy references folder if it exists
+$SourceReferencesPath = Join-Path $ScriptPath "references"
+if (Test-Path $SourceReferencesPath) {
+    Copy-Item -Path $SourceReferencesPath -Destination $TempDir -Recurse -Force
 }
 
 # Create zip from the temp directory with proper structure
-$ItemPaths = @("$TempDir\skills", "$TempDir\assets")
+$ItemPaths = @("$TempDir\skills", "$TempDir\references")
 $ItemPaths = $ItemPaths | Where-Object { Test-Path $_ }
 
 if ($ItemPaths.Count -gt 0) {
     Compress-Archive -Path $ItemPaths -DestinationPath $BundleZipPath -Force
     Write-Host "bundle.zip created at: $BundleZipPath" -ForegroundColor Green
 } else {
-    Write-Warning "No bundle directories found (skills, assets) to zip"
+    Write-Warning "No bundle directories found (skills, references) to zip"
 }
 
 # Clean up temp directory

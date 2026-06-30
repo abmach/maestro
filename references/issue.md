@@ -112,9 +112,11 @@ Each issue file must follow this structure:
 
 ## References
 
+Links to relevant workspace content (NOT specification files in `.agents/references/`):
+
 - [Error Logs]({{workspace_dir}}/path/to/logs}) — Link to relevant logs
-- [Contexts]({{workspace_dir}}/.agents/assets/contexts.md) — Domain language references
-- [ADRs]({{workspace_dir}}/.agents/assets/adrs.md) — Architectural decisions that may be relevant
+- [Contexts]({{workspace_dir}}/knowledge/contexts.md) — Domain language references
+- [ADRs]({{workspace_dir}}/knowledge/adrs/) — Architectural decisions that may be relevant
 ```
 
 ## Severity Classification
@@ -171,15 +173,15 @@ Connect issues to related work:
 - ADRs that influenced the design
 - Contexts that define relevant terminology
 
-## Integration with Other Assets
+## Integration with Other References
 
 Issues should be created in consultation with:
-- **[Contexts]({{workspace_dir}}/.agents/assets/contexts.md)** — Use domain language in issue descriptions and component names
-- **[ADRs]({{workspace_dir}}/.agents/assets/adrs.md)** — Consider architectural decisions that may have caused the issue
+- **[Contexts]({{workspace_dir}}/.agents/references/contexts.md)** — Use domain language in issue descriptions and component names
+- **[ADRs]({{workspace_dir}}/.agents/references/adrs.md)** — Consider architectural decisions that may have caused the issue
 - **[Issues Index]({{workspace_dir}}/issues/index.md)** — Register new issues, update status, track resolution
-- **[Repo Fingerprint]({{workspace_dir}}/.agents/assets/repo-fingerprint.md)** — Reference current technology stack and versions
-- **[Tech Preferences]({{workspace_dir}}/.agents/assets/tech-preferences.md)** — Consider preferred technologies for solutions
-- **[Design Principles]({{workspace_dir}}/.agents/assets/design-principles.md)** — Apply design patterns in resolution approach
+- **[Repo Fingerprint]({{workspace_dir}}/.agents/references/repo-fingerprint.md)** — Reference current technology stack and versions
+- **[Tech Preferences]({{workspace_dir}}/.agents/references/tech-preferences.md)** — Consider preferred technologies for solutions
+- **[Design Principles]({{workspace_dir}}/.agents/references/design-principles.md)** — Apply design patterns in resolution approach
 
 ## Maintenance
 
@@ -218,7 +220,7 @@ For systematic issue resolution, use the `tune` skill:
 
 ## Example
 
-```markdown
+````markdown
 # BUG-001: JWT Authentication Token Expiration
 
 **Status:** Resolved
@@ -298,9 +300,11 @@ Implemented refresh token flow with access tokens (1h expiration) and refresh to
 ## Related Issues
 
 - None
+- [PLAN-AUTH-002]({{workspace_dir}}/plans/AUTH-002-refresh-token-implementation.md) — Refresh token implementation plan that resolved this issue
 
 ## References
 
 - [Error Logs]({{workspace_dir}}/logs/auth-service-2026-06-22.log}) — Authentication error logs
-- [Contexts]({{workspace_dir}}/.agents/assets/contexts.md)) — Authentication domain language
-```
+- [Contexts]({{workspace_dir}}/knowledge/contexts.md) — Authentication domain language
+- [ADRs]({{workspace_dir}}/knowledge/adrs/0001-refresh-token-strategy.md) — Decision to adopt refresh token flow over extended JWT expiration
+````

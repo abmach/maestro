@@ -12,7 +12,7 @@ allowed-tools:
 permissions:
   allow:
     - Read(./issues/**/*)
-    - Read(./.agents/assets/**/*)
+    - Read(./.agents/references/**/*)
     - Write(./**/*)
     - Edit(./**/*)
     - Exec(yarn add *)
@@ -43,14 +43,14 @@ Resolve `Issue`s by investigating problems, implementing fixes, and documenting 
 
 ## Specifications & Methodologies
 
-Read the following asset specification files from `{{workspace_dir}}/.agents/assets/` to understand `Issue` tracking formats and debugging methodologies before resolving the `Issue`:
+Read the following reference specification files from `{{workspace_dir}}/.agents/references/` to understand `Issue` tracking formats and debugging methodologies before resolving the `Issue`:
 
-- **Issue:** [issue.md]({{workspace_dir}}/.agents/assets/issue.md) - issue tracking and problem documentation specification
-- **Issues Index:** [issues-index.md]({{workspace_dir}}/.agents/assets/issues-index.md) - issues index specification
-- **Testing Principles:** [testing-principles.md]({{workspace_dir}}/.agents/assets/testing-principles.md) - testing philosophy and TDD methodology
-- **Design Principles:** [design-principles.md]({{workspace_dir}}/.agents/assets/design-principles.md) - Interface design and dependency patterns
-- **Repo Fingerprint:** [repo-fingerprint.md]({{workspace_dir}}/.agents/assets/repo-fingerprint.md) - Current technology stack and frameworks
-- **Contexts:** [contexts.md]({{workspace_dir}}/.agents/assets/contexts.md) - Domain language for issue descriptions
+- **Issue:** [issue.md]({{workspace_dir}}/.agents/references/issue.md) - issue tracking and problem documentation specification
+- **Issues Index:** [issues-index.md]({{workspace_dir}}/.agents/references/issues-index.md) - issues index specification
+- **Testing Principles:** [testing-principles.md]({{workspace_dir}}/.agents/references/testing-principles.md) - testing philosophy and TDD methodology
+- **Design Principles:** [design-principles.md]({{workspace_dir}}/.agents/references/design-principles.md) - Interface design and dependency patterns
+- **Repo Fingerprint:** [repo-fingerprint.md]({{workspace_dir}}/.agents/references/repo-fingerprint.md) - Current technology stack and frameworks
+- **Contexts:** [contexts.md]({{workspace_dir}}/.agents/references/contexts.md) - Domain language for issue descriptions
 - **Working Files:** Located in `{{workspace_dir}}/issues/` following specifications
 
 ## Validation

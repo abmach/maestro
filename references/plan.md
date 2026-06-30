@@ -18,18 +18,18 @@ Plans serve as the single source of truth for:
 - **Index file:** `{{workspace_dir}}/plans/index.md` tracks all plans and their status
 - **Directory creation:** Create `{{workspace_dir}}/plans/` lazily when the first plan is needed
 
-## Integration with Other Assets
+## Integration with Other References
 
 Plans should be created in consultation with:
-- **[Contexts]({{workspace_dir}}/.agents/assets/contexts.md)** - Use domain language in plan descriptions, API routes, and component names
-- **[ADRs]({{workspace_dir}}/.agents/assets/adrs.md)** - Respect existing architectural decisions and consider if new decisions are needed
-- **[Issue]({{workspace_dir}}/.agents/assets/issue.md)** - Consider existing issues that the plan might resolve or need to address
+- **[Contexts]({{workspace_dir}}/.agents/references/contexts.md)** - Use domain language in plan descriptions, API routes, and component names
+- **[ADRs]({{workspace_dir}}/.agents/references/adrs.md)** - Respect existing architectural decisions and consider if new decisions are needed
+- **[Issue]({{workspace_dir}}/.agents/references/issue.md)** - Consider existing issues that the plan might resolve or need to address
 - **[Issues Index]({{workspace_dir}}/issues/index.md)** - Check existing issues to understand current problems and prioritize work
 - **[Plans Index]({{workspace_dir}}/plans/index.md)** - Check existing plans to avoid conflicts, register new plans, and update status
-- **[Repo Fingerprint]({{workspace_dir}}/.agents/assets/repo-fingerprint.md)** - Align specifications with current technology stack and frameworks
-- **[Tech Preferences]({{workspace_dir}}/.agents/assets/tech-preferences.md)** - Use preferred technologies when introducing new components
-- **[Design Principles]({{workspace_dir}}/.agents/assets/design-principles.md)** - Apply deep module, interface design, and dependency injection patterns
-- **[Testing Principles]({{workspace_dir}}/.agents/assets/testing-principles.md)** - Consider test tier requirements and design for testability
+- **[Repo Fingerprint]({{workspace_dir}}/.agents/references/repo-fingerprint.md)** - Align specifications with current technology stack and frameworks
+- **[Tech Preferences]({{workspace_dir}}/.agents/references/tech-preferences.md)** - Use preferred technologies when introducing new components
+- **[Design Principles]({{workspace_dir}}/.agents/references/design-principles.md)** - Apply deep module, interface design, and dependency injection patterns
+- **[Testing Principles]({{workspace_dir}}/.agents/references/testing-principles.md)** - Consider test tier requirements and design for testability
 
 ## Test Tier Classification
 

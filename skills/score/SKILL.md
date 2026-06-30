@@ -33,10 +33,10 @@ Maintain the single source of truth for repository documentation, API changes, a
 
 ## Specifications & Methodologies
 
-Read the following asset specification files from `{{workspace_dir}}/.agents/assets/` to understand formats, rules, and methodologies before updating documentation:
+Read the following reference specification files from `{{workspace_dir}}/.agents/references/` to understand formats, rules, and methodologies before updating documentation:
 
-- **Plans Index:** [plans-index.md]({{workspace_dir}}/.agents/assets/plans-index.md) - plans index file format and management
-- **Plan:** [plan.md]({{workspace_dir}}/.agents/assets/plan.md) - plan structure and metadata specification
+- **Plans Index:** [plans-index.md]({{workspace_dir}}/.agents/references/plans-index.md) - plans index file format and management
+- **Plan:** [plan.md]({{workspace_dir}}/.agents/references/plan.md) - plan structure and metadata specification
 - **Working Files:** Located in `{{workspace_dir}}/plans/` following specifications
 
 ## Validation

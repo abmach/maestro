@@ -112,13 +112,13 @@ Only update the fingerprint when:
 - New frameworks or tools are introduced
 - CI/CD configuration changes significantly
 
-## Integration with Other Assets
+## Integration with Other References
 
 The repo fingerprint works alongside:
-- **[Testing Tech Preferences]({{workspace_dir}}/.agents/assets/testing-tech-preferences.md)** - Preferred testing frameworks and tools
-- **[Tech Preferences]({{workspace_dir}}/.agents/assets/tech-preferences.md)** - General technology preferences
+- **[Testing Tech Preferences]({{workspace_dir}}/.agents/references/testing-tech-preferences.md)** - Preferred testing frameworks and tools
+- **[Tech Preferences]({{workspace_dir}}/.agents/references/tech-preferences.md)** - General technology preferences
 
-The repo fingerprint captures what IS currently in use, while the preference assets guide what SHOULD be used for new choices.
+The repo fingerprint captures what IS currently in use, while the preference references guide what SHOULD be used for new choices.
 
 ## Example
 

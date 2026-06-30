@@ -15,7 +15,7 @@ permissions:
   allow:
     - Read(./plans/**/*)
     - Write(./plans/**/*)
-    - Read(./.agents/assets/**/*)
+    - Read(./.agents/references/**/*)
     - Read(./knowledge/**/*)
   deny:
     - exec
@@ -33,15 +33,15 @@ Elaborate existing `Plan`s with detailed, actionable guidance distilled from hig
 
 ## Specifications & Methodologies
 
-Read the following asset specification files from `{{workspace_dir}}/.agents/assets/` to understand `Plan` structure and enhancement methodologies before elaborating:
+Read the following reference specification files from `{{workspace_dir}}/.agents/references/` to understand `Plan` structure and enhancement methodologies before elaborating:
 
-- **Plan:** [plan.md]({{workspace_dir}}/.agents/assets/plan.md) - plan structure and metadata specification
-- **Plans Index:** [plans-index.md]({{workspace_dir}}/.agents/assets/plans-index.md) - plans index specification
-- **Repo Fingerprint:** [repo-fingerprint.md]({{workspace_dir}}/.agents/assets/repo-fingerprint.md) - technical stack documentation
-- **Tech Preferences:** [tech-preferences.md]({{workspace_dir}}/.agents/assets/tech-preferences.md) - preferred technologies
-- **Contexts:** [contexts.md]({{workspace_dir}}/.agents/assets/contexts.md) - domain language documentation
-- **Design Principles:** [design-principles.md]({{workspace_dir}}/.agents/assets/design-principles.md) - interface design and dependency patterns
-- **Testing Principles:** [testing-principles.md]({{workspace_dir}}/.agents/assets/testing-principles.md) - testing philosophy and TDD methodology
+- **Plan:** [plan.md]({{workspace_dir}}/.agents/references/plan.md) - plan structure and metadata specification
+- **Plans Index:** [plans-index.md]({{workspace_dir}}/.agents/references/plans-index.md) - plans index specification
+- **Repo Fingerprint:** [repo-fingerprint.md]({{workspace_dir}}/.agents/references/repo-fingerprint.md) - technical stack documentation
+- **Tech Preferences:** [tech-preferences.md]({{workspace_dir}}/.agents/references/tech-preferences.md) - preferred technologies
+- **Contexts:** [contexts.md]({{workspace_dir}}/.agents/references/contexts.md) - domain language documentation
+- **Design Principles:** [design-principles.md]({{workspace_dir}}/.agents/references/design-principles.md) - interface design and dependency patterns
+- **Testing Principles:** [testing-principles.md]({{workspace_dir}}/.agents/references/testing-principles.md) - testing philosophy and TDD methodology
 - **Working Files:** Located in `{{workspace_dir}}/plans/` following specifications
 
 ## Validation

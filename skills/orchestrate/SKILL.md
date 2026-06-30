@@ -29,12 +29,12 @@ Coordinate feature implementation workflows by executing existing `Plan`s, deleg
 
 ## Specifications & Methodologies
 
-Read the following asset specification files from `{{workspace_dir}}/.agents/assets/` to understand formats, rules, and methodologies before executing the plan:
+Read the following reference specification files from `{{workspace_dir}}/.agents/references/` to understand formats, rules, and methodologies before executing the plan:
 
-- **Plans Index:** [plans-index.md]({{workspace_dir}}/.agents/assets/plans-index.md) - plans index file format and management
-- **Plan:** [plan.md]({{workspace_dir}}/.agents/assets/plan.md) - plan structure and metadata specification
-- **Issue:** [issue.md]({{workspace_dir}}/.agents/assets/issue.md) - issue tracking and problem documentation specification
-- **Issues Index:** [issues-index.md]({{workspace_dir}}/.agents/assets/issues-index.md) - issues index specification
+- **Plans Index:** [plans-index.md]({{workspace_dir}}/.agents/references/plans-index.md) - plans index file format and management
+- **Plan:** [plan.md]({{workspace_dir}}/.agents/references/plan.md) - plan structure and metadata specification
+- **Issue:** [issue.md]({{workspace_dir}}/.agents/references/issue.md) - issue tracking and problem documentation specification
+- **Issues Index:** [issues-index.md]({{workspace_dir}}/.agents/references/issues-index.md) - issues index specification
 - **Working Files:** Located in `{{workspace_dir}}/plans/` and `{{workspace_dir}}/issues/` following specifications
 
 ## Validation
