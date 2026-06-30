@@ -1,44 +1,6 @@
 # Testing Principles
 
-Testing philosophy and patterns for writing maintainable, reliable tests that verify behavior rather than implementation.
-
-## Purpose
-
-The testing principles serve as the single source of truth for:
-- **Test Philosophy** - Core principles for behavior-driven testing
-- **Test Design** - Patterns for writing good tests vs bad tests
-- **Test Maintenance** - Guidelines for tests that survive refactoring
-- **Integration Testing** - Approaches for testing through real interfaces
-- **TDD Methodology** - Red-green-refactor workflow and test-driven development practices
-
-## When to Reference
-
-Skills and agents should consult these principles when:
-- Writing new tests or test frameworks
-- Evaluating existing test quality
-- Designing test strategies for features
-- Debugging test failures
-- Planning test coverage
-- Applying TDD methodology for feature development
-- Designing interfaces for testability
-
-## Integration with Other References
-
-These testing principles work alongside:
-- **[Repo Fingerprint]({{workspace_dir}}/.agents/references/repo-fingerprint.md)** - Primary reference for actual testing frameworks and tools in use - test patterns should align with current testing setup
-- **[Design Principles]({{workspace_dir}}/.agents/references/design-principles.md)** - Apply design patterns that make testing natural
-- **[Tech Preferences]({{workspace_dir}}/.agents/references/tech-preferences.md)** - Secondary reference for preferred testing tools when making new choices
-- **[Contexts]({{workspace_dir}}/.agents/references/contexts.md)** - Use domain language in test names and assertions
-
-## Core Philosophy
-
-**Test behavior, not implementation.**
-
-Tests should verify what the system does, not how it does it. Good tests are integration-style: they exercise real code paths through public APIs. They describe what the system does, not how it does it.
-
-A good test reads like a specification - "user can checkout with valid cart" tells you exactly what capability exists. These tests survive refactors because they don't care about internal structure.
-
-Bad tests are coupled to implementation. They mock internal collaborators, test private methods, or verify through external means (like querying a database directly instead of using the interface). The warning sign: your test breaks when you refactor, but behavior hasn't changed.
+> Testing philosophy: test behavior not implementation, TDD methodology, and test design rules.
 
 ## Good Tests
 
@@ -124,14 +86,6 @@ Tests should be independent:
 - Tests shouldn't depend on execution order
 - Clean up state after each test
 
-## Integration with Design Principles
-
-These testing principles work best when combined with the design principles:
-
-- **Interface Design** - Good interfaces make testing natural
-- **Dependency Injection** - Makes external dependencies easy to mock
-- **Deep Modules** - Small interfaces mean fewer tests needed
-
 ## When to Apply Different Test Approaches
 
 ### Unit Tests
@@ -178,8 +132,6 @@ RIGHT (vertical):
 ```
 
 ## TDD Methodology
-
-Test-driven development is a workflow that uses the red-green-refactor cycle to drive development through testing.
 
 ### When to Use TDD
 

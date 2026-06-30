@@ -1,6 +1,6 @@
 # Contexts
 
-A CONTEXTS file defines the ubiquitous language for bounded contexts—the shared vocabulary that team members use to communicate about the domain. It eliminates ambiguity by establishing authoritative definitions for domain-specific terms.
+> Defines the ubiquitous language for bounded contexts—the shared vocabulary that eliminates ambiguity by establishing authoritative definitions for domain-specific terms.
 
 ## File Location and Naming
 
@@ -12,7 +12,7 @@ A CONTEXTS file defines the ubiquitous language for bounded contexts—the share
 
 ### Single File with Area Headers
 
-All repositories use a single `contexts.md` file in the `{{workspace_dir}}/knowledge/` folder. For repositories with multiple bounded contexts, use area headers with folder references to separate them:
+All repositories use a single `contexts.md` file in the `{{workspace_dir}}/knowledge/` folder. For repositories with multiple bounded contexts, use area headers with folder references:
 
 ```markdown
 # {Project Name} Context
@@ -54,7 +54,7 @@ _Avoid_: Alternative term1, alternative term2
 
 ### Be Opinionated
 
-When multiple words exist for the same concept, pick the best one and list the alternatives under `_Avoid_`. This establishes a canonical vocabulary and prevents inconsistent terminology across the codebase.
+When multiple words exist for the same concept, pick the best one and list the alternatives under `_Avoid_`.
 
 ### Keep Definitions Tight
 
@@ -62,17 +62,13 @@ Limit definitions to one or two sentences maximum. Focus on defining what the co
 
 ### Context-Specific Terms Only
 
-Only include terms that are specific to this project's domain context. General programming concepts (timeouts, error types, utility patterns) do not belong, even if the project uses them extensively.
-
-Before adding a term, ask: "Is this a concept unique to this context, or a general programming concept?" Only the former belongs in contexts.md.
+Only include terms that are specific to this project's domain context. General programming concepts (timeouts, error types, utility patterns) do not belong.
 
 ### Group Terms Logically
 
-Keep a flat list of terms under the Language section. Avoid subheadings unless you have many terms that clearly fall into distinct categories. Simplicity is preferred over complex categorization.
+Keep a flat list of terms under the Language section. Avoid subheadings unless you have many terms that clearly fall into distinct categories.
 
 ## Inference Strategy
-
-The system automatically handles context files:
 
 1. If `{{workspace_dir}}/knowledge/contexts.md` exists, read it to understand the project's domain language
 2. If multiple area contexts exist, the system infers which area the current topic relates to based on folder references

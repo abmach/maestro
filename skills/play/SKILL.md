@@ -42,18 +42,23 @@ Implement `Plan` milestones using test-driven development methodology with red-g
 - Target folders: `{{workspace_dir}}/plans/` (read-only) and code files in the project (read/write)
 - Required input: `Plan` code+number (e.g., "AUTH-001") and milestone ID to implement
 
-## Specifications & Methodologies
+## References
 
-Read the following reference specification files from `{{workspace_dir}}/.agents/references/` to understand TDD methodology and design patterns before implementing the milestone:
+Reference specs are in `{{workspace_dir}}/.agents/references/`. Read them on-demand when the workflow requires them — do NOT read all upfront.
 
-- **Testing Principles:** [testing-principles.md]({{workspace_dir}}/.agents/references/testing-principles.md) - TDD methodology and test philosophy
-- **Design Principles:** [design-principles.md]({{workspace_dir}}/.agents/references/design-principles.md) - Interface design and dependency patterns
-- **Repo Fingerprint:** [repo-fingerprint.md]({{workspace_dir}}/.agents/references/repo-fingerprint.md) - Current technology stack and testing frameworks
-- **Plan Structure:** [plan.md]({{workspace_dir}}/.agents/references/plan.md) - Plan format and milestone specifications
-- **Plans Index:** [plans-index.md]({{workspace_dir}}/.agents/references/plans-index.md) - Plans index file format and management
-- **Issue:** [issue.md]({{workspace_dir}}/.agents/references/issue.md) - Issue tracking and problem documentation specification
-- **Issues Index:** [issues-index.md]({{workspace_dir}}/.agents/references/issues-index.md) - Issues index specification
-- **Working Files:** Located in `{{workspace_dir}}/plans/` and `{{workspace_dir}}/issues/` following specifications
+### Always needed
+- **`Plan` (quick):** Read `plan-quick.md` — for Plan format, milestone fields, and status management
+- **`Plans Index`:** Read `plans-index.md` — for index lookup and status updates
+- **`Testing Principles`:** Read `testing-principles.md` — for TDD methodology (red-green-refactor)
+- **`Design Principles`:** Read `design-principles.md` — for interface design and refactor guidance
+
+### On-demand (read only when needed)
+- **`Issue` (quick):** Read `issue-quick.md` — only on failure AND only in solo mode (not orchestrated)
+- **`Issues Index`:** Read `issues-index.md` — only in solo mode when creating an Issue on failure
+- **`Repo Fingerprint`:** Read `repo-fingerprint.md` — only if working file exists and tech stack is ambiguous
+
+### Cross-references
+For how references relate to each other, see `references-map.md`.
 
 ## Validation
 

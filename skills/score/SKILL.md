@@ -31,13 +31,16 @@ Maintain the single source of truth for repository documentation, API changes, a
 - Target folders: `{{workspace_dir}}/docs/`, `{{workspace_dir}}/README.md`, `{{workspace_dir}}/CHANGELOG.md` (you should only modify files in these locations)
 - Required input: `Plan` ID/code from orchestrate
 
-## Specifications & Methodologies
+## References
 
-Read the following reference specification files from `{{workspace_dir}}/.agents/references/` to understand formats, rules, and methodologies before updating documentation:
+Reference specs are in `{{workspace_dir}}/.agents/references/`. Read them on-demand when the workflow requires them — do NOT read all upfront.
 
-- **Plans Index:** [plans-index.md]({{workspace_dir}}/.agents/references/plans-index.md) - plans index file format and management
-- **Plan:** [plan.md]({{workspace_dir}}/.agents/references/plan.md) - plan structure and metadata specification
-- **Working Files:** Located in `{{workspace_dir}}/plans/` following specifications
+### Always needed
+- **`Plan` (quick):** Read `plan-quick.md` — for Plan format, milestone fields, and status management
+- **`Plans Index`:** Read `plans-index.md` — for index lookup and status updates
+
+### Cross-references
+For how references relate to each other, see `references-map.md`.
 
 ## Validation
 

@@ -26,13 +26,18 @@ Interview relentlessly about every aspect of a plan to reach shared understandin
 - Target folders: `{{workspace_dir}}/knowledge/` (you should only modify files in this folder)
 - Required input: Plan or feature description to rehearse
 
-## Specifications & Methodologies
+## References
 
-Read the following reference specification files from `{{workspace_dir}}/.agents/references/` to understand documentation formats and guidelines before refining the plan:
+Reference specs are in `{{workspace_dir}}/.agents/references/`. Read them on-demand when the workflow requires them — do NOT read all upfront.
 
-- **Contexts:** [contexts.md]({{workspace_dir}}/.agents/references/contexts.md) - domain language and terminology specification
-- **ADRs:** [adrs.md]({{workspace_dir}}/.agents/references/adrs.md) - architectural decision records specification
-- **Working Files:** Created in `{{workspace_dir}}/knowledge/` following specifications
+### Always needed
+- **`Contexts`:** Read `contexts.md` — for glossary format (rehearse reads and writes `{{workspace_dir}}/knowledge/contexts.md`)
+
+### On-demand (read only when needed)
+- **`ADRs`:** Read `adrs.md` — only when an architectural decision meets ADR criteria during the interview (3 criteria already inlined in workflow step 8). Read for the ADR format template at that moment.
+
+### Cross-references
+For how references relate to each other, see `references-map.md`.
 
 ## Validation
 

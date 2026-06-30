@@ -1,6 +1,6 @@
 # Architecture Decision Records (ADRs)
 
-ADRs capture significant architectural decisions, their context, and their consequences. They serve as historical documentation for future maintainers to understand "why" the codebase is structured a certain way.
+> Captures significant architectural decisions, their context, and consequences for future maintainers.
 
 ## File Location and Naming
 
@@ -8,17 +8,7 @@ ADRs capture significant architectural decisions, their context, and their conse
 - **Naming convention:** Sequential numbering with descriptive slug: `0001-slug.md`, `0002-slug.md`, etc.
 - **Directory creation:** Create `{{workspace_dir}}/knowledge/adrs/` lazily when the first ADR is needed
 
-## Integration with Other References
-
-ADRs should be created in consultation with:
-- **[Contexts]({{workspace_dir}}/.agents/references/contexts.md)** - Use established domain language in decision descriptions and rationale
-- **[Repo Fingerprint]({{workspace_dir}}/.agents/references/repo-fingerprint.md)** - Consider current technology stack when documenting architectural decisions
-- **[Tech Preferences]({{workspace_dir}}/.agents/references/tech-preferences.md)** - Reference preferred technologies when explaining technology choices
-- **[Design Principles]({{workspace_dir}}/.agents/references/design-principles.md)** - Align decisions with established design patterns and principles
-
 ## Core Template
-
-An ADR can be as simple as a single paragraph. The value lies in recording that a decision was made and why—not in filling out bureaucratic sections.
 
 ```markdown
 ---
@@ -32,8 +22,6 @@ status: accepted | proposed | deprecated | superseded by ADR-NNNN
 
 ## Optional Sections
 
-Only include these sections when they add genuine value. Most ADRs will not need them.
-
 ### Status (Frontmatter)
 
 Use the `status` field to track the lifecycle of a decision:
@@ -45,7 +33,7 @@ Use the `status` field to track the lifecycle of a decision:
 
 ### Considered Options
 
-List alternatives that were evaluated and rejected. Only include when:
+List alternatives that were evaluated and rejected. Include when:
 
 - The rejected alternatives are worth remembering
 - The rejection reason is non-obvious
@@ -53,7 +41,7 @@ List alternatives that were evaluated and rejected. Only include when:
 
 ### Consequences
 
-Document downstream effects that are not immediately obvious:
+Document downstream effects:
 
 - Performance implications
 - Operational constraints
@@ -68,46 +56,15 @@ Write an ADR only when **all three** of the following criteria are true:
 2. **Surprising Without Context** — A future reader would look at the code and ask "why on earth did they do it this way?"
 3. **Result of a Real Trade-off** — Genuine alternatives existed and one was chosen for specific reasons
 
-If a decision is easy to reverse, skip it—you'll just reverse it. If it's not surprising, nobody will wonder why. If there was no real alternative, there's nothing to record beyond "we did the obvious thing."
-
 ## Examples of ADR-Worthy Decisions
 
-### Architectural Shape
-
-- "We're using a monorepo structure."
-- "The write model is event-sourced; the read model is projected into Postgres."
-
-### Integration Patterns
-
-- "Ordering and Billing contexts communicate via domain events, not synchronous HTTP."
-
-### Technology Choices (High-Lock-In)
-
-- Database, message bus, authentication provider, deployment target
-- Only for technologies that would take a quarter or more to swap out
-- Not for every library—only those with significant migration cost
-
-### Boundary and Scope Decisions
-
-- "Customer data is owned by the Customer context; other contexts reference it by ID only."
-- Explicit "no" decisions are as valuable as "yes" decisions.
-
-### Deliberate Deviations
-
-- "We're using manual SQL instead of an ORM because X."
-- Anything where a reasonable engineer would assume the opposite.
-- These prevent future engineers from "fixing" something that was intentional.
-
-### Invisible Constraints
-
-- "We cannot use AWS due to compliance requirements."
-- "Response times must be under 200ms due to partner API contract."
-- Constraints that are not visible in the code but affect implementation.
-
-### Rejected Alternatives (Non-Obvious)
-
-- "We considered GraphQL but chose REST for subtle reasons."
-- Record this to prevent the same suggestion from recurring in six months.
+- **Architectural shape:** monorepo structure, event-sourced write model with projected read model
+- **Integration patterns:** cross-context communication via domain events instead of synchronous HTTP
+- **Technology choices (high-lock-in):** database, message bus, auth provider, deployment target — only technologies that take a quarter+ to swap
+- **Boundary and scope decisions:** data ownership by context, explicit "no" decisions
+- **Deliberate deviations:** manual SQL instead of ORM, anything where a reasonable engineer would assume the opposite
+- **Invisible constraints:** compliance restrictions, performance contracts not visible in code
+- **Rejected alternatives (non-obvious):** considered GraphQL but chose REST for subtle reasons
 
 ## Numbering Strategy
 

@@ -1,37 +1,10 @@
 # Design Principles
 
-Design principles and patterns for creating maintainable, testable software architecture.
-
-## Purpose
-
-The design principles serve as the single source of truth for:
-- **Module Design** - Deep module principles for clean architecture
-- **Interface Design** - Patterns for testable, maintainable interfaces
-- **Dependency Patterns** - Dependency injection and system boundary design
-- **Refactoring Strategy** - Guidelines for improving code structure
-
-## When to Reference
-
-Skills and agents should consult these principles when:
-- Designing new modules or components
-- Creating interfaces between components
-- Deciding on dependency injection patterns
-- Planning refactoring work
-- Evaluating code quality and structure
-
-## Integration with Other References
-
-These design principles work alongside:
-- **[Repo Fingerprint]({{workspace_dir}}/.agents/references/repo-fingerprint.md)** - Primary reference for actual technology stack in use - design patterns should align with current frameworks, databases, and tools
-- **[Tech Preferences]({{workspace_dir}}/.agents/references/tech-preferences.md)** - Secondary reference for preferred technologies when making new choices
-- **[ADRs]({{workspace_dir}}/.agents/references/adrs.md)** - Document significant architectural decisions that deviate from these principles
-- **[Contexts]({{workspace_dir}}/.agents/references/contexts.md)** - Use domain language when designing interfaces and modules
+> Design principles and patterns for creating maintainable, testable software architecture.
 
 ## Core Principles
 
 ### Deep Modules
-
-From "A Philosophy of Software Design":
 
 **Deep module** = small interface + lots of implementation
 
@@ -64,8 +37,6 @@ When designing interfaces, ask:
 - Can I hide more complexity inside?
 
 ### Interface Design for Testability
-
-Good interfaces make testing natural:
 
 1. **Accept dependencies, don't create them**
 
@@ -112,11 +83,7 @@ Good interfaces make testing natural:
 
 #### Designing for Dependency Injection
 
-At system boundaries, design interfaces that are easy to mock:
-
 ##### 1. Use dependency injection
-
-Pass external dependencies in rather than creating them internally:
 
 ```typescript
 // Easy to mock
@@ -133,8 +100,6 @@ function processPayment(order) {
 
 ##### 2. Prefer SDK-style interfaces over generic fetchers
 
-Create specific functions for each external operation instead of one generic function with conditional logic:
-
 ```typescript
 // GOOD: Each function is independently mockable
 const api = {
@@ -149,7 +114,6 @@ const api = {
 };
 ```
 
-The SDK approach means:
 - Each mock returns one specific shape
 - No conditional logic in test setup
 - Easier to see which endpoints a test exercises
@@ -165,20 +129,3 @@ After development cycles, look for:
 - **Feature envy** → Move logic to where data lives
 - **Primitive obsession** → Introduce value objects
 - **Existing code** the new code reveals as problematic
-
-## Application Guidelines
-
-### When Applying These Principles
-
-1. **Design Phase** - Apply deep module and interface design principles when planning new components
-2. **Implementation** - Use dependency injection patterns when integrating external services
-3. **Refactoring** - Use refactoring candidates checklist during code improvement cycles
-4. **Code Review** - Evaluate code against these principles during review processes
-
-### Trade-offs
-
-These principles should be applied pragmatically:
-- Deep modules may require more upfront design
-- Dependency injection adds complexity to simple cases
-- Over-refactoring can waste time on code that works fine
-- Balance principles with project timeline and constraints

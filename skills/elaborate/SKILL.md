@@ -31,18 +31,23 @@ Elaborate existing `Plan`s with detailed, actionable guidance distilled from hig
 - Target folders: `{{workspace_dir}}/plans/` (you should only modify files in this folder)
 - Required input: `Plan` ID (e.g., "AUTH-001") or `Plan` file path (e.g., "plans/AUTH-001-user-authentication.md")
 
-## Specifications & Methodologies
+## References
 
-Read the following reference specification files from `{{workspace_dir}}/.agents/references/` to understand `Plan` structure and enhancement methodologies before elaborating:
+Reference specs are in `{{workspace_dir}}/.agents/references/`. Read them on-demand when the workflow requires them — do NOT read all upfront.
 
-- **Plan:** [plan.md]({{workspace_dir}}/.agents/references/plan.md) - plan structure and metadata specification
-- **Plans Index:** [plans-index.md]({{workspace_dir}}/.agents/references/plans-index.md) - plans index specification
-- **Repo Fingerprint:** [repo-fingerprint.md]({{workspace_dir}}/.agents/references/repo-fingerprint.md) - technical stack documentation
-- **Tech Preferences:** [tech-preferences.md]({{workspace_dir}}/.agents/references/tech-preferences.md) - preferred technologies
-- **Contexts:** [contexts.md]({{workspace_dir}}/.agents/references/contexts.md) - domain language documentation
-- **Design Principles:** [design-principles.md]({{workspace_dir}}/.agents/references/design-principles.md) - interface design and dependency patterns
-- **Testing Principles:** [testing-principles.md]({{workspace_dir}}/.agents/references/testing-principles.md) - testing philosophy and TDD methodology
-- **Working Files:** Located in `{{workspace_dir}}/plans/` following specifications
+### Always needed
+- **`Plan` (quick):** Read `plan-quick.md` — for Plan format, milestone fields, and status management
+- **`Plans Index`:** Read `plans-index.md` — for index lookup and status updates
+
+### On-demand (read only when needed)
+- **`Contexts`:** Read `contexts.md` — when checking domain language for elaborations
+- **`Repo Fingerprint`:** Read `repo-fingerprint.md` — when checking tech stack for elaborations
+- **`Testing Principles`:** Read `testing-principles.md` — when elaborating test strategy
+- **`Design Principles`:** Read `design-principles.md` — when elaborating code patterns
+- **`Tech Preferences`:** Read `tech-preferences.md` — when elaborating tech choices
+
+### Cross-references
+For how references relate to each other, see `references-map.md`.
 
 ## Validation
 

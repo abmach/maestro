@@ -1,6 +1,6 @@
 # Testing Technology Preferences
 
-These are the preferred testing technologies, frameworks, libraries, and versions to use when implementing test-driven development and quality assurance. These preferences guide agents and skills in their testing decisions, ensuring consistency across workspaces.
+> Preferred testing frameworks, libraries, and tools by language, with config templates and best practices.
 
 ## ⚡ Priority: Free and Lightweight
 
@@ -20,33 +20,6 @@ Commercial tools should only be considered when they provide essential functiona
 ## ⚠️ Important: Always Check Online
 
 When selecting testing technologies, always search online for the current latest stable versions. Use web search to verify current versions before making technology choices.
-
-## Purpose
-
-The testing technology preferences serve as a single source of truth for:
-- **Test Framework Selection** - Preferred testing frameworks and libraries for different languages
-- **Consistency** - Standardizing testing approaches across different workspaces
-- **Best Practices** - Industry-standard testing combinations that work well together
-- **Tool Integration** - Preferred tools for test execution, coverage, and reporting
-
-## Usage
-
-When an agent or skill needs to:
-- Choose a testing framework for a new project
-- Select testing libraries for specific test types
-- Determine test execution and reporting tools
-- Pick coverage and quality measurement tools
-
-They should consult this file first and use the preferred options unless there's a compelling reason to deviate.
-
-## Integration with Other References
-
-These testing technology preferences work alongside:
-- **[Testing Principles]({{workspace_dir}}/.agents/references/testing-principles.md)** - Testing philosophy and TDD methodology
-- **[Tech Preferences]({{workspace_dir}}/.agents/references/tech-preferences.md)** - General technology preferences
-- **[Repo Fingerprint]({{workspace_dir}}/.agents/references/repo-fingerprint.md)** - Current testing stack in use
-
-The testing-tech-preferences provide specialized testing framework guidance, while tech-preferences provides general technology guidance. When making testing technology decisions, consult testing-tech-preferences first. For general technology choices (runtimes, frameworks, databases), consult tech-preferences.
 
 ## Preferences
 
@@ -271,31 +244,3 @@ When deviating, document the reason in the ADR or project documentation.
 - **Flaky Tests:** Identify and fix flaky tests immediately
 - **Test Coverage:** Monitor coverage but avoid targeting arbitrary percentages
 - **Documentation:** Document complex test scenarios and setup
-
-## Technology Stacks
-
-### Full-Stack JavaScript Testing Stack (Free & Lightweight)
-
-- **Unit Testing:** Vitest (free, lightweight, fast)
-- **E2E Testing:** Playwright (free, lightweight, reliable)
-- **Mocking:** MSW for API mocking (free), vi.mock for module mocking (built-in)
-- **Coverage:** c8 (free, Vitest native)
-- **Visual Regression:** Playwright screenshot comparison (free, built-in)
-- **Accessibility:** axe-core integration (free, lightweight)
-- **Performance:** k6 (free, lightweight)
-
-### Python Web Testing Stack (Free & Lightweight)
-
-- **Unit Testing:** pytest (free, lightweight, extensive plugin ecosystem)
-- **E2E Testing:** Playwright with pytest-playwright plugin (free, lightweight)
-- **Mocking:** pytest-mock (free, lightweight), unittest.mock (built-in)
-- **Coverage:** pytest-cov (free, lightweight)
-- **API Testing:** requests + pytest (free, lightweight)
-
-### .NET Testing Stack (Free & Lightweight)
-
-- **Unit Testing:** xUnit (free, lightweight, modern)
-- **E2E Testing:** Playwright with .NET bindings (free, lightweight)
-- **Mocking:** Moq (free, lightweight) or NSubstitute (free, lightweight alternative)
-- **Coverage:** Coverlet (free, lightweight)
-- **API Testing:** WebApplicationFactory (free, built-in)

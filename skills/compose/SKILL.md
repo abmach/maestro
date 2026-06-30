@@ -30,20 +30,23 @@ Analyze requirements and create structured technical `Plan`s with precise specif
 - Target folders: `{{workspace_dir}}/knowledge/` and `{{workspace_dir}}/plans/` (you should only modify files in these folders)
 - Required input: Feature/change request from user prompt
 
-## Specifications & Methodologies
+## References
 
-Read the following reference specification files from `{{workspace_dir}}/.agents/references/` to understand formats, rules, and methodologies before creating the `Plan`:
+Reference specs are in `{{workspace_dir}}/.agents/references/`. Read them on-demand when the workflow requires them — do NOT read all upfront.
 
-- **Repo Fingerprint:** [repo-fingerprint.md]({{workspace_dir}}/.agents/references/repo-fingerprint.md) - technical stack documentation specification
-- **Tech Preferences:** [tech-preferences.md]({{workspace_dir}}/.agents/references/tech-preferences.md) - preferred technologies specification
-- **Testing Tech Preferences:** [testing-tech-preferences.md]({{workspace_dir}}/.agents/references/testing-tech-preferences.md) - preferred testing frameworks and tools
-- **Contexts:** [contexts.md]({{workspace_dir}}/.agents/references/contexts.md) - domain language documentation specification
-- **ADRs:** [adrs.md]({{workspace_dir}}/.agents/references/adrs.md) - architectural decision records specification
-- **Issue:** [issue.md]({{workspace_dir}}/.agents/references/issue.md) - issue tracking and problem documentation specification
-- **Issues Index:** [issues-index.md]({{workspace_dir}}/.agents/references/issues-index.md) - issues index specification
-- **Plan:** [plan.md]({{workspace_dir}}/.agents/references/plan.md) - plan structure and metadata specification
-- **Plans Index:** [plans-index.md]({{workspace_dir}}/.agents/references/plans-index.md) - plans index specification
-- **Working Files:** Created in `{{workspace_dir}}/knowledge/`, `{{workspace_dir}}/plans/`, and `{{workspace_dir}}/issues/` following their respective specifications
+### Always needed
+- **`Plan` (quick):** Read `plan-quick.md` — for Plan format, milestone DAG, and development specifications (compose creates Plans)
+- **`Plans Index`:** Read `plans-index.md` — for index format (compose updates the index every invocation)
+
+### On-demand (read only when needed)
+- **`Repo Fingerprint`:** Read `{{workspace_dir}}/knowledge/repo-fingerprint.md` (working file) — if it exists, to understand current tech stack. Read `repo-fingerprint.md` (spec) only if updating the fingerprint.
+- **`Contexts`:** Read `{{workspace_dir}}/knowledge/contexts.md` (working file) — if it exists, to understand domain language.
+- **`ADRs`:** Read `{{workspace_dir}}/knowledge/adrs/` (working files) — if they exist, to review relevant architectural decisions.
+- **`Issue` (quick):** Read `issue-quick.md` — only if `{{workspace_dir}}/issues/index.md` exists, to identify relevant `Issue`s.
+- **`Issues Index`:** Read `issues-index.md` — only if `{{workspace_dir}}/issues/index.md` exists.
+
+### Cross-references
+For how references relate to each other, see `references-map.md`.
 
 ## Validation
 

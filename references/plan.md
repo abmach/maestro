@@ -1,15 +1,6 @@
 # Plan
 
-A PLAN file defines the execution strategy for a feature or change request. It structures the work as a Directed Acyclic Graph (DAG) of milestones to maximize parallel execution, provides detailed specifications for implementation, and defines automated testing requirements.
-
-## Purpose
-
-Plans serve as the single source of truth for:
-- **Orchestration** — The orchestrator uses the plan to spawn and coordinate subagents
-- **Parallelization** — The DAG structure enables independent milestones to run simultaneously
-- **Specifications** — Detailed backend/frontend requirements prevent ambiguity during implementation
-- **Testing** — Explicit E2E test specifications ensure automated coverage of user flows
-- **Tracking** — Status indicators track progress through the development lifecycle
+> Defines the execution strategy for a feature: milestones as a DAG, test tiers, and development specifications.
 
 ## File Location and Naming
 
@@ -17,19 +8,6 @@ Plans serve as the single source of truth for:
 - **Naming convention:** Meaningful feature code with sequential number: `AUTH-001-user-authentication.md`, `PAY-002-stripe-integration.md`, etc.
 - **Index file:** `{{workspace_dir}}/plans/index.md` tracks all plans and their status
 - **Directory creation:** Create `{{workspace_dir}}/plans/` lazily when the first plan is needed
-
-## Integration with Other References
-
-Plans should be created in consultation with:
-- **[Contexts]({{workspace_dir}}/.agents/references/contexts.md)** - Use domain language in plan descriptions, API routes, and component names
-- **[ADRs]({{workspace_dir}}/.agents/references/adrs.md)** - Respect existing architectural decisions and consider if new decisions are needed
-- **[Issue]({{workspace_dir}}/.agents/references/issue.md)** - Consider existing issues that the plan might resolve or need to address
-- **[Issues Index]({{workspace_dir}}/issues/index.md)** - Check existing issues to understand current problems and prioritize work
-- **[Plans Index]({{workspace_dir}}/plans/index.md)** - Check existing plans to avoid conflicts, register new plans, and update status
-- **[Repo Fingerprint]({{workspace_dir}}/.agents/references/repo-fingerprint.md)** - Align specifications with current technology stack and frameworks
-- **[Tech Preferences]({{workspace_dir}}/.agents/references/tech-preferences.md)** - Use preferred technologies when introducing new components
-- **[Design Principles]({{workspace_dir}}/.agents/references/design-principles.md)** - Apply deep module, interface design, and dependency injection patterns
-- **[Testing Principles]({{workspace_dir}}/.agents/references/testing-principles.md)** - Consider test tier requirements and design for testability
 
 ## Test Tier Classification
 
@@ -39,8 +17,6 @@ Each plan must specify a `Test Tier` to indicate the level of automated testing 
 - **smoke** — Basic smoke testing with minimal automated tests for smaller changes and bug fixes
 - **none** — No automated testing required for trivial changes that don't affect user-facing behavior
 
-The `Test Tier` determines whether E2E testing milestones must be included in the DAG.
-
 ## Documentation Impact
 
 Each plan must specify `Docs Affected` to indicate whether the change requires documentation updates:
@@ -48,13 +24,11 @@ Each plan must specify `Docs Affected` to indicate whether the change requires d
 - **true** — The change affects user-facing behavior, API contracts, or requires manual updates
 - **false** — The change is internal, refactoring, or doesn't impact user documentation
 
-The `Docs Affected` field determines whether documentation milestones must be included in the DAG.
-
 ## Writing Rules
 
 ### Use Relative Paths
 
-Always use relative paths (e.g., `src/`, `tests/`, `package.json`) instead of absolute repository paths. The repository can be checked out anywhere, so absolute paths would be incorrect in different environments.
+Always use relative paths (e.g., `src/`, `tests/`, `package.json`) instead of absolute repository paths.
 
 ### Define Milestones as a DAG
 
@@ -86,11 +60,7 @@ When defining milestones in the Steps section, incorporate these mandatory miles
 - Specify exact unit test file paths and test cases
 - Provide precise component hierarchies, props, and state definitions
 
-Ambiguity leads to implementation delays and rework. If something is unclear, specify it explicitly.
-
 ### Optional Milestone Elaboration
-
-Milestones may include optional elaboration to provide additional implementation guidance for complex tasks. Elaboration is typically added by the `elaborate` skill and can include:
 
 - **Implementation Guidance:** Detailed step-by-step breakdowns, specific file paths, prerequisite checks, integration points
 - **Code Patterns:** Relevant code snippets following project conventions, interface implementations, configuration examples
@@ -120,12 +90,6 @@ Elaboration format example:
   - Mock data: [specific mock requirements]
 ```
 
-Elaboration is optional but recommended for:
-- Complex technical implementations
-- Milestones involving unfamiliar technologies
-- High-risk or critical-path milestones
-- Tasks where the team has limited experience
-
 ### Status Management
 
 Use the standard status legend for both the overall plan and individual milestones:
@@ -135,8 +99,6 @@ Use the standard status legend for both the overall plan and individual mileston
 - ⚠️ Blocked
 - ❌ Failed
 
-Update milestone statuses as work progresses to enable the orchestrator to identify ready milestones and execute them in parallel.
-
 ### Numbering Strategy
 
 1. Choose a meaningful feature code (e.g., `AUTH` for authentication, `PAY` for payments, `UI` for user interface)
@@ -145,9 +107,10 @@ Update milestone statuses as work progresses to enable the orchestrator to ident
 4. Use hyphen-separated format: `{CODE}-{number}-{descriptive-slug}.md`
 5. Use zero-padded three-digit numbers (e.g., `AUTH-001`, `PAY-002`) for consistent sorting
 
----
-
 ## Template
+
+````markdown
+# {Feature Title}
 
 > Brief one-line summary of the feature or change.
 
@@ -234,8 +197,7 @@ Update milestone statuses as work progresses to enable the orchestrator to ident
 ### Visual Regression Viewports
 
 - List viewport dimensions for automated screenshot comparisons (e.g., 1920x1080, 768x1024, 375x812).
-
----
+````
 
 ## Example
 

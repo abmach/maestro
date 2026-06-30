@@ -27,14 +27,16 @@ Create and update clean, reliable, and maintainable integration and E2E test sui
 - Target folders: `{{workspace_dir}}/tests/` (you should only modify files in this folder - focuses on integration and E2E tests)
 - Required input: `Plan` ID/code from orchestrate
 
-## Specifications & Methodologies
+## References
 
-Read the following reference specification files from `{{workspace_dir}}/.agents/references/` to understand formats, rules, and methodologies before creating tests:
+Reference specs are in `{{workspace_dir}}/.agents/references/`. Read them on-demand when the workflow requires them — do NOT read all upfront.
 
-- **Plan:** [plan.md]({{workspace_dir}}/.agents/references/plan.md) - plan structure and metadata specification
-- **Testing Tech Preferences:** [testing-tech-preferences.md]({{workspace_dir}}/.agents/references/testing-tech-preferences.md) - preferred testing frameworks and tools for different test types
-- **Testing Principles:** [testing-principles.md]({{workspace_dir}}/.agents/references/testing-principles.md) - testing philosophy and TDD methodology
-- **Working Files:** Located in `{{workspace_dir}}/plans/` following specifications
+### Always needed
+- **`Plan` (quick):** Read `plan-quick.md` — for Plan format and test tier requirements
+- **`Testing Tech Preferences` (quick):** Read `testing-tech-preferences-quick.md` — for framework selection and config
+
+### Cross-references
+For how references relate to each other, see `references-map.md`.
 
 ## Validation
 

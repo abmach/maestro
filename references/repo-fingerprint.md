@@ -1,14 +1,6 @@
 # Repo Fingerprint
 
-A REPO FINGERPRINT file captures the technical stack and infrastructure details of a repository. It serves as a quick reference for understanding the project's technology choices and enables efficient delta-context auditing by avoiding repeated full repository scans.
-
-## Purpose
-
-The repo fingerprint serves as a single source of truth for:
-- **Technology Stack** — Package managers, runtimes, frameworks, and libraries
-- **Infrastructure** — Build tools, CI/CD systems, and deployment targets
-- **Database** — Database systems, ORM tools, and connection patterns
-- **Efficiency** — Enables delta-context auditing by identifying what has changed since the last scan
+> Captures the technical stack and infrastructure details of a repository for quick reference and delta-context auditing.
 
 ## File Location and Naming
 
@@ -91,11 +83,11 @@ Last updated: {timestamp}
 
 ### Be Specific with Versions
 
-Always include specific version numbers for all technologies. Use the latest stable versions unless the existing codebase requires specific versions for compatibility.
+Always include specific version numbers for all technologies.
 
 ### Scan Key Configuration Files
 
-Generate the fingerprint by examining:
+Examine:
 - `package.json`, `yarn.lock`, `package-lock.json` — Node.js projects
 - `.csproj`, `.sln` — .NET projects
 - `requirements.txt`, `pyproject.toml` — Python projects
@@ -106,19 +98,11 @@ Generate the fingerprint by examining:
 
 ### Update Strategically
 
-Only update the fingerprint when:
+Only update when:
 - New dependencies are added that change the technology stack
 - Major version upgrades occur
 - New frameworks or tools are introduced
 - CI/CD configuration changes significantly
-
-## Integration with Other References
-
-The repo fingerprint works alongside:
-- **[Testing Tech Preferences]({{workspace_dir}}/.agents/references/testing-tech-preferences.md)** - Preferred testing frameworks and tools
-- **[Tech Preferences]({{workspace_dir}}/.agents/references/tech-preferences.md)** - General technology preferences
-
-The repo fingerprint captures what IS currently in use, while the preference references guide what SHOULD be used for new choices.
 
 ## Example
 

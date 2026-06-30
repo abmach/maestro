@@ -27,15 +27,20 @@ Coordinate feature implementation workflows by executing existing `Plan`s, deleg
 - Target folders: `{{workspace_dir}}/plans/` (you should only modify files in this folder)
 - Required input: `Plan` ID/code from user prompt
 
-## Specifications & Methodologies
+## References
 
-Read the following reference specification files from `{{workspace_dir}}/.agents/references/` to understand formats, rules, and methodologies before executing the plan:
+Reference specs are in `{{workspace_dir}}/.agents/references/`. Read them on-demand when the workflow requires them — do NOT read all upfront.
 
-- **Plans Index:** [plans-index.md]({{workspace_dir}}/.agents/references/plans-index.md) - plans index file format and management
-- **Plan:** [plan.md]({{workspace_dir}}/.agents/references/plan.md) - plan structure and metadata specification
-- **Issue:** [issue.md]({{workspace_dir}}/.agents/references/issue.md) - issue tracking and problem documentation specification
-- **Issues Index:** [issues-index.md]({{workspace_dir}}/.agents/references/issues-index.md) - issues index specification
-- **Working Files:** Located in `{{workspace_dir}}/plans/` and `{{workspace_dir}}/issues/` following specifications
+### Always needed
+- **`Plan` (quick):** Read `plan-quick.md` — for Plan format, milestone fields, and status management
+- **`Plans Index`:** Read `plans-index.md` — for index lookup and status updates
+
+### On-demand (read only when needed)
+- **`Issue` (quick):** Read `issue-quick.md` — when a milestone fails and an Issue must be created
+- **`Issues Index`:** Read `issues-index.md` — when updating the issues index after a failure
+
+### Cross-references
+For how references relate to each other, see `references-map.md`.
 
 ## Validation
 

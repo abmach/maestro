@@ -41,17 +41,22 @@ Resolve `Issue`s by investigating problems, implementing fixes, and documenting 
 - Target folders: `{{workspace_dir}}/issues/` (read/write) and code files in the project (read/write)
 - Required input: `Issue` ID (e.g., "BUG-001", "BUILD-002", "PERF-003")
 
-## Specifications & Methodologies
+## References
 
-Read the following reference specification files from `{{workspace_dir}}/.agents/references/` to understand `Issue` tracking formats and debugging methodologies before resolving the `Issue`:
+Reference specs are in `{{workspace_dir}}/.agents/references/`. Read them on-demand when the workflow requires them — do NOT read all upfront.
 
-- **Issue:** [issue.md]({{workspace_dir}}/.agents/references/issue.md) - issue tracking and problem documentation specification
-- **Issues Index:** [issues-index.md]({{workspace_dir}}/.agents/references/issues-index.md) - issues index specification
-- **Testing Principles:** [testing-principles.md]({{workspace_dir}}/.agents/references/testing-principles.md) - testing philosophy and TDD methodology
-- **Design Principles:** [design-principles.md]({{workspace_dir}}/.agents/references/design-principles.md) - Interface design and dependency patterns
-- **Repo Fingerprint:** [repo-fingerprint.md]({{workspace_dir}}/.agents/references/repo-fingerprint.md) - Current technology stack and frameworks
-- **Contexts:** [contexts.md]({{workspace_dir}}/.agents/references/contexts.md) - Domain language for issue descriptions
-- **Working Files:** Located in `{{workspace_dir}}/issues/` following specifications
+### Always needed
+- **`Issue` (quick):** Read `issue-quick.md` — for Issue format, types, and status workflow
+- **`Issues Index`:** Read `issues-index.md` — for index format and status updates
+
+### On-demand (read only when needed)
+- **`Testing Principles`:** Read `testing-principles.md` — when applying TDD to reproduce and fix the issue
+- **`Design Principles`:** Read `design-principles.md` — during optional refactor phase
+- **`Repo Fingerprint`:** Read `repo-fingerprint.md` — only if `{{workspace_dir}}/knowledge/repo-fingerprint.md` exists and tech stack is ambiguous
+- **`Contexts`:** Read `contexts.md` — only if `{{workspace_dir}}/knowledge/contexts.md` exists and domain terminology matters
+
+### Cross-references
+For how references relate to each other, see `references-map.md`.
 
 ## Validation
 

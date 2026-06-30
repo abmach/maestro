@@ -1,14 +1,6 @@
 # Issues Index
 
-The ISSUES INDEX file serves as the central registry for all issues in the workspace. It provides a high-level overview of reported problems, their status, severity, and priority.
-
-## Purpose
-
-The issues index serves as the single source of truth for:
-- **Discovery** — Quick overview of all reported issues and their current state
-- **Status Tracking** — Real-time status of each issue through the resolution lifecycle
-- **Prioritization** — Understanding which issues need immediate attention based on severity and priority
-- **Coordination** — Reference point for developers to avoid duplicate work and track resolution efforts
+> Central registry for all issues, tracking status, severity, and priority through resolution.
 
 ## File Location and Naming
 
@@ -23,7 +15,7 @@ The issues index serves as the single source of truth for:
 Each issue entry must follow this exact format:
 
 ```markdown
-- [status] **{ISSUE-TYPE}-{NUMBER}: {Title** *([issue-file.md](issue-file.md))*
+- [status] **{ISSUE-TYPE}-{NUMBER}: {Title}** *([issue-file.md](issue-file.md))*
   [Severity: {Critical/High/Medium/Low}] [Priority: {P1/P2/P3/P4}] Brief description
 ```
 
@@ -145,23 +137,3 @@ Periodically review and clean up the index:
 - Keep recent resolved issues visible for reference
 - Remove wontfix issues that are no longer relevant
 - Ensure all entries have valid links to existing issue files
-
-## Integration
-
-The issues index is automatically:
-- **Read** by developers to understand current problems and priorities
-- **Updated** when new issues are reported or status changes
-- **Referenced** in planning discussions to prioritize feature work
-- **Used** in release notes to communicate fixes to stakeholders
-
-## Issue Type Prefixes
-
-When creating new issues, use these type prefixes:
-- **BUG** — Functional bugs and logic errors
-- **BUILD** — Compilation and build failures
-- **PERF** — Performance problems
-- **SEC** — Security vulnerabilities
-- **UI** — User interface problems
-- **TEST** — Test failures and coverage gaps
-- **DOCS** — Documentation issues
-- **DEP** — Deprecated code and technical debt

@@ -1,14 +1,6 @@
 # Plans Index
 
-The PLANS INDEX file serves as the central registry for all feature plans in the workspace. It provides a high-level overview of planned, in-progress, and completed work.
-
-## Purpose
-
-The plans index serves as the single source of truth for:
-- **Discovery** — Quick overview of all planned features and changes
-- **Status Tracking** — Real-time status of each plan through the development lifecycle
-- **Prioritization** — Understanding what work is queued, active, or completed
-- **Coordination** — Reference point for the orchestrator to manage concurrent work
+> Central registry for all feature plans, tracking status from pending through completion.
 
 ## File Location and Naming
 
@@ -112,11 +104,3 @@ When plans are completed and archived:
 1. Move to Done section
 2. Consider archiving old Done entries to separate file if index grows too large
 3. Keep recent Done entries visible for reference
-
-## Integration
-
-The plans index is automatically:
-- **Read** by the `orchestrate` skill to understand current work state
-- **Updated** by the `compose` skill when creating new plans
-- **Modified** by the `orchestrate` skill when changing plan status
-- **Referenced** by team members to understand project progress

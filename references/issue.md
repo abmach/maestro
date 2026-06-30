@@ -1,15 +1,6 @@
 # Issues
 
-An ISSUES file defines a problem in the codebase, build process, or system that needs to be resolved. It provides detailed information about the issue, including error messages, reproduction steps, impact assessment, and resolution strategy.
-
-## Purpose
-
-Issues serve as the single source of truth for:
-- **Problem Tracking** — Central registry of bugs, build failures, and system problems
-- **Debugging Context** — Detailed error messages and reproduction steps for troubleshooting
-- **Impact Assessment** — Severity and priority classification to guide resolution efforts
-- **Resolution History** — Record of attempted solutions and their outcomes
-- **Knowledge Sharing** — Learning from past issues to prevent recurrence
+> Defines a codebase problem: type, severity, priority, reproduction steps, impact assessment, and resolution tracking.
 
 ## File Location and Naming
 
@@ -145,13 +136,11 @@ Issues follow this status progression:
 
 ### Be Specific
 
-Provide concrete details rather than vague descriptions:
 - **Bad:** "Authentication doesn't work"
 - **Good:** "JWT token validation fails with 'Invalid signature' error when token expires after 1 hour"
 
 ### Include Context
 
-Add relevant context about when and how the issue occurs:
 - Environment (dev/staging/prod)
 - Recent changes that may have introduced the issue
 - Configuration settings
@@ -159,7 +148,6 @@ Add relevant context about when and how the issue occurs:
 
 ### Document Attempts
 
-Record all resolution attempts, even failed ones:
 - What was tried
 - Why it failed
 - What was learned
@@ -167,21 +155,10 @@ Record all resolution attempts, even failed ones:
 
 ### Link to Related Work
 
-Connect issues to related work:
 - Other issues that may be related
 - Plans that implement fixes
 - ADRs that influenced the design
 - Contexts that define relevant terminology
-
-## Integration with Other References
-
-Issues should be created in consultation with:
-- **[Contexts]({{workspace_dir}}/.agents/references/contexts.md)** — Use domain language in issue descriptions and component names
-- **[ADRs]({{workspace_dir}}/.agents/references/adrs.md)** — Consider architectural decisions that may have caused the issue
-- **[Issues Index]({{workspace_dir}}/issues/index.md)** — Register new issues, update status, track resolution
-- **[Repo Fingerprint]({{workspace_dir}}/.agents/references/repo-fingerprint.md)** — Reference current technology stack and versions
-- **[Tech Preferences]({{workspace_dir}}/.agents/references/tech-preferences.md)** — Consider preferred technologies for solutions
-- **[Design Principles]({{workspace_dir}}/.agents/references/design-principles.md)** — Apply design patterns in resolution approach
 
 ## Maintenance
 

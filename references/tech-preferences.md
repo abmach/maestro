@@ -1,6 +1,6 @@
 # Tech Preferences
 
-These are the preferred technologies, frameworks, libraries, and versions to use when creating new projects or making technology choices. These preferences guide agents and skills in their decisions, ensuring consistency across workspaces.
+> Preferred technologies, frameworks, libraries, and version strategy for new projects and technology choices.
 
 ## ⚡ Priority: Free and Lightweight
 
@@ -20,31 +20,6 @@ Commercial tools should only be considered when they provide essential functiona
 ## ⚠️ Important: Always Check Online
 
 When selecting technologies, always search online for the current latest stable versions. **Do not rely on your internal training data or pre-existing knowledge**, as it may be outdated. Use web search to verify current versions before making technology choices.
-
-## Purpose
-
-The tech preferences serve as a single source of truth for:
-- **Technology Selection** - Preferred frameworks and libraries for new projects
-- **Consistency** - Standardizing choices across different workspaces
-- **Best Practices** - Industry-standard combinations that work well together
-
-## Usage
-
-When an agent or skill needs to:
-- Choose a framework for a new project
-- Select a library for a specific task
-- Determine package manager or runtime
-- Pick build tools
-
-They should consult this file first and use the preferred options unless there's a compelling reason to deviate. For testing technology decisions, consult [Testing Tech Preferences]({{workspace_dir}}/.agents/references/testing-tech-preferences.md).
-
-## Integration with Other References
-
-These technology preferences work alongside:
-- **[Testing Tech Preferences]({{workspace_dir}}/.agents/references/testing-tech-preferences.md)** - Detailed testing framework preferences and guidance
-- **[Repo Fingerprint]({{workspace_dir}}/.agents/references/repo-fingerprint.md)** - Current technology stack in use
-
-The tech preferences provide general technology guidance, while testing-tech-preferences provides specialized testing guidance. When making testing technology decisions, consult testing-tech-preferences first.
 
 ## Preferences
 
@@ -74,7 +49,6 @@ The tech preferences provide general technology guidance, while testing-tech-pre
 - **React:** Vite + React (lightweight SPA) or Next.js when SSR needed
 - **Vue:** Vite + Vue (lightweight SPA) or Nuxt when SSR needed
 - **Vanilla:** Vite as build tool
-- **Note:** Prefer Svelte for maximum lightweight and performance. Prefer SPA (Single Page Application) over SSR unless SEO or server-side features are required
 
 ### UI Libraries
 
@@ -85,7 +59,6 @@ The tech preferences provide general technology guidance, while testing-tech-pre
   - Vue: Headless UI (unstyled, lightweight) or Nuxt UI
   - Svelte: Skeleton UI (lightweight)
 - **Icons:** Lucide (tree-shakeable, modern)
-- **Note:** Prefer framework-agnostic UI (knadh/oat) over framework-specific components. Only use framework-specific libraries when framework features are required.
 
 ### Database
 
@@ -93,14 +66,12 @@ The tech preferences provide general technology guidance, while testing-tech-pre
 - **Document:** MongoDB
 - **Key-Value:** Redis
 - **Embedded:** SQLite - for local development/testing
-- **Note:** SQLite is excellent for lightweight applications and can scale to significant workloads
 
 ### ORM/Database Tools
 
 - **Node.js:** Drizzle ORM (preferred for lightweight and performance) or Prisma (for type safety)
 - **Python:** SQLAlchemy with async support, or Django ORM
 - **.NET:** Entity Framework Core
-- **Note:** Drizzle ORM is significantly lighter and faster than Prisma for Node.js
 
 ### Build Tools
 

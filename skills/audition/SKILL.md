@@ -33,13 +33,16 @@ Execute test suites to validate implementation, capture results, and generate ar
 - Target folders: `{{workspace_dir}}/tests/` and `{{workspace_dir}}/test-results/`
 - Required input: Test type and scope from orchestrate
 
-## Specifications & Methodologies
+## References
 
-Read the following reference specification files from `{{workspace_dir}}/.agents/references/` to understand formats, rules, and methodologies before executing tests:
+Reference specs are in `{{workspace_dir}}/.agents/references/`. Read them on-demand when the workflow requires them — do NOT read all upfront.
 
-- **Testing Tech Preferences:** [testing-tech-preferences.md]({{workspace_dir}}/.agents/references/testing-tech-preferences.md) - preferred testing frameworks and tools
-- **Testing Principles:** [testing-principles.md]({{workspace_dir}}/.agents/references/testing-principles.md) - testing philosophy and methodology
-- **Repo Fingerprint:** [repo-fingerprint.md]({{workspace_dir}}/.agents/references/repo-fingerprint.md) - Current testing stack in use
+### On-demand (read only when needed)
+- **`Testing Tech Preferences` (quick):** Read `testing-tech-preferences-quick.md` — only if an unusual/non-standard test framework is in use
+- **`Repo Fingerprint`:** Read `{{workspace_dir}}/knowledge/repo-fingerprint.md` (the working file, not the spec) — to identify the current testing stack
+
+### Cross-references
+For how references relate to each other, see `references-map.md`.
 
 ## Validation
 

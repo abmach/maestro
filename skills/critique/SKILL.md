@@ -49,13 +49,15 @@ Collaborate with user to identify and diagnose screenshot regressions against ex
 - If required inputs are missing or screenshot files don't exist, abort with error
 - **Screenshot Pattern Flexibility:** While baseline/actual/diff is a common pattern across many frameworks, the skill accepts whatever screenshot paths the framework provides - it adapts to available comparison images
 
-## Specifications & Methodologies
+## References
 
-Read the following reference specification files from `{{workspace_dir}}/.agents/references/` to understand formats, rules, and methodologies before analyzing screenshots:
+Reference specs are in `{{workspace_dir}}/.agents/references/`. Read them on-demand when the workflow requires them — do NOT read all upfront.
 
-- **Testing Principles:** [testing-principles.md]({{workspace_dir}}/.agents/references/testing-principles.md) - testing philosophy and methodology
-- **Design Principles:** [design-principles.md]({{workspace_dir}}/.agents/references/design-principles.md) - interface design and dependency patterns
-- **Plan Structure:** [plan.md]({{workspace_dir}}/.agents/references/plan.md) - Plan format and milestone specifications
+### Always needed
+- **`Plan` (quick):** Read `plan-quick.md` — to parse the Plan's QA Testing Specifications and intended changes
+
+### Cross-references
+For how references relate to each other, see `references-map.md`.
 
 ## 🔌 Input & Output Interface
 
