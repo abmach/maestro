@@ -52,7 +52,7 @@ Read the following asset specification files from `{{workspace_dir}}/.agents/ass
 5. **Scenario Testing:** When domain relationships are being discussed, stress-test them with specific scenarios. Invent scenarios that probe edge cases and force the user to be precise about the boundaries between concepts
 6. **Code Verification:** When the user states how something works, check whether the code agrees. If you find a contradiction, surface it: "Your code cancels entire Orders, but you just said partial cancellation is possible — which is right?"
 7. **Inline Documentation Updates:** When a term is resolved, update `{{workspace_dir}}/knowledge/contexts.md` right there. Don't batch these up — capture them as they happen. Follow the format specified in the `Contexts` specification
-8. **ADR Creation:** Only offer to create an ADR in `{{workspace_dir}}/knowledge/adrs/` when the criteria in the `ADRs` specification are met (hard to reverse, surprising without context, result of real trade-off). Follow the format specified in the `ADRs` specification
+8. **ADR Creation:** Only offer to create an `ADR` in `{{workspace_dir}}/knowledge/adrs/` when the criteria in the `ADRs` specification are met (hard to reverse, surprising without context, result of real trade-off). Follow the format specified in the `ADRs` specification
 
 ## Documentation Constraints
 

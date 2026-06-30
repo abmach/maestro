@@ -2,7 +2,6 @@
 name: play
 description: Implement plan milestones using test-driven development - apply red-green-refactor workflow to build features with comprehensive test coverage
 argument-hint: "[plan code+number] [milestone ID]"
-subagent: true
 allowed-tools:
   - read
   - find_file_by_name
@@ -35,13 +34,13 @@ permissions:
 
 # Play Milestone Implementation
 
-Implement plan milestones using test-driven development methodology with red-green-refactor cycles.
+Implement `Plan` milestones using test-driven development methodology with red-green-refactor cycles.
 
 ## Pre-flight
 
 - Working folder: `{{workspace_dir}}` - the root of the project/workspace
 - Target folders: `{{workspace_dir}}/plans/` (read-only) and code files in the project (read/write)
-- Required input: Plan code+number (e.g., "AUTH-001") and milestone ID to implement
+- Required input: `Plan` code+number (e.g., "AUTH-001") and milestone ID to implement
 
 ## Specifications & Methodologies
 
@@ -59,32 +58,32 @@ Read the following asset specification files from `{{workspace_dir}}/.agents/ass
 ## Validation
 
 - If required inputs are missing or invalid, abort with error
-- If plan file doesn't exist in plans index, abort with error
-- If milestone ID doesn't exist in the plan, abort with error
+- If `Plan` file doesn't exist in `Plans Index`, abort with error
+- If milestone ID doesn't exist in the `Plan`, abort with error
 
 ## Core Workflow
 
-**Note:** This skill focuses on milestone implementation and verification. Plan milestone status updates are handled by the `orchestrate` skill.
+**Note:** This skill focuses on milestone implementation and verification. `Plan` milestone status updates are handled by the `orchestrate` skill.
 
 ### Phase 0: Setup
 
-1. Read the `Plans Index` at `{{workspace_dir}}/plans/index.md` to find the full plan filename for the given code+number
-2. Construct plan file path: `{{workspace_dir}}/plans/{full_filename}.md`
-3. Read the plan file to understand milestone requirements and test specifications
+1. Read the `Plans Index` at `{{workspace_dir}}/plans/index.md` to find the full `Plan` filename for the given code+number
+2. Construct `Plan` file path: `{{workspace_dir}}/plans/{full_filename}.md`
+3. Read the `Plan` file to understand milestone requirements and test specifications
 
 ### 1. Extract Milestone Requirements
 
-- Read the `Plans Index` at `{{workspace_dir}}/plans/index.md` to find the full filename for the given plan code+number
-- Read the plan file at `{{workspace_dir}}/plans/{full_filename}.md`
+- Read the `Plans Index` at `{{workspace_dir}}/plans/index.md` to find the full filename for the given `Plan` code+number
+- Read the `Plan` file at `{{workspace_dir}}/plans/{full_filename}.md`
 - Extract the milestone with the specified ID
 - Understand the specific requirements from the milestone's development specifications:
   - Files to modify/create
   - API routes or components to implement
   - Business logic requirements
-  - Test specifications from the plan
+  - Test specifications from the `Plan`
 - **Check Execution Context:** Check if `MAESTRO_ORCHESTRATED` environment variable is set to "true"
-  - If orchestrated: Skip plan file updates (orchestrate will handle them)
-  - If solo: Update plan file with milestone status (In Progress) and plans index
+  - If orchestrated: Skip `Plan` file updates (orchestrate will handle them)
+  - If solo: Update `Plan` file with milestone status (In Progress) and `Plans Index`
 
 ### 2. Apply TDD Methodology
 
@@ -112,9 +111,9 @@ After milestone verification is complete:
 - **Check Execution Context:** Check if `MAESTRO_ORCHESTRATED` environment variable is set to "true"
   - If orchestrated: Return structured status to orchestrate (milestone ID, status, notes, errors)
   - If solo:
-    - **Update Plan Status:** Update milestone status to "Done" in the plan file with completion timestamp and implementation notes
-    - **Update Plans Index:** Update milestone status in plans index to reflect "Done" for this specific milestone
-    - **Add Implementation Notes:** Document any important implementation details, deviations from plan, or technical decisions in the plan file
+    - **Update Plan Status:** Update milestone status to "Done" in the `Plan` file with completion timestamp and implementation notes
+    - **Update Plans Index:** Update milestone status in `Plans Index` to reflect "Done" for this specific milestone
+    - **Add Implementation Notes:** Document any important implementation details, deviations from `Plan`, or technical decisions in the `Plan` file
 
 ### 5. Error Handling
 
@@ -123,12 +122,12 @@ If milestone implementation fails:
 - **Check Execution Context:** Check if `MAESTRO_ORCHESTRATED` environment variable is set to "true"
   - If orchestrated: Return structured failure status to orchestrate (milestone ID, error details, failure type)
   - If solo:
-    - **Update Plan Status:** Update milestone status to "Failed" in the plan file with error details and failure timestamp
-    - **Update Plans Index:** Update milestone status in plans index to reflect "Failed" for this specific milestone
-    - **Document Failure:** Add error details, reproduction steps, and investigation notes to the plan file
-    - **Automatic Issue Creation:** Create a new issue file in `{{workspace_dir}}/issues/` with appropriate type (BUG/BUILD/TEST/PERF) based on failure type
-    - **Link to Plan:** Reference the plan ID and milestone in the issue for traceability
-    - **Update Issues Index:** Add the new issue to the issues index with status "Open"
+    - **Update Plan Status:** Update milestone status to "Failed" in the `Plan` file with error details and failure timestamp
+    - **Update Plans Index:** Update milestone status in `Plans Index` to reflect "Failed" for this specific milestone
+    - **Document Failure:** Add error details, reproduction steps, and investigation notes to the `Plan` file
+    - **Automatic Issue Creation:** Create a new `Issue` file in `{{workspace_dir}}/issues/` with appropriate type (BUG/BUILD/TEST/PERF) based on failure type
+    - **Link to Plan:** Reference the `Plan` ID and milestone in the `Issue` for traceability
+    - **Update Issues Index:** Add the new `Issue` to the `Issues Index` with status "Open"
 
 ## Quality Checklist
 
@@ -141,10 +140,10 @@ Before considering the milestone complete:
 - [ ] No linting warnings on modified files
 - [ ] Code is minimal and focused (no speculative features)
 - [ ] Milestone status updated appropriately (based on execution context)
-  - If solo: Updated in plan file and plans index
+  - If solo: Updated in `Plan` file and `Plans Index`
   - If orchestrated: Returned structured status to orchestrate
 - [ ] Implementation notes added (solo) or included in status return (orchestrated)
-- [ ] If failed, issue automatically created with appropriate type (solo) or error details returned (orchestrated)
+- [ ] If failed, `Issue` automatically created with appropriate type (solo) or error details returned (orchestrated)
 
 ## Error Handling
 

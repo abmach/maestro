@@ -50,7 +50,7 @@ Read the following asset specification files from `{{workspace_dir}}/.agents/ass
 
 ### 1. Test Discovery
 
-1. **Read Asset Specifications:** Load testing preferences and repo fingerprint to understand the testing stack
+1. **Read Asset Specifications:** Load `Testing Tech Preferences` and `Repo Fingerprint` to understand the testing stack
 2. **Locate Test Files:** Find test files matching the specified scope using `find_file_by_name` and `grep`
 3. **Identify Test Framework:** Determine which testing framework is in use (Vitest, Jest, pytest, xUnit, etc.)
 

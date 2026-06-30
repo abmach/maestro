@@ -22,7 +22,7 @@ permissions:
 
 # Compose Technical Solutions
 
-Analyze requirements and create structured technical plans with precise specifications for development and testing.
+Analyze requirements and create structured technical `Plan`s with precise specifications for development and testing.
 
 ## Pre-flight
 
@@ -32,7 +32,7 @@ Analyze requirements and create structured technical plans with precise specific
 
 ## Specifications & Methodologies
 
-Read the following asset specification files from `{{workspace_dir}}/.agents/assets/` to understand formats, rules, and methodologies before creating the plan:
+Read the following asset specification files from `{{workspace_dir}}/.agents/assets/` to understand formats, rules, and methodologies before creating the `Plan`:
 
 - **Repo Fingerprint:** [repo-fingerprint.md]({{workspace_dir}}/.agents/assets/repo-fingerprint.md) - technical stack documentation specification
 - **Tech Preferences:** [tech-preferences.md]({{workspace_dir}}/.agents/assets/tech-preferences.md) - preferred technologies specification
@@ -53,29 +53,29 @@ Read the following asset specification files from `{{workspace_dir}}/.agents/ass
 
 0. **Validate Input:** Ensure feature request is provided
 1. **Get Request:** Extract the feature/change request from the user prompt
-2. **Offer Rehearse:** Use `ask_user_question` to ask: "Would you like to refine domain language, clarify terminology, and stress-test assumptions with the rehearse skill before creating the plan?"
+2. **Offer Rehearse:** Use `ask_user_question` to ask: "Would you like to refine domain language, clarify terminology, and stress-test assumptions with the rehearse skill before creating the `Plan`?"
    - If user selects "Yes, let's rehearse first": Invoke the `rehearse` skill with the current feature request as input, then proceed to step 3
-   - If user selects "No, proceed with plan creation": Proceed directly to step 3
+   - If user selects "No, proceed with `Plan` creation": Proceed directly to step 3
 3. **Check Repo Fingerprint:** If `{{workspace_dir}}/knowledge/repo-fingerprint.md` exists, read it to understand current technical stack (following `Repo Fingerprint` specification)
 4. **Check Contexts:** If `{{workspace_dir}}/knowledge/contexts.md` exists, read it to understand domain language (following `Contexts` specification)
-5. **Check ADRs:** If `{{workspace_dir}}/knowledge/adrs/` contains ADRs, review them for relevant architectural decisions (following `ADRs` specification)
+5. **Check ADRs:** If `{{workspace_dir}}/knowledge/adrs/` contains `ADRs`, review them for relevant architectural decisions (following `ADRs` specification)
 6. **Analyze Workspace:** Examine current codebase structure, existing patterns, and technical constraints
 7. **Check Existing Plans:** Read `{{workspace_dir}}/plans/index.md` to avoid conflicts with ongoing work
-8. **Check Existing Issues:** If `{{workspace_dir}}/issues/index.md` exists, read it to identify relevant issues that the plan might resolve or need to consider
-9. **Create Plan:** Generate a new plan in `{{workspace_dir}}/plans/` following the `Plan` specification
-10. **Update Index:** Update the `{{workspace_dir}}/plans/index.md` with the new plan and status ⏳ Pending
-11. **Update Repo Fingerprint:** If plan introduces new technologies, update `{{workspace_dir}}/knowledge/repo-fingerprint.md` following the `Repo Fingerprint` specification
+8. **Check Existing Issues:** If `{{workspace_dir}}/issues/index.md` exists, read it to identify relevant `Issue`s that the `Plan` might resolve or need to consider
+9. **Create Plan:** Generate a new `Plan` in `{{workspace_dir}}/plans/` following the `Plan` specification
+10. **Update Index:** Update the `{{workspace_dir}}/plans/index.md` with the new `Plan` and status ⏳ Pending
+11. **Update Repo Fingerprint:** If `Plan` introduces new technologies, update `{{workspace_dir}}/knowledge/repo-fingerprint.md` following the `Repo Fingerprint` specification
 
 ## Quality Checklist
 
-Before completing the plan:
+Before completing the `Plan`:
 
 0. **Input Validated:** Ensure feature request is provided and clear
-1. **Rehearse Option Offered:** User was given the option to refine domain language before plan creation
+1. **Rehearse Option Offered:** User was given the option to refine domain language before `Plan` creation
 2. **Context Alignment:** Use terminology from `{{workspace_dir}}/knowledge/contexts.md` if it exists
 3. **Technical Compatibility:** Match existing codebase patterns and frameworks
 4. **No Ambiguity:** Define specific implementations, not placeholders
 5. **Specification Compliance:** Follow the exact structure from the `Plan` specification
-6. **Index Updated:** Ensure `{{workspace_dir}}/plans/index.md` includes the new plan (following `Plans Index` specification)
-7. **Issues Considered:** Relevant existing issues from `{{workspace_dir}}/issues/index.md` are considered in plan design
-8. **Fingerprint Updated:** If `{{workspace_dir}}/knowledge/repo-fingerprint.md` exists, update it if plan introduces new technologies
+6. **Index Updated:** Ensure `{{workspace_dir}}/plans/index.md` includes the new `Plan` (following `Plans Index` specification)
+7. **Issues Considered:** Relevant existing `Issue`s from `{{workspace_dir}}/issues/index.md` are considered in `Plan` design
+8. **Fingerprint Updated:** If `{{workspace_dir}}/knowledge/repo-fingerprint.md` exists, update it if `Plan` introduces new technologies

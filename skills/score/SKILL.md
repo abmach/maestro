@@ -2,7 +2,6 @@
 name: score
 description: Document implementation changes - audit finished code and maintain manuals, Readmes, and API descriptions
 argument-hint: "[plan ID/code]"
-subagent: true
 allowed-tools:
   - read
   - find_file_by_name
@@ -30,7 +29,7 @@ Maintain the single source of truth for repository documentation, API changes, a
 
 - Working folder: `{{workspace_dir}}` - the root of the project/workspace
 - Target folders: `{{workspace_dir}}/docs/`, `{{workspace_dir}}/README.md`, `{{workspace_dir}}/CHANGELOG.md` (you should only modify files in these locations)
-- Required input: Plan ID/code from orchestrate
+- Required input: `Plan` ID/code from orchestrate
 
 ## Specifications & Methodologies
 
@@ -42,28 +41,28 @@ Read the following asset specification files from `{{workspace_dir}}/.agents/ass
 
 ## Validation
 
-- If required input is missing or plan ID doesn't exist in plans index, abort with error
+- If required input is missing or `Plan` ID doesn't exist in `Plans Index`, abort with error
 
 ## Core Workflow
 
-0. **Validate Input:** Ensure plan ID/code is provided
-1. **Resolve Plan:** Read the Plans Index at `{{workspace_dir}}/plans/index.md` to find the full plan filename for the given plan ID/code
-2. **Read Plan:** Construct the full plan file path and read the plan file to understand the implemented changes
-3. **Analyze Changes:** Review the plan's development specifications, user flows, and any API changes to understand what documentation needs updating
+0. **Validate Input:** Ensure `Plan` ID/code is provided
+1. **Resolve Plan:** Read the `Plans Index` at `{{workspace_dir}}/plans/index.md` to find the full `Plan` filename for the given `Plan` ID/code
+2. **Read Plan:** Construct the full `Plan` file path and read the `Plan` file to understand the implemented changes
+3. **Analyze Changes:** Review the `Plan`'s development specifications, user flows, and any API changes to understand what documentation needs updating
 4. **Update Documentation:** Update the relevant documentation files based on the implemented changes:
    - Technical manuals and guides in `{{workspace_dir}}/docs/`
    - API documentation if endpoints changed
    - `{{workspace_dir}}/README.md` if user-facing features changed
    - `{{workspace_dir}}/CHANGELOG.md` if significant changes occurred
-5. **Handle Screenshots:** If the plan includes visual changes, copy relevant screenshots from `{{workspace_dir}}/tests/screenshots/` to `{{workspace_dir}}/docs/screenshots/` and embed them in the documentation
+5. **Handle Screenshots:** If the `Plan` includes visual changes, copy relevant screenshots from `{{workspace_dir}}/tests/screenshots/` to `{{workspace_dir}}/docs/screenshots/` and embed them in the documentation
 
 ## Quality Checklist
 
 Before completing the documentation updates:
 
-0. **Input Validated:** Ensure plan ID/code is provided and exists in plans index
-1. **Plan Read:** Successfully read and understood the implemented changes from the plan file
-2. **Changes Reflected:** All implemented changes from the plan are reflected in the documentation
+0. **Input Validated:** Ensure `Plan` ID/code is provided and exists in `Plans Index`
+1. **Plan Read:** Successfully read and understood the implemented changes from the `Plan` file
+2. **Changes Reflected:** All implemented changes from the `Plan` are reflected in the documentation
 3. **API Accuracy:** API changes are documented with accurate request/response formats
 4. **User-Friendly Language:** User-facing features are explained in clear, user-friendly language
 5. **Screenshot Integration:** Screenshots are properly embedded and referenced with correct paths

@@ -23,17 +23,17 @@ permissions:
 
 # Elaborate Plans
 
-Elaborate existing plans with detailed, actionable guidance distilled from higher-quality models, filling gaps and making them easier for simpler models to execute during development.
+Elaborate existing `Plan`s with detailed, actionable guidance distilled from higher-quality models, filling gaps and making them easier for simpler models to execute during development.
 
 ## Pre-flight
 
 - Working folder: `{{workspace_dir}}` - the root of the project/workspace
 - Target folders: `{{workspace_dir}}/plans/` (you should only modify files in this folder)
-- Required input: Plan ID (e.g., "AUTH-001") or plan file path (e.g., "plans/AUTH-001-user-authentication.md")
+- Required input: `Plan` ID (e.g., "AUTH-001") or `Plan` file path (e.g., "plans/AUTH-001-user-authentication.md")
 
 ## Specifications & Methodologies
 
-Read the following asset specification files from `{{workspace_dir}}/.agents/assets/` to understand plan structure and enhancement methodologies before elaborating:
+Read the following asset specification files from `{{workspace_dir}}/.agents/assets/` to understand `Plan` structure and enhancement methodologies before elaborating:
 
 - **Plan:** [plan.md]({{workspace_dir}}/.agents/assets/plan.md) - plan structure and metadata specification
 - **Plans Index:** [plans-index.md]({{workspace_dir}}/.agents/assets/plans-index.md) - plans index specification
@@ -47,16 +47,16 @@ Read the following asset specification files from `{{workspace_dir}}/.agents/ass
 ## Validation
 
 - If required input is missing, abort with error
-- If plan file doesn't exist in plans directory, abort with error
-- If plan is already marked as Done or Failed, abort with error
+- If `Plan` file doesn't exist in plans directory, abort with error
+- If `Plan` is already marked as Done or Failed, abort with error
 
 ## Core Workflow
 
 ### Phase 0: Setup
 
-1. **Parse Input:** Determine if input is a plan ID or file path
-2. **Locate Plan:** If plan ID provided, read `{{workspace_dir}}/plans/index.md` to find the full plan filename
-3. **Read Plan:** Read the full plan file to understand its structure, milestones, and current detail level
+1. **Parse Input:** Determine if input is a `Plan` ID or file path
+2. **Locate Plan:** If `Plan` ID provided, read `{{workspace_dir}}/plans/index.md` to find the full `Plan` filename
+3. **Read Plan:** Read the full `Plan` file to understand its structure, milestones, and current detail level
 4. **Read Context:** Read relevant knowledge files (`{{workspace_dir}}/knowledge/contexts.md`, `{{workspace_dir}}/knowledge/repo-fingerprint.md`) to understand domain language and technical stack
 
 ### Phase 1: Gap Analysis
@@ -125,16 +125,16 @@ For each milestone identified as needing elaboration, add:
 ### Phase 4: User Review
 
 1. **Present Elaborations:** Use `ask_user_question` to present proposed elaborations:
-   - "I've elaborated the plan with detailed implementation guidance, code patterns, testing strategies, and best practices. Key additions include: [summary of major elaborations]. Should I apply these enhancements to the plan?"
+   - "I've elaborated the `Plan` with detailed implementation guidance, code patterns, testing strategies, and best practices. Key additions include: [summary of major elaborations]. Should I apply these enhancements to the `Plan`?"
    - Options: "Yes, apply all", "Review specific sections", "No, cancel"
 2. **Selective Review:** If user chooses "Review specific sections", present elaborations section by section for approval
 
 ### Phase 5: Plan Enhancement
 
-1. **Apply Elaborations:** Update the plan file with approved elaborations
-2. **Maintain Structure:** Ensure elaborations are added without breaking the existing plan structure and DAG dependencies
-3. **Preserve Metadata:** Keep original plan metadata (Test Tier, Docs Affected, Status) unchanged
-4. **Update Index:** If elaborations significantly change the plan scope, consider updating the description in `{{workspace_dir}}/plans/index.md`
+1. **Apply Elaborations:** Update the `Plan` file with approved elaborations
+2. **Maintain Structure:** Ensure elaborations are added without breaking the existing `Plan` structure and DAG dependencies
+3. **Preserve Metadata:** Keep original `Plan` metadata (Test Tier, Docs Affected, Status) unchanged
+4. **Update Index:** If elaborations significantly change the `Plan` scope, consider updating the description in `{{workspace_dir}}/plans/index.md`
 
 ## Elaboration Format
 
@@ -173,7 +173,7 @@ Add elaborations as nested bullet points under each milestone:
 
 Before completing the elaboration:
 
-- [ ] Plan file successfully read and understood
+- [ ] `Plan` file successfully read and understood
 - [ ] Gaps identified in existing milestones
 - [ ] Knowledge gathered from documentation and codebase
 - [ ] Elaborations follow project conventions and patterns
@@ -183,36 +183,36 @@ Before completing the elaboration:
 - [ ] Error handling covers common scenarios
 - [ ] Best practices are relevant to the tech stack
 - [ ] User approval obtained for elaborations
-- [ ] Plan structure and DAG dependencies preserved
-- [ ] Original plan metadata maintained
+- [ ] `Plan` structure and DAG dependencies preserved
+- [ ] Original `Plan` metadata maintained
 
 ## Error Handling
 
-- If plan file cannot be found, abort with error message suggesting user check the plans index
-- If plan is already Done or Failed, abort with error message suggesting the plan may not need elaboration
+- If `Plan` file cannot be found, abort with error message suggesting user check the `Plans Index`
+- If `Plan` is already Done or Failed, abort with error message suggesting the `Plan` may not need elaboration
 - If web research fails for a specific technology, note this in elaborations and proceed with codebase patterns only
-- If user rejects elaborations, do not modify the plan file
-- If elaborations would fundamentally change the plan scope, suggest creating a new plan instead
+- If user rejects elaborations, do not modify the `Plan` file
+- If elaborations would fundamentally change the `Plan` scope, suggest creating a new `Plan` instead
 
 ## Integration with Other Skills
 
 The elaborate skill integrates with:
 
-- **compose**: Can be invoked automatically after compose creates a new plan to add detail before execution
-- **orchestrate**: Elaborated plans provide better guidance for subagent execution
-- **play**: Enhanced plans make execution more reliable and efficient
+- **compose**: Can be invoked automatically after compose creates a new `Plan` to add detail before execution
+- **orchestrate**: Elaborated `Plan`s provide better guidance for subagent execution
+- **play**: Enhanced `Plan`s make execution more reliable and efficient
 - **rehearse**: Can be called if rehearse identifies areas needing more technical detail
-- **tune**: If tune identifies that a plan needs more detail for successful implementation
+- **tune**: If tune identifies that a `Plan` needs more detail for successful implementation
 
 ## Usage Patterns
 
 **Automatic Elaboration:**
-- Invoke after `compose` creates a new plan
+- Invoke after `compose` creates a new `Plan`
 - Run before `orchestrate` begins execution
-- Ensures all plans have sufficient detail for reliable execution
+- Ensures all `Plan`s have sufficient detail for reliable execution
 
 **Manual Elaboration:**
-- User invokes on existing plans that are proving difficult to execute
+- User invokes on existing `Plan`s that are proving difficult to execute
 - Can target specific complex milestones that need more guidance
 - Useful when onboarding new team members or technologies
 

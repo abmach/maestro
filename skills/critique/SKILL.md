@@ -41,7 +41,7 @@ Collaborate with user to identify and diagnose screenshot regressions against ex
 
 - Working folder: `{{workspace_dir}}` - the root of the project/workspace
 - Target folders: Framework-specific screenshot directories (read-only access)
-- Required input: Screenshot paths (provided by the testing framework) and plan reference from orchestrate/audition
+- Required input: Screenshot paths (provided by the testing framework) and `Plan` reference from orchestrate/audition
 - **Framework Flexibility:** This skill works with any testing framework that provides screenshot comparison (Playwright, Cypress, Selenium, custom solutions, etc.) - screenshot paths are provided as input rather than assumed
 
 ## Validation
@@ -79,7 +79,7 @@ Read the following asset specification files from `{{workspace_dir}}/.agents/ass
 ## Strict File Routing Rules
 
 1. **Image Isolation:** Read visual artifacts from the paths provided by the testing framework (framework-agnostic)
-2. **Context Intake:** Read the active plans in `{{workspace_dir}}/plans/` to determine if a layout change is intended or an accidental regression
+2. **Context Intake:** Read the active `Plan`s in `{{workspace_dir}}/plans/` to determine if a layout change is intended or an accidental regression
 3. **Code Analysis:** Read relevant styling, layout, component, and configuration files to understand implementation and identify root causes
 
 ## Core Workflow
@@ -103,7 +103,7 @@ Read the following asset specification files from `{{workspace_dir}}/.agents/ass
 #### If User Reports Issues:
 1. **Analyze User Description:** Parse the user's visual observations
 2. **Code Investigation:** Read relevant styling, layout, component, and configuration files to understand the implementation
-3. **Cross-Reference Plan:** Check if the visual difference matches intended changes from the plan
+3. **Cross-Reference Plan:** Check if the visual difference matches intended changes from the `Plan`
 4. **Root Cause Analysis:** Correlate user's visual observations with code to identify:
    - Styling rules causing the issue
    - Layout properties that need adjustment
@@ -113,8 +113,8 @@ Read the following asset specification files from `{{workspace_dir}}/.agents/ass
 5. **Provide Remediation:** Generate specific styling fixes, layout adjustments, or configuration changes based on both user input and code analysis
 
 #### If User Says It Looks Correct:
-1. **Plan Verification:** Cross-reference with the plan's QA specifications
-2. **Intended Change Check:** If the visual difference matches an intended change from the plan, mark as `APPROVE`
+1. **Plan Verification:** Cross-reference with the `Plan`'s QA specifications
+2. **Intended Change Check:** If the visual difference matches an intended change from the `Plan`, mark as `APPROVE`
 3. **Baseline Update Recommendation:** If appropriate, recommend updating the baseline snapshot
 4. **Final Verdict:** Provide `APPROVE` with explanation
 
@@ -126,7 +126,7 @@ Read the following asset specification files from `{{workspace_dir}}/.agents/ass
 ## Aesthetic & Spatial Audit Guidelines
 
 When evaluating screenshots (either in AI-only mode or to supplement user input), conduct the analysis through these core dimensions:
-1. **Blueprint Verification:** Read the active plan's QA Testing Specifications. If a visual difference matches an explicitly requested style, layout, or viewport modification, mark it as `APPROVE`
+1. **Blueprint Verification:** Read the active `Plan`'s QA Testing Specifications. If a visual difference matches an explicitly requested style, layout, or viewport modification, mark it as `APPROVE`
 2. **Layout & Alignment Check:** Look for broken alignments, overlapping elements, unexpected word wraps, container height collapses, or grid gutter blowouts
 3. **Responsive Breakpoint Auditing:** Verify visual consistency and correctness across different viewport dimensions (desktop, tablet, mobile). Look for layout shifts or hidden elements
 4. **Code-Level Investigation:** Examine styling rules, component structure, and configuration files to identify the root cause of visual issues
