@@ -46,6 +46,8 @@
 
 ## Path Conventions
 
+- **Unit tests:** Co-locate with source following the project's existing convention (e.g., `src/auth/jwt.test.ts`, `test_auth.py`)
+- **E2E tests:** Flat in root `tests/` (e.g., `tests/auth.spec.ts`) — no subdirectories
 - `{name}` placeholder: replaced with test-specific screenshot names
 - `critique` skill accepts screenshot paths as input (framework-agnostic)
 - `test-results/` directory should be in `.gitignore`

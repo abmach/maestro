@@ -46,17 +46,7 @@ Independent milestones (empty dependencies) can execute in parallel. Integration
 
 ### DAG Milestone Requirements
 
-When defining milestones in the Steps section, incorporate these mandatory milestones based on plan metadata:
-
-**E2E Testing (if `Test Tier` is `e2e`):**
-- Milestone for E2E Test Creation (depends on feature completion)
-- Milestone for E2E Test Execution (depends on test creation)
-
-**Smoke Testing (if `Test Tier` is `smoke`):**
-- You MAY include basic smoke testing milestones if appropriate for the change scope
-
-**Documentation (if `Docs Affected` is `true`):**
-- Milestone for Documentation Update (depends on development or E2E testing completion)
+The DAG should only contain **development milestones** — things the `play` skill can implement (features, components, API endpoints, schema changes, etc.). Do not include testing or documentation as milestones.
 
 ### Be Specific and Unambiguous
 
@@ -90,7 +80,7 @@ Elaboration format example:
     }
     ```
   **Testing Strategy:**
-  - Create test file at `tests/path/to/test.spec.ts`
+  - Create test file at `tests/auth.spec.ts`
   - Test cases: [specific cases]
   - Mock data: [specific mock requirements]
 ```
@@ -127,16 +117,13 @@ Use the standard status legend for both the overall plan and individual mileston
 
 ## Status: ✅ Done/🔄 In progress/⏳ Pending/⚠️ Blocked/❌ Failed
 
-## Steps
+## Milestones
 
 (✅ Done, 🔄 In progress, ⏳ Pending, ⚠️ Blocked, ❌ Failed)
 
 - ⏳ **Milestone 1 (ID: 1, Dependencies: [])**: [Short Title] - Specific detailed task description.
 - ⏳ **Milestone 2 (ID: 2, Dependencies: [])**: [Short Title] - Independent milestone (can run in parallel with Milestone 1).
 - ⏳ **Milestone 3 (ID: 3, Dependencies: [1, 2])**: [Short Title] - Integration milestone (requires both Milestone 1 and 2 to be completed first).
-- ⏳ **Milestone 4 (ID: 4, Dependencies: [3])**: [E2E Test Creation] - Spawn `e2e_test_developer` to write Playwright test cases covering the integrated user flow.
-- ⏳ **Milestone 5 (ID: 5, Dependencies: [4])**: [E2E Test Execution] - Invoke `audition` skill to execute test specs and capture results.
-- ⏳ **Milestone 6 (ID: 6, Dependencies: [5])**: [Documentation Update] - Spawn `doc_processor` to update manuals, Readmes, or API descriptions under `docs/` based on final layout and E2E visual captures.
 - ...
 
 **Optional Elaboration Example:**
@@ -161,7 +148,7 @@ Use the standard status legend for both the overall plan and individual mileston
     }
     ```
   **Testing Strategy:**
-  - Create `tests/auth/jwt-authenticator.spec.ts`
+  - Create `tests/auth.spec.ts`
   - Test token generation with valid user data
   - Test token validation with valid and expired tokens
   - Test error handling for malformed tokens
@@ -172,6 +159,11 @@ Use the standard status legend for both the overall plan and individual mileston
 ```
 
 ## Development Specifications
+
+### Test File Locations
+
+- **Unit tests:** Co-locate with source code following the project's existing convention (e.g., `src/auth/jwt.test.ts`, `src/components/auth/LoginForm.test.tsx`, `test_auth.py`)
+- **E2E tests:** Flat in the root `tests/` directory (e.g., `tests/auth.spec.ts`, `tests/login.spec.ts`) — do NOT nest in subdirectories
 
 ### Backend
 
@@ -221,7 +213,7 @@ Implement JWT-based authentication with login, registration, and password reset 
 
 ## Status: ⏳ Pending
 
-## Steps
+## Milestones
 
 (✅ Done, 🔄 In progress, ⏳ Pending, ⚠️ Blocked, ❌ Failed)
 
@@ -230,9 +222,6 @@ Implement JWT-based authentication with login, registration, and password reset 
 - ⏳ **Milestone 3 (ID: 3, Dependencies: [1, 2])**: [JWT Middleware] - Create authentication middleware in `src/middleware/auth.ts` that validates JWT tokens and attaches user to request.
 - ⏳ **Milestone 4 (ID: 4, Dependencies: [3])**: [Frontend Login Form] - Build login component at `src/components/auth/LoginForm.tsx` with email/password fields and form validation.
 - ⏳ **Milestone 5 (ID: 5, Dependencies: [3, 4])**: [Frontend Registration Form] - Build registration component at `src/components/auth/RegisterForm.tsx` with email/password/confirm-password fields.
-- ⏳ **Milestone 6 (ID: 6, Dependencies: [5])**: [E2E Test Creation] - Spawn `e2e_test_developer` to write Playwright test cases covering the complete auth flow (registration → login → logout).
-- ⏳ **Milestone 7 (ID: 7, Dependencies: [6])**: [E2E Test Execution] - Invoke `audition` skill to execute test specs and capture results of auth forms.
-- ⏳ **Milestone 8 (ID: 8, Dependencies: [7])**: [Documentation Update] - Spawn `doc_processor` to update API documentation under `docs/api/auth.md` with authentication endpoints and JWT usage.
 
 ## Development Specifications
 
@@ -253,7 +242,7 @@ Implement JWT-based authentication with login, registration, and password reset 
 - **Components:** LoginForm (email input, password input, submit button), RegisterForm (email input, password input, confirm password input, submit button), useAuth hook (login, register, logout functions)
 - **API Integration:** LoginForm calls POST /api/auth/login, RegisterForm calls POST /api/auth/register, useAuth manages token in localStorage
 - **Styling Notes:** Use semantic HTML (form, label, input), responsive design for mobile (max-width: 400px), accessibility (aria-labels, focus states)
-- **Automated Component Tests:** Create `src/components/auth/__tests__/LoginForm.test.tsx` and `RegisterForm.test.tsx` with tests for form validation, API calls, error handling, loading states
+- **Automated Component Tests:** Create `src/components/auth/LoginForm.test.tsx` and `RegisterForm.test.tsx` with tests for form validation, API calls, error handling, loading states
 
 ### Automated User Flows
 

@@ -219,9 +219,8 @@ When deviating, document the reason in the ADR or project documentation.
 
 ### Test Organization
 
-- **Unit Tests:** Co-locate with source code or in dedicated `__tests__` directories
-- **Integration Tests:** Separate directory (e.g., `tests/integration/`)
-- **E2E Tests:** Dedicated directory (e.g., `tests/e2e/`)
+- **Unit Tests:** Co-locate with source code following the project's existing convention (e.g., `src/auth/jwt.test.ts`, `test_auth.py`, `Auth.Tests.cs`)
+- **E2E Tests:** Flat in the root `tests/` directory (e.g., `tests/auth.spec.ts`, `tests/login.spec.ts`) — do NOT nest in subdirectories
 - **Test Files:** Use `.test.ts`, `.spec.ts`, or `test_*.py` naming conventions
 
 ### Test Data Management

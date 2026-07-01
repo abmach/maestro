@@ -159,7 +159,7 @@ Add elaborations as nested bullet points under each milestone:
     }
     ```
   **Testing Strategy:**
-  - Create test file at `tests/path/to/test.spec.ts`
+  - Create test file at `tests/auth.spec.ts`
   - Test cases: [specific cases]
   - Mock data: [specific mock requirements]
   **Error Handling:**

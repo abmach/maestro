@@ -19,8 +19,7 @@
 
 - Each milestone has: unique numeric `ID`, `Dependencies` list (referencing preceding IDs), description
 - Empty dependencies = can run in parallel
-- **If `Test Tier` is `e2e`:** must include E2E Test Creation + E2E Test Execution milestones
-- **If `Docs Affected` is `true`:** must include Documentation Update milestone
+- Only development milestones (features, components, API endpoints, etc.) — do not include testing or documentation
 
 ## Template
 
@@ -37,18 +36,19 @@
 
 ## Status: ⏳ Pending
 
-## Steps
+## Milestones
 
 (✅ Done, 🔄 In progress, ⏳ Pending, ⚠️ Blocked, ❌ Failed)
 
 - ⏳ **Milestone 1 (ID: 1, Dependencies: [])**: [Title] - Description.
 - ⏳ **Milestone 2 (ID: 2, Dependencies: [])**: [Title] - Independent milestone.
 - ⏳ **Milestone 3 (ID: 3, Dependencies: [1, 2])**: [Title] - Integration milestone.
-- ⏳ **Milestone 4 (ID: 4, Dependencies: [3])**: [E2E Test Creation] - Write E2E tests.
-- ⏳ **Milestone 5 (ID: 5, Dependencies: [4])**: [E2E Test Execution] - Run E2E tests.
-- ⏳ **Milestone 6 (ID: 6, Dependencies: [5])**: [Documentation Update] - Update docs.
 
 ## Development Specifications
+
+### Test File Locations
+- **Unit tests:** Co-locate with source following the project's existing convention (e.g., `src/auth/jwt.test.ts`)
+- **E2E tests:** Flat in root `tests/` (e.g., `tests/auth.spec.ts`) — no subdirectories
 
 ### Backend
 - **Files to modify/create:** [paths]
