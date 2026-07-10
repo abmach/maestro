@@ -8,10 +8,15 @@ allowed-tools:
   - find_file_by_name
   - grep
   - web_search
+  - write
+  - edit
 permissions:
   allow:
     - Write(./knowledge/**/*)
     - Edit(./knowledge/**/*)
+    - Read(./knowledge/**/*)
+    - Read(./.agents/references/**/*)
+    - Read(./**/*)
   deny:
     - exec
 ---

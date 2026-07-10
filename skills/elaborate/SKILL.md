@@ -15,8 +15,10 @@ permissions:
   allow:
     - Read(./plans/**/*)
     - Write(./plans/**/*)
+    - Edit(./plans/**/*)
     - Read(./.agents/references/**/*)
     - Read(./knowledge/**/*)
+    - Read(./**/*)
   deny:
     - exec
 ---

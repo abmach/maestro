@@ -12,10 +12,13 @@ allowed-tools:
   - skill
 permissions:
   allow:
-    - Write(./knowledge/**/*)
-    - Edit(./knowledge/**/*)
     - Write(./plans/**/*)
     - Edit(./plans/**/*)
+    - Read(./plans/**/*)
+    - Read(./knowledge/**/*)
+    - Read(./.agents/references/**/*)
+    - Read(./issues/**/*)
+    - Read(./**/*)
   deny:
     - exec
 ---
@@ -39,7 +42,7 @@ Reference specs are in `{{workspace_dir}}/.agents/references/`. Read them on-dem
 - **`Plans Index`:** Read `plans-index.md` — for index format (compose updates the index every invocation)
 
 ### On-demand (read only when needed)
-- **`Repo Fingerprint`:** Read `{{workspace_dir}}/knowledge/repo-fingerprint.md` (working file) — if it exists, to understand current tech stack. Read `repo-fingerprint.md` (spec) only if updating the fingerprint.
+- **`Repo Fingerprint`:** Read `{{workspace_dir}}/knowledge/repo-fingerprint.md` (working file) — if it exists, to understand current tech stack
 - **`Contexts`:** Read `{{workspace_dir}}/knowledge/contexts.md` (working file) — if it exists, to understand domain language.
 - **`ADRs`:** Read `{{workspace_dir}}/knowledge/adrs/` (working files) — if they exist, to review relevant architectural decisions.
 - **`Issue` (quick):** Read `issue-quick.md` — only if `{{workspace_dir}}/issues/index.md` exists, to identify relevant `Issue`s.
@@ -67,7 +70,6 @@ For how references relate to each other, see `references-map.md`.
 8. **Check Existing Issues:** If `{{workspace_dir}}/issues/index.md` exists, read it to identify relevant `Issue`s that the `Plan` might resolve or need to consider
 9. **Create Plan:** Generate a new `Plan` in `{{workspace_dir}}/plans/` following the `Plan` specification
 10. **Update Index:** Update the `{{workspace_dir}}/plans/index.md` with the new `Plan` and status ⏳ Pending
-11. **Update Repo Fingerprint:** If `Plan` introduces new technologies, update `{{workspace_dir}}/knowledge/repo-fingerprint.md` following the `Repo Fingerprint` specification
 
 ## Quality Checklist
 
@@ -81,7 +83,6 @@ Before completing the `Plan`:
 5. **Specification Compliance:** Follow the exact structure from the `Plan` specification
 6. **Index Updated:** Ensure `{{workspace_dir}}/plans/index.md` includes the new `Plan` (following `Plans Index` specification)
 7. **Issues Considered:** Relevant existing `Issue`s from `{{workspace_dir}}/issues/index.md` are considered in `Plan` design
-8. **Fingerprint Updated:** If `{{workspace_dir}}/knowledge/repo-fingerprint.md` exists, update it if `Plan` introduces new technologies
 
 ## Execution
 

@@ -18,6 +18,9 @@ permissions:
     - Write(./docs/screenshots/**/*)
     - Write(./README.md)
     - Edit(./README.md)
+    - Read(./.agents/references/**/*)
+    - Write(./CHANGELOG.md)
+    - Edit(./CHANGELOG.md)
   deny:
     - exec
 ---

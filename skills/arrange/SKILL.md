@@ -11,6 +11,8 @@ allowed-tools:
 permissions:
   allow:
     - Read(./plans/**/*)
+    - Read(./.agents/references/**/*)
+    - Read(./tests/**/*)
     - Write(./tests/**/*)
     - Edit(./tests/**/*)
   deny:
@@ -52,21 +54,23 @@ For how references relate to each other, see `references-map.md`.
 
 ### Phase 1: Test Design & Creation
 
-1. **Test Type Determination:** Based on the `Plan` specifications, determine the types of integration and E2E tests needed
-2. **Framework Selection:** Consult `Testing Tech Preferences` to select appropriate testing frameworks for integration and E2E testing
-3. **Test Design:** Apply the test design cycle based on `Plan` specifications and selected frameworks:
+1. **Check Existing Tests:** Before creating new test files, check if test files already exist in `{{workspace_dir}}/tests/` for this `Plan`. If they do, update them to match the current `Plan` specifications rather than creating new files
+2. **Test Type Determination:** Based on the `Plan` specifications, determine the types of integration and E2E tests needed
+3. **Framework Selection:** Consult `Testing Tech Preferences` to select appropriate testing frameworks for integration and E2E testing
+4. **Test Design:** Apply the test design cycle based on `Plan` specifications and selected frameworks:
    - **Test Structure:** Create E2E test files flat in the root `tests/` directory (e.g., `tests/auth.spec.ts`) — do NOT nest in subdirectories. Unit tests are co-located with source code by the `play` skill
+   - **Visual Regression:** Include `expect(page).toHaveScreenshot('{name}.png')` calls in E2E tests for each user flow and viewport specified in the `Plan`. These capture baseline screenshots on first run and compare against them on subsequent runs
    - **Test Isolation:** Ensure tests are independent and can run in any order
    - **Mocking Strategy:** For integration and E2E tests, determine appropriate mocking strategies for external dependencies
    - **Data Management:** Set up test fixtures and data factories for consistent test data
    - **Framework-Specific Best Practices:** Apply framework-specific best practices (e.g., semantic selectors for UI tests, clean assertions for unit tests)
-4. **Configuration:** Set up testing framework configuration as needed:
+5. **Configuration:** Set up testing framework configuration as needed:
    - Configure test runners, reporters, and output directories
    - Set up code coverage collection if required
    - Configure test databases or test environments if needed
    - Ensure proper `.gitignore` entries for test artifacts
    - Apply the configuration settings from `Testing Tech Preferences`, if available
-5. **Test Creation:** Create or update E2E test files flat in the `{{workspace_dir}}/tests/` directory (e.g., `tests/auth.spec.ts`, `tests/login.spec.ts`) following the `Plan` specifications and test design principles. Do NOT create subdirectories inside `tests/`
+6. **Test Creation:** Create or update E2E test files flat in the `{{workspace_dir}}/tests/` directory (e.g., `tests/auth.spec.ts`, `tests/login.spec.ts`) following the `Plan` specifications and test design principles. Do NOT create subdirectories inside `tests/`
 
 ## 🔌 Input & Output Interface
 

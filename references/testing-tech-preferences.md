@@ -72,14 +72,15 @@ export default defineConfig({
   // Structured reporting for Maestro integration
   reporter: ['json', { outputFile: './test-results/summary.json' }],
 
-  // Screenshot configuration for debugging
-  screenshot: 'on', // Config-level setting captures temporary, git-ignored snapshots
+  // Screenshot configuration for debugging (temporary, git-ignored)
+  screenshot: 'only-on-failure', // Captures screenshots on test failure for debugging
 
   // Disable heavy features for performance
   video: 'off', // Video capture adds significant overhead
   trace: 'off', // Trace capture adds significant overhead
 
-  // Screenshot path configuration for visual regression
+  // Visual regression snapshot configuration
+  // Used by expect(page).toHaveScreenshot() calls in E2E tests
   expect: {
     snapshotPath: 'tests/screenshots/baselines',
   },
@@ -88,7 +89,7 @@ export default defineConfig({
 })
 ```
 
-**Note:** Ensure the `test-results/` directory is added to `.gitignore` to avoid committing runtime test outputs.
+**Note:** Ensure the `test-results/` directory is added to `.gitignore` to avoid committing runtime test outputs. Visual regression baselines in `tests/screenshots/baselines/` SHOULD be committed to git.
 
 #### Cypress Configuration
 

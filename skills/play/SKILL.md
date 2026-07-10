@@ -8,12 +8,13 @@ allowed-tools:
   - grep
   - write
   - edit
-  - skill
+  - exec
 permissions:
   allow:
     - Read(./plans/**/*)
     - Read(./.agents/references/**/*)
     - Read(./issues/**/*)
+    - Read(./**/*)
     - Write(./**/*)
     - Edit(./**/*)
     - Exec(yarn add *)

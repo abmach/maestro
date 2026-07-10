@@ -188,6 +188,7 @@ Use the standard status legend for both the overall plan and individual mileston
    - Fill `[data-testid="..."]` with `{input}`
    - Click `[data-testid="..."]`
    - Assert page redirects to `{URL}` or displays element `[data-testid="..."]`
+   - Capture screenshot: `expect(page).toHaveScreenshot('{flow-name}.png')` for each viewport in Visual Regression Viewports
 
 ### Playwright Element Selectors
 
@@ -253,6 +254,7 @@ Implement JWT-based authentication with login, registration, and password reset 
    - Fill `[data-testid="register-confirm-password"]` with `SecurePass123!`
    - Click `[data-testid="register-submit"]`
    - Assert page redirects to `/login` or displays success message `[data-testid="register-success"]`
+   - Capture screenshot: `expect(page).toHaveScreenshot('registration.png')` for each viewport
 
 2. **Login Flow:** Step-by-step automated user interaction sequence.
    - Navigate to `/login`
@@ -260,11 +262,13 @@ Implement JWT-based authentication with login, registration, and password reset 
    - Fill `[data-testid="login-password"]` with `SecurePass123!`
    - Click `[data-testid="login-submit"]`
    - Assert page redirects to `/dashboard` or displays user info `[data-testid="user-info"]`
+   - Capture screenshot: `expect(page).toHaveScreenshot('login.png')` for each viewport
 
 3. **Logout Flow:** Step-by-step automated user interaction sequence.
    - Navigate to `/dashboard`
    - Click `[data-testid="logout-button"]`
    - Assert page redirects to `/login` and localStorage is cleared
+   - Capture screenshot: `expect(page).toHaveScreenshot('logout.png')` for each viewport
 
 ### Playwright Element Selectors
 

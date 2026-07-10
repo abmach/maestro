@@ -65,7 +65,7 @@
 - **Automated Component Tests:** [test files, mocked state, expected renders]
 
 ### Automated User Flows
-1. **{Flow Name}:** Navigate → Fill `[data-testid="..."]` → Click `[data-testid="..."]` → Assert redirect or element
+1. **{Flow Name}:** Navigate → Fill `[data-testid="..."]` → Click `[data-testid="..."]` → Assert redirect or element → Capture screenshot `expect(page).toHaveScreenshot('{name}.png')` for each viewport
 
 ### Playwright Element Selectors
 - `[data-testid="..."]` — description

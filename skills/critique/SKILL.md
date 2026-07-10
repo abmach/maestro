@@ -4,6 +4,8 @@ description: Critique visual issues - collaborate with user to identify screensh
 argument-hint: "[plan ID/code] [screenshot paths]"
 allowed-tools:
   - read
+  - find_file_by_name
+  - grep
   - ask_user_question
 permissions:
   allow:
@@ -12,6 +14,7 @@ permissions:
     - Read(./tests/**/*)
     - Read(./plans/**/*)
     - Read(./src/**/*)
+    - Read(./.agents/references/**/*)
     - Read(./**/*.css)
     - Read(./**/*.scss)
     - Read(./**/*.less)

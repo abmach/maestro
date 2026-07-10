@@ -10,11 +10,25 @@ allowed-tools:
   - run_subagent
   - read_subagent
   - skill
+  - exec
 permissions:
   allow:
     - Read(./plans/**/*)
     - Write(./plans/**/*)
     - Edit(./plans/**/*)
+    - Read(./knowledge/**/*)
+    - Write(./knowledge/repo-fingerprint.md)
+    - Edit(./knowledge/repo-fingerprint.md)
+    - Read(./.agents/references/**/*)
+    - Read(./issues/**/*)
+    - Write(./issues/**/*)
+    - Edit(./issues/**/*)
+    - Exec(yarn test*)
+    - Exec(npm run test*)
+    - Exec(yarn build*)
+    - Exec(npm run build*)
+    - Exec(git checkout*)
+    - Exec(git restore*)
 ---
 
 # Orchestrate Feature Implementation
@@ -38,6 +52,7 @@ Reference specs are in `{{workspace_dir}}/.agents/references/`. Read them on-dem
 ### On-demand (read only when needed)
 - **`Issue` (quick):** Read `issue-quick.md` — when a milestone fails and an Issue must be created
 - **`Issues Index`:** Read `issues-index.md` — when updating the issues index after a failure
+- **`Repo Fingerprint`:** Read `repo-fingerprint.md` — when updating `{{workspace_dir}}/knowledge/repo-fingerprint.md` in Phase 3
 
 ### Cross-references
 For how references relate to each other, see `references-map.md`.
@@ -99,10 +114,11 @@ Execute the `Plan` as a Directed Acyclic Graph (DAG) of development milestones t
 1. **Update plan status:** Update the `{{workspace_dir}}/plans/index.md` status to `✅ Done`
    - If `Docs Affected` is `true`: append `⏳` after the status emoji (e.g., `✅⏳`) to indicate documentation is pending
    - If `Docs Affected` is `false`: no docs marker (e.g., `✅`)
-2. **User Gate:** If `Docs Affected` is `true`, ask the user: "Documentation update is needed. Run the `score` skill now? [Yes / No]"
+2. **Update Repo Fingerprint:** If the `Plan` introduced new technologies, frameworks, or dependencies that are now in the codebase, update `{{workspace_dir}}/knowledge/repo-fingerprint.md`
+3. **User Gate:** If `Docs Affected` is `true`, ask the user: "Documentation update is needed. Run the `score` skill now? [Yes / No]"
    - If "Yes": Invoke the `score` skill with the `Plan` ID/code (this will update `⏳` → `📝` in the index)
    - If "No": Inform the user they can run `/score {plan-id}` later, or run `/score` without arguments to process all pending finished plans at once
-3. If any `Issue`s were created during execution, ensure they are properly documented in `{{workspace_dir}}/issues/` and indexed in `{{workspace_dir}}/issues/index.md`
+4. If any `Issue`s were created during execution, ensure they are properly documented in `{{workspace_dir}}/issues/` and indexed in `{{workspace_dir}}/issues/index.md`
 
 ## 🚫 Critical Boundaries
 

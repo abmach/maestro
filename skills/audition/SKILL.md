@@ -7,13 +7,14 @@ allowed-tools:
   - find_file_by_name
   - grep
   - write
-  - edit
   - exec
 permissions:
   allow:
     - Read(./tests/**/*)
     - Read(./plans/**/*)
     - Read(./src/**/*)
+    - Read(./.agents/references/**/*)
+    - Read(./knowledge/**/*)
     - Write(./test-results/**/*)
     - Exec(yarn test*)
     - Exec(npm run test*)

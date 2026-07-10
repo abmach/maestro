@@ -5,10 +5,10 @@ allowed-tools:
   - ask_user_question
   - read
   - exec
-  - write
 permissions:
   allow:
     - Write(./.agents/**/*)
+    - Read(./.agents/**/*)
     - Exec(./)
 ---
 

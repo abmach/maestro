@@ -9,10 +9,14 @@ allowed-tools:
   - write
   - edit
   - ask_user_question
+  - exec
+  - skill
 permissions:
   allow:
     - Read(./issues/**/*)
     - Read(./.agents/references/**/*)
+    - Read(./knowledge/**/*)
+    - Read(./**/*)
     - Write(./**/*)
     - Edit(./**/*)
     - Exec(yarn add *)
