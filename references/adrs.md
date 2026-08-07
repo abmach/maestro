@@ -4,9 +4,9 @@
 
 ## File Location and Naming
 
-- **Directory:** `{{workspace_dir}}/knowledge/adrs/`
+- **Directory:** `{{WORKSPACE}}/knowledge/adrs/`
 - **Naming convention:** Sequential numbering with descriptive slug: `0001-slug.md`, `0002-slug.md`, etc.
-- **Directory creation:** Create `{{workspace_dir}}/knowledge/adrs/` lazily when the first ADR is needed
+- **Directory creation:** Create `{{WORKSPACE}}/knowledge/adrs/` lazily when the first ADR is needed
 
 ## Core Template
 

@@ -4,10 +4,10 @@
 
 ## File Location and Naming
 
-- **Directory:** `{{workspace_dir}}/issues/`
+- **Directory:** `{{WORKSPACE}}/issues/`
 - **Naming convention:** Issue type with sequential number: `BUG-001-authentication-failure.md`, `BUILD-002-compilation-error.md`, `PERF-003-slow-query.md`, etc.
-- **Index file:** `{{workspace_dir}}/issues/index.md` tracks all issues and their status
-- **Directory creation:** Create `{{workspace_dir}}/issues/` lazily when the first issue is needed
+- **Index file:** `{{WORKSPACE}}/issues/index.md` tracks all issues and their status
+- **Directory creation:** Create `{{WORKSPACE}}/issues/` lazily when the first issue is needed
 
 ## Issue Types
 
@@ -98,16 +98,16 @@ Each issue file must follow this structure:
 
 ## Related Issues
 
-- [ISSUE-TYPE-NUMBER]({{workspace_dir}}/issues/ISSUE-TYPE-NUMBER-issue-title.md) — Related issue description
-- [PLAN-TYPE-NUMBER]({{workspace_dir}}/plans/PLAN-TYPE-NUMBER-plan-title.md) — Related plan if fix requires feature work
+- [ISSUE-TYPE-NUMBER](./issues/ISSUE-TYPE-NUMBER-issue-title.md) — Related issue description
+- [PLAN-TYPE-NUMBER](./plans/PLAN-TYPE-NUMBER-plan-title.md) — Related plan if fix requires feature work
 
 ## References
 
 Links to relevant workspace content (NOT specification files in `.agents/references/`):
 
-- [Error Logs]({{workspace_dir}}/path/to/logs}) — Link to relevant logs
-- [Contexts]({{workspace_dir}}/knowledge/contexts.md) — Domain language references
-- [ADRs]({{workspace_dir}}/knowledge/adrs/) — Architectural decisions that may be relevant
+- [Error Logs](./path/to/logs}) — Link to relevant logs
+- [Contexts](./knowledge/contexts.md) — Domain language references
+- [ADRs](./knowledge/adrs/) — Architectural decisions that may be relevant
 ```
 
 ## Severity Classification
@@ -165,7 +165,7 @@ Issues follow this status progression:
 ### Creating Issues
 
 When a new issue is identified:
-1. Create issue file in `{{workspace_dir}}/issues/` with appropriate type and number
+1. Create issue file in `{{WORKSPACE}}/issues/` with appropriate type and number
 2. Add entry to `issues/index.md` with status Open
 3. Include all available error details and reproduction steps
 4. Set severity and priority based on impact assessment
@@ -262,7 +262,7 @@ Root cause identified: Token refresh mechanism not implemented. Access tokens ex
 - **Date:** 2026-06-23
 - **Approach:** Added refresh token mechanism with 7-day expiration
 - **Result:** Success - tokens now refresh automatically before expiration
-- **Notes:** Requires [PLAN-AUTH-002-refresh-token-implementation]({{workspace_dir}}/plans/AUTH-002-refresh-token-implementation.md)
+- **Notes:** Requires [PLAN-AUTH-002-refresh-token-implementation](./plans/AUTH-002-refresh-token-implementation.md)
 
 ## Resolution
 
@@ -277,11 +277,11 @@ Implemented refresh token flow with access tokens (1h expiration) and refresh to
 ## Related Issues
 
 - None
-- [PLAN-AUTH-002]({{workspace_dir}}/plans/AUTH-002-refresh-token-implementation.md) — Refresh token implementation plan that resolved this issue
+- [PLAN-AUTH-002](./plans/AUTH-002-refresh-token-implementation.md) — Refresh token implementation plan that resolved this issue
 
 ## References
 
-- [Error Logs]({{workspace_dir}}/logs/auth-service-2026-06-22.log}) — Authentication error logs
-- [Contexts]({{workspace_dir}}/knowledge/contexts.md) — Authentication domain language
-- [ADRs]({{workspace_dir}}/knowledge/adrs/0001-refresh-token-strategy.md) — Decision to adopt refresh token flow over extended JWT expiration
+- [Error Logs](./logs/auth-service-2026-06-22.log}) — Authentication error logs
+- [Contexts](./knowledge/contexts.md) — Authentication domain language
+- [ADRs](./knowledge/adrs/0001-refresh-token-strategy.md) — Decision to adopt refresh token flow over extended JWT expiration
 ````

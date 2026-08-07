@@ -17,9 +17,9 @@ Commercial tools should only be considered when they provide essential functiona
 
 - **Directory:** None. This file is just for reference, it's not part of the workspace.
 
-## ⚠️ Important: Always Check Online
+## ⚠️ When to Check Online
 
-When selecting testing technologies, always search online for the current latest stable versions. Use web search to verify current versions before making technology choices.
+Use web search to confirm current versions **only when selecting a NEW testing technology** to introduce to the project — i.e., when no `Repo Fingerprint` exists yet, or when introducing a testing framework/library not already recorded in the existing `Repo Fingerprint`. The `Repo Fingerprint`'s recorded versions are authoritative for the existing stack; do not re-search them.
 
 ## Preferences
 
@@ -54,7 +54,7 @@ When selecting testing technologies, always search online for the current latest
 
 **Path Conventions:**
 - **{name} placeholder**: Replaced with test-specific screenshot names
-- **Framework flexibility**: The `critique` skill accepts screenshot paths as input, making it framework-agnostic
+- **Framework flexibility**: Screenshot paths are inputs to the `orchestrate` skill's visual regression routing, making them framework-agnostic
 - **Consistency**: Projects can choose to follow these conventions or use custom paths
 - **Recommended structure**: `tests/screenshots/baselines/`, `tests/screenshots/actuals/`, `tests/screenshots/diffs/`
 
@@ -211,7 +211,7 @@ When deviating, document the reason in the ADR or project documentation.
 
 ## Version Strategy
 
-- **Always Verify Online:** Before selecting any version, search online for the current latest stable release
+- **Verify Online for New Selections:** Search online for the current latest stable release when introducing a testing technology not in the existing `Repo Fingerprint`. Use the `Repo Fingerprint`'s recorded versions for the existing stack.
 - **Stable Only:** Use stable releases, never alpha/beta unless explicitly required
 - **Security Updates:** Always use versions that receive security updates
 - **Breaking Changes:** Be cautious with major version upgrades in testing frameworks

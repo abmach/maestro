@@ -4,10 +4,10 @@
 
 ## File Location and Naming
 
-- **Directory:** `{{workspace_dir}}/plans/`
+- **Directory:** `{{WORKSPACE}}/plans/`
 - **Naming convention:** Meaningful feature code with sequential number: `AUTH-001-user-authentication.md`, `PAY-002-stripe-integration.md`, etc.
-- **Index file:** `{{workspace_dir}}/plans/index.md` tracks all plans and their status
-- **Directory creation:** Create `{{workspace_dir}}/plans/` lazily when the first plan is needed
+- **Index file:** `{{WORKSPACE}}/plans/index.md` tracks all plans and their status
+- **Directory creation:** Create `{{WORKSPACE}}/plans/` lazily when the first plan is needed
 
 ## Test Tier Classification
 
@@ -29,6 +29,16 @@ When `Docs Affected` is `true`, the plan must also track `Docs Updated` to indic
 - **true** — Documentation has been updated
 - **false** — Documentation not yet updated, or not applicable (when `Docs Affected` is `false`)
 
+## Verification Command
+
+Each plan may specify a `Verify Cmd` — a single shell command that orchestrate runs to verify milestone-level and Phase-2 (smoke/none tier) work:
+
+- **e.g.,** `yarn test`, `npm run lint`, `go test ./...`, `dotnet test`
+- Run after each milestone passes (per-milestone verification)
+- Run at Phase 2 when `Test Tier` is `smoke` or `none` (catch-all verification)
+- Leave empty (or omit) when there's no meaningful verify command for the Plan
+- The `orchestrate` skill reads this field; skills and agents do NOT read it directly
+
 ## Writing Rules
 
 ### Use Relative Paths
@@ -41,6 +51,7 @@ Structure the plan as a Directed Acyclic Graph where each milestone has:
 - A unique numeric ID
 - A list of dependencies (referencing preceding milestone IDs)
 - A clear, actionable description
+- A `retry_count` field (default `0`, written as `Retries: 0` in the milestone header) — incremented by `orchestrate` on each `play` spawn for that milestone; `orchestrate` halts at 3 and marks the milestone `❌ Failed`. Persists across compaction.
 
 Independent milestones (empty dependencies) can execute in parallel. Integration milestones depend on completion of their prerequisites.
 
@@ -97,7 +108,7 @@ Use the standard status legend for both the overall plan and individual mileston
 ### Numbering Strategy
 
 1. Choose a meaningful feature code (e.g., `AUTH` for authentication, `PAY` for payments, `UI` for user interface)
-2. Scan `{{workspace_dir}}/plans/` for the highest existing number for that feature code
+2. Scan `{{WORKSPACE}}/plans/` for the highest existing number for that feature code
 3. Increment by one for the new plan
 4. Use hyphen-separated format: `{CODE}-{number}-{descriptive-slug}.md`
 5. Use zero-padded three-digit numbers (e.g., `AUTH-001`, `PAY-002`) for consistent sorting
@@ -115,21 +126,23 @@ Use the standard status legend for both the overall plan and individual mileston
 
 ## Docs Updated: true/false
 
+## Verify Cmd: <optional verification command, or empty — e.g., "yarn test", "npm run lint", "go test ./...", "dotnet test">. Run by orchestrate after each milestone passes and at Phase 2 for smoke/none tiers.
+
 ## Status: ✅ Done/🔄 In progress/⏳ Pending/⚠️ Blocked/❌ Failed
 
 ## Milestones
 
 (✅ Done, 🔄 In progress, ⏳ Pending, ⚠️ Blocked, ❌ Failed)
 
-- ⏳ **Milestone 1 (ID: 1, Dependencies: [])**: [Short Title] - Specific detailed task description.
-- ⏳ **Milestone 2 (ID: 2, Dependencies: [])**: [Short Title] - Independent milestone (can run in parallel with Milestone 1).
-- ⏳ **Milestone 3 (ID: 3, Dependencies: [1, 2])**: [Short Title] - Integration milestone (requires both Milestone 1 and 2 to be completed first).
+- ⏳ **Milestone 1 (ID: 1, Dependencies: [], Retries: 0)**: [Short Title] - Specific detailed task description.
+- ⏳ **Milestone 2 (ID: 2, Dependencies: [], Retries: 0)**: [Short Title] - Independent milestone (can run in parallel with Milestone 1).
+- ⏳ **Milestone 3 (ID: 3, Dependencies: [1, 2], Retries: 0)**: [Short Title] - Integration milestone (requires both Milestone 1 and 2 to be completed first).
 - ...
 
 **Optional Elaboration Example:**
 
 ```markdown
-- ⏳ **Milestone 1 (ID: 1, Dependencies: [])**: Implement JWT authentication service
+- ⏳ **Milestone 1 (ID: 1, Dependencies: [], Retries: 0)**: Implement JWT authentication service
   **Implementation Guidance:**
   - Create `src/auth/jwt-authenticator.ts` following the pattern in `src/auth/base-authenticator.ts`
   - Implement `generateToken()` and `validateToken()` methods
@@ -212,17 +225,19 @@ Implement JWT-based authentication with login, registration, and password reset 
 
 ## Docs Updated: false
 
+## Verify Cmd: yarn test && yarn lint
+
 ## Status: ⏳ Pending
 
 ## Milestones
 
 (✅ Done, 🔄 In progress, ⏳ Pending, ⚠️ Blocked, ❌ Failed)
 
-- ⏳ **Milestone 1 (ID: 1, Dependencies: [])**: [Database Schema] - Create User table with email, password_hash, created_at, updated_at fields in `src/database/schema/users.sql`.
-- ⏳ **Milestone 2 (ID: 2, Dependencies: [])**: [Auth API Endpoints] - Implement POST /api/auth/register, POST /api/auth/login, POST /api/auth/logout in `src/api/routes/auth.ts`.
-- ⏳ **Milestone 3 (ID: 3, Dependencies: [1, 2])**: [JWT Middleware] - Create authentication middleware in `src/middleware/auth.ts` that validates JWT tokens and attaches user to request.
-- ⏳ **Milestone 4 (ID: 4, Dependencies: [3])**: [Frontend Login Form] - Build login component at `src/components/auth/LoginForm.tsx` with email/password fields and form validation.
-- ⏳ **Milestone 5 (ID: 5, Dependencies: [3, 4])**: [Frontend Registration Form] - Build registration component at `src/components/auth/RegisterForm.tsx` with email/password/confirm-password fields.
+- ⏳ **Milestone 1 (ID: 1, Dependencies: [], Retries: 0)**: [Database Schema] - Create User table with email, password_hash, created_at, updated_at fields in `src/database/schema/users.sql`.
+- ⏳ **Milestone 2 (ID: 2, Dependencies: [], Retries: 0)**: [Auth API Endpoints] - Implement POST /api/auth/register, POST /api/auth/login, POST /api/auth/logout in `src/api/routes/auth.ts`.
+- ⏳ **Milestone 3 (ID: 3, Dependencies: [1, 2], Retries: 0)**: [JWT Middleware] - Create authentication middleware in `src/middleware/auth.ts` that validates JWT tokens and attaches user to request.
+- ⏳ **Milestone 4 (ID: 4, Dependencies: [3], Retries: 0)**: [Frontend Login Form] - Build login component at `src/components/auth/LoginForm.tsx` with email/password fields and form validation.
+- ⏳ **Milestone 5 (ID: 5, Dependencies: [3, 4], Retries: 0)**: [Frontend Registration Form] - Build registration component at `src/components/auth/RegisterForm.tsx` with email/password/confirm-password fields.
 
 ## Development Specifications
 

@@ -1,26 +1,7 @@
 ---
 name: elaborate
-description: Elaborate plans with distilled information from higher-quality models to fill gaps and simplify execution for simpler models
+description: Elaborate plans - distill detail from higher-quality models into a Plan to fill gaps and simplify execution for simpler models; invoked via "/elaborate PLAN-001" after compose but before orchestrate to add implementation guidance and test strategy
 argument-hint: "[plan ID or plan file path]"
-allowed-tools:
-  - read
-  - write
-  - edit
-  - find_file_by_name
-  - grep
-  - web_search
-  - webfetch
-  - ask_user_question
-permissions:
-  allow:
-    - Read(./plans/**/*)
-    - Write(./plans/**/*)
-    - Edit(./plans/**/*)
-    - Read(./.agents/references/**/*)
-    - Read(./knowledge/**/*)
-    - Read(./**/*)
-  deny:
-    - exec
 ---
 
 # Elaborate Plans
@@ -29,16 +10,17 @@ Elaborate existing `Plan`s with detailed, actionable guidance distilled from hig
 
 ## Pre-flight
 
-- Working folder: `{{workspace_dir}}` - the root of the project/workspace
-- Target folders: `{{workspace_dir}}/plans/` (you should only modify files in this folder)
+- `{{WORKSPACE}}` = the workspace root (your cwd).
+- Working folder: `{{WORKSPACE}}` - the workspace root (your cwd)
+- Target folders: `{{WORKSPACE}}/plans/` (you should only modify files in this folder)
 - Required input: `Plan` ID (e.g., "AUTH-001") or `Plan` file path (e.g., "plans/AUTH-001-user-authentication.md")
 
 ## References
 
-Reference specs are in `{{workspace_dir}}/.agents/references/`. Read them on-demand when the workflow requires them — do NOT read all upfront.
+Reference specs are in `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/`. Read them on-demand when the workflow requires them — do NOT read all upfront.
 
 ### Always needed
-- **`Plan` (quick):** Read `plan-quick.md` — for Plan format, milestone fields, and status management
+- **`Plan`:** Read `plan.md` — for Plan format, milestone fields, and status management
 - **`Plans Index`:** Read `plans-index.md` — for index lookup and status updates
 
 ### On-demand (read only when needed)
@@ -62,9 +44,9 @@ For how references relate to each other, see `references-map.md`.
 ### Phase 0: Setup
 
 1. **Parse Input:** Determine if input is a `Plan` ID or file path
-2. **Locate Plan:** If `Plan` ID provided, read `{{workspace_dir}}/plans/index.md` to find the full `Plan` filename
+2. **Locate Plan:** If `Plan` ID provided, read `{{WORKSPACE}}/plans/index.md` to find the full `Plan` filename
 3. **Read Plan:** Read the full `Plan` file to understand its structure, milestones, and current detail level
-4. **Read Context:** Read relevant knowledge files (`{{workspace_dir}}/knowledge/contexts.md`, `{{workspace_dir}}/knowledge/repo-fingerprint.md`) to understand domain language and technical stack
+4. **Read Context:** Read relevant knowledge files (`{{WORKSPACE}}/knowledge/contexts.md`, `{{WORKSPACE}}/knowledge/repo-fingerprint.md`) to understand domain language and technical stack
 
 ### Phase 1: Gap Analysis
 
@@ -79,15 +61,15 @@ For how references relate to each other, see `references-map.md`.
 
 ### Phase 2: Knowledge Gathering
 
-1. **Tech Stack Research:** Use `web_search` and `webfetch` to gather:
+1. **Tech Stack Research:** Search the web to gather:
    - Latest documentation for referenced technologies and frameworks
    - Best practices for the specific implementation patterns
    - Common pitfalls and how to avoid them
-2. **Codebase Patterns:** Use `grep` and `find_file_by_name` to find:
+2. **Codebase Patterns:** Search the codebase to find:
    - Existing similar implementations in the codebase
    - Established patterns for the technology stack
    - Relevant utility functions or helper classes
-3. **Domain Alignment:** Ensure elaboration uses terminology from `{{workspace_dir}}/knowledge/contexts.md`
+3. **Domain Alignment:** Ensure elaboration uses terminology from `{{WORKSPACE}}/knowledge/contexts.md`
 
 ### Phase 3: Elaboration Generation
 
@@ -131,7 +113,7 @@ For each milestone identified as needing elaboration, add:
 
 ### Phase 4: User Review
 
-1. **Present Elaborations:** Use `ask_user_question` to present proposed elaborations:
+1. **Present Elaborations:** Present proposed elaborations to the user:
    - "I've elaborated the `Plan` with detailed implementation guidance, code patterns, testing strategies, and best practices. Key additions include: [summary of major elaborations]. Should I apply these enhancements to the `Plan`?"
    - Options: "Yes, apply all", "Review specific sections", "No, cancel"
 2. **Selective Review:** If user chooses "Review specific sections", present elaborations section by section for approval
@@ -141,7 +123,7 @@ For each milestone identified as needing elaboration, add:
 1. **Apply Elaborations:** Update the `Plan` file with approved elaborations
 2. **Maintain Structure:** Ensure elaborations are added without breaking the existing `Plan` structure and DAG dependencies
 3. **Preserve Metadata:** Keep original `Plan` metadata (Test Tier, Docs Affected, Status) unchanged
-4. **Update Index:** If elaborations significantly change the `Plan` scope, consider updating the description in `{{workspace_dir}}/plans/index.md`
+4. **Update Index:** If elaborations significantly change the `Plan` scope, consider updating the description in `{{WORKSPACE}}/plans/index.md`
 
 ## Elaboration Format
 

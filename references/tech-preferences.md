@@ -17,9 +17,9 @@ Commercial tools should only be considered when they provide essential functiona
 
 - **Directory:** None. This file is just for reference, it's not part of the workspace.
 
-## ⚠️ Important: Always Check Online
+## ⚠️ When to Check Online
 
-When selecting technologies, always search online for the current latest stable versions. **Do not rely on your internal training data or pre-existing knowledge**, as it may be outdated. Use web search to verify current versions before making technology choices.
+Use web search to confirm current versions **only when selecting a NEW technology** to introduce to the project — i.e., when no `Repo Fingerprint` exists yet, or when introducing a framework/library not already recorded in the existing `Repo Fingerprint`. **Do not** re-validate versions for technologies already in the recorded stack: the fingerprint's versions are authoritative. Training-data versions for unfamiliar libraries remain unreliable; web search is the corrective for new selections, not for routine re-validation.
 
 ## Preferences
 
@@ -112,7 +112,7 @@ When deviating, document the reason in the ADR or project documentation.
 
 ## Version Strategy
 
-- **Always Verify Online:** Before selecting any version, search online for the current latest stable release. **Never trust your internal training data for version numbers.**
+- **Verify Online for New Selections:** Search online for the current latest stable release when introducing a technology not in the existing `Repo Fingerprint`. Use the `Repo Fingerprint`'s recorded versions when working with the existing stack.
 - **Latest Preferred:** Generally prefer the latest stable version of libraries and tools to ensure access to modern features, bug fixes, and security patches.
 - **Stable Only:** Use stable releases, never alpha/beta unless explicitly required
 - **LTS for Runtimes:** Prefer Long Term Support versions for Node.js and .NET
@@ -129,7 +129,7 @@ When deviating, document the reason in the ADR or project documentation.
 - **UI:** knadh/oat or Tailwind CSS + Skeleton UI + Lucide icons
 - **Database:** SQLite + Drizzle ORM (or PostgreSQL for scale)
 - **Build:** Vite
-- **Testing:** See [Testing Tech Preferences]({{workspace_dir}}/.agents/references/testing-tech-preferences.md)
+- **Testing:** See [Testing Tech Preferences]({{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/testing-tech-preferences.md)
 
 ### Full-Stack JavaScript (Full-Featured)
 
@@ -139,7 +139,7 @@ When deviating, document the reason in the ADR or project documentation.
 - **UI:** knadh/oat or Tailwind CSS + shadcn/ui + Lucide icons
 - **Database:** PostgreSQL + Prisma
 - **Build:** Vite
-- **Testing:** See [Testing Tech Preferences]({{workspace_dir}}/.agents/references/testing-tech-preferences.md)
+- **Testing:** See [Testing Tech Preferences]({{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/testing-tech-preferences.md)
 
 ### Python Web (Lightweight)
 
@@ -147,7 +147,7 @@ When deviating, document the reason in the ADR or project documentation.
 - **Backend:** FastAPI
 - **Database:** SQLite + SQLAlchemy (or PostgreSQL for scale)
 - **Dependency Management:** Poetry
-- **Testing:** See [Testing Tech Preferences]({{workspace_dir}}/.agents/references/testing-tech-preferences.md)
+- **Testing:** See [Testing Tech Preferences]({{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/testing-tech-preferences.md)
 
 ### .NET
 
@@ -155,4 +155,4 @@ When deviating, document the reason in the ADR or project documentation.
 - **Backend:** ASP.NET Core
 - **Database:** PostgreSQL + Entity Framework Core
 - **Frontend:** Next.js or Blazor (if using .NET-only stack)
-- **Testing:** See [Testing Tech Preferences]({{workspace_dir}}/.agents/references/testing-tech-preferences.md)
+- **Testing:** See [Testing Tech Preferences]({{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/testing-tech-preferences.md)

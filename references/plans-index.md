@@ -4,9 +4,9 @@
 
 ## File Location and Naming
 
-- **Directory:** `{{workspace_dir}}/plans/`
-- **Index file:** `{{workspace_dir}}/plans/index.md` — central registry for all plans
-- **Directory creation:** Create `{{workspace_dir}}/plans/` lazily when the first plan is needed
+- **Directory:** `{{WORKSPACE}}/plans/`
+- **Index file:** `{{WORKSPACE}}/plans/index.md` — central registry for all plans
+- **Directory creation:** Create `{{WORKSPACE}}/plans/` lazily when the first plan is needed
 
 ## Writing Rules
 

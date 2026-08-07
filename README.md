@@ -1,93 +1,190 @@
-# maestro
+# Maestro
 
+A bundle of [Agent Skills](https://agentskills.io) for AI-assisted software development. Maestro gives AI coding agents (OpenCode, Claude Code, and other Agent-Skills-compatible systems) a structured workflow for planning, implementing, testing, and documenting features — without locking you to a single platform.
 
-
-## Getting started
-
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
-
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
-
-## Add your files
-
-* [Create](https://docs.gitlab.com/user/project/repository/web_editor/#create-a-file) or [upload](https://docs.gitlab.com/user/project/repository/web_editor/#upload-a-file) files
-* [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+## What's in the box
 
 ```
-cd existing_repo
-git remote add origin https://gitlab.com/arthur_b_machado/maestro.git
-git branch -M main
-git push -uf origin main
+maestro/
+├── Install-Maestro.ps1      # Installer script
+├── VERSION                  # Bundle version (read by installer)
+├── skills/                  # Agent Skills (loaded on-demand when invoked)
+│   ├── compose/             # Create technical Plans from feature requests
+│   ├── rehearse/            # Stress-test plans against domain language
+│   ├── elaborate/           # Distill detail from stronger models into plans
+│   ├── orchestrate/         # Execute plans via parallel subagents
+│   ├── arrange/             # Write integration & E2E test specs
+│   ├── audition/            # Run test suites and capture results
+│   └── score/               # Update docs after features ship
+├── agents/                  # Subagent definitions (spawned by orchestrate or @mention)
+│   ├── play.md              # Implements plan milestones via TDD
+│   └── tune.md              # Resolves issues via systematic debugging
+└── references/              # Specs for plan/issue/ADR/contexts formats
+    ├── plan.md
+    ├── plans-index.md
+    ├── issue.md
+    ├── issues-index.md
+    ├── contexts.md
+    ├── adrs.md
+    ├── repo-fingerprint.md
+    ├── design-principles.md
+    ├── testing-principles.md
+    ├── tech-preferences.md
+    ├── testing-tech-preferences.md
+    └── references-map.md
 ```
 
-## Integrate with your tools
+**7 skills** + **2 agents** + **12 reference specs**.
 
-* [Set up project integrations](https://gitlab.com/arthur_b_machado/maestro/-/settings/integrations)
+## The workflow
 
-## Collaborate with your team
-
-* [Invite team members and collaborators](https://docs.gitlab.com/user/project/members/)
-* [Create a new merge request](https://docs.gitlab.com/user/project/merge_requests/creating_merge_requests/)
-* [Automatically close issues from merge requests](https://docs.gitlab.com/user/project/issues/managing_issues/#closing-issues-automatically)
-* [Enable merge request approvals](https://docs.gitlab.com/user/project/merge_requests/approvals/)
-* [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-* [Get started with GitLab CI/CD](https://docs.gitlab.com/ci/quick_start/)
-* [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/user/application_security/sast/)
-* [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/topics/autodevops/requirements/)
-* [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/user/clusters/agent/)
-* [Set up protected environments](https://docs.gitlab.com/ci/environments/protected_environments/)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+```
+  User request
+       │
+       ▼
+   compose ──▶ Creates a Plan (DAG of milestones)
+       │
+       ▼
+   rehearse ──▶ (optional) Sharpens domain language, challenges assumptions
+       │
+       ▼
+   elaborate ──▶ (optional) Adds detail distilled from stronger models
+       │
+       ▼
+   orchestrate ──── spawns ──▶ play (parallel, one per ready milestone)
+       │                         │
+       │                         ▼
+       │                    Returns structured status (Done/Failed)
+       │
+       ├──▶ arrange (writes E2E tests from Plan)
+       ├──▶ audition (runs tests, captures results)
+       │
+       │  ┌── Visual regression failures?
+       │  │    1. Cross-reference Plan: intended change? → update baseline
+       │  │    2. Real defect? → create Issue, ask user: fix now or defer
+       │  │    3. Fix now → spawn tune subagent
+       │  └─
+       │
+       ▼
+   score (updates README/docs/changelog if Plan's Docs Affected = true)
+       │
+       ▼
+   Done
+```
 
 ## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+
+### Prerequisites
+
+- PowerShell 7+ (`pwsh`)
+- A target repo (the maestro bundle gets copied into the repo's config directory)
+
+### Install into a target repo
+
+```powershell
+.\Install-Maestro.ps1 -Target D:\Personal\my-app
+```
+
+Defaults to installing into `.agents/` (the Agent-Skills-compatible location, works on OpenCode).
+
+### Choose where to install
+
+```powershell
+# Claude Code only
+.\Install-Maestro.ps1 -Target D:\Personal\my-app -Locations .claude
+
+# OpenCode native
+.\Install-Maestro.ps1 -Target D:\Personal\my-app -Locations .opencode
+
+# Both Claude Code and OpenCode
+.\Install-Maestro.ps1 -Target D:\Personal\my-app -Locations .agents,.claude,.opencode
+```
+
+Supported locations and what they enable:
+
+| Location    | Skills | Agents | Platform coverage                              |
+| ----------- | ------ | ------ | ---------------------------------------------- |
+| `.agents`   | yes    | yes    | OpenCode (Claude-compatible discovery path)    |
+| `.claude`   | yes    | yes    | Claude Code; also discovered by OpenCode       |
+| `.opencode` | yes    | yes    | OpenCode native (highest precedence on OpenCode) |
+
+The installer copies `skills/`, `references/`, and `agents/` to each target location and substitutes `{{MAESTRO_CONFIG}}` placeholders in every `.md` file with the location string, so reference paths resolve correctly at runtime.
+
+### Idempotent re-runs and upgrades
+
+Re-running the installer overwrites in place. To wipe stale folders before copying (useful after a skill rename or removal upstream):
+
+```powershell
+.\Install-Maestro.ps1 -Target . -Clean -Force -Locations .agents,.claude
+```
+
+The installer records the bundle version in each target's `MAESTRO_VERSION` file so you can audit which Maestro version a repo is on.
 
 ## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+### With OpenCode
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+1. Install Maestro into your repo (see above).
+2. Open your project in OpenCode.
+3. Skills are discovered automatically. Invoke any skill by typing `/skill-name` or letting the agent load it when relevant:
+   - `/compose Add user authentication with JWT`
+   - `/rehearse the auth plan I just composed`
+   - `/orchestrate AUTH-001`
+4. `play` and `tune` are subagents — invoke them via the agent menu (`Tab` to cycle, or `@mention`), or let `orchestrate` spawn them automatically.
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+### With Claude Code
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+1. Install Maestro with `-Locations .claude`.
+2. Open Claude Code in your project.
+3. Skills are discovered from `.claude/skills/`. Invoke with `/skill-name`:
+   - `/compose Add user authentication with JWT`
+   - `/orchestrate AUTH-001`
+4. `play` and `tune` are subagents — invoke with `@play` / `@tune`, or let `orchestrate` spawn them automatically.
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+### Typical flow
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+```
+1. /compose <feature request>          → creates a Plan (DAG of milestones)
+2. /rehearse <feature >                → (optional) refine domain language
+3. /elaborate <plan-id>                → (optional) add detail for execution
+4. /orchestrate <plan-id>              → executes the plan:
+                                          spawns play subagents in parallel,
+                                          then arrange + audition for tests,
+                                          routes visual regressions to tune
+5. /score <plan-id>                    → updates docs (if Docs Affected=true)
+```
+
+Items 2, 3, and 5 are optional. `orchestrate` is the main entry point for execution.
+
+## What Maestro creates in your repo
+
+When you compose a Plan, Maestro lazily creates these directories in your project root:
+
+```
+your-repo/
+├── plans/                    # Plans (DAG of milestones) and index.md
+├── issues/                   # Issues (bugs, build failures) and index.md
+├── knowledge/                # Domain language, ADRs, repo fingerprint
+│   ├── contexts.md           # Ubiquitous language glossary
+│   ├── adrs/                 # Architectural Decision Records
+│   └── repo-fingerprint.md   # Tech stack snapshot
+├── tests/                    # E2E test specs (flat, no subdirectories)
+├── test-results/             # Test output (gitignored)
+└── docs/                     # Maintained by the score skill
+```
+
+All file formats are specified in the `references/` folder of the installed bundle.
+
+## Multi-platform design
+
+Maestro targets the [Agent Skills](https://agentskills.io) open standard. It works on:
+
+- **OpenCode** — fully compatible. Install to `.agents/`, `.opencode/`, or both.
+- **Claude Code** — fully compatible. Install to `.claude/`.
+- **Other Agent-Skills-compatible systems** — install to whichever config directory the system scans.
+
+Skills use only standard Agent-Skills frontmatter (`name`, `description`). Agents use Claude-Code/OpenCode-compatible frontmatter (`name`, `description`, `mode: subagent`). No platform-specific tooling assumptions are baked into the bundle — the workflow text is portable.
 
 ## License
-For open source projects, say how it is licensed.
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+MIT

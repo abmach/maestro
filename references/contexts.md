@@ -4,15 +4,15 @@
 
 ## File Location and Naming
 
-- **Directory:** `{{workspace_dir}}/knowledge/`
+- **Directory:** `{{WORKSPACE}}/knowledge/`
 - **Filename:** `contexts.md`
-- **Directory creation:** Create `{{workspace_dir}}/knowledge/` lazily when the first context is needed
+- **Directory creation:** Create `{{WORKSPACE}}/knowledge/` lazily when the first context is needed
 
 ## Structure
 
 ### Single File with Area Headers
 
-All repositories use a single `contexts.md` file in the `{{workspace_dir}}/knowledge/` folder. For repositories with multiple bounded contexts, use area headers with folder references:
+All repositories use a single `contexts.md` file in the `{{WORKSPACE}}/knowledge/` folder. For repositories with multiple bounded contexts, use area headers with folder references:
 
 ```markdown
 # {Project Name} Context
@@ -70,10 +70,10 @@ Keep a flat list of terms under the Language section. Avoid subheadings unless y
 
 ## Inference Strategy
 
-1. If `{{workspace_dir}}/knowledge/contexts.md` exists, read it to understand the project's domain language
+1. If `{{WORKSPACE}}/knowledge/contexts.md` exists, read it to understand the project's domain language
 2. If multiple area contexts exist, the system infers which area the current topic relates to based on folder references
 3. If the area is unclear, it will ask for clarification
-4. If no `{{workspace_dir}}/knowledge/contexts.md` exists, create it lazily when the first term is resolved
+4. If no `{{WORKSPACE}}/knowledge/contexts.md` exists, create it lazily when the first term is resolved
 
 ## Example
 

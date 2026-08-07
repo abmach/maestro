@@ -1,46 +1,30 @@
 ---
 name: audition
-description: Audition tests - execute test suites to validate implementation and capture results for analysis
+description: Audition tests - execute test suites and capture pass/fail results, screenshots, and artifacts for visual regression routing; invoked by orchestrate after arrange or via "/audition <scope>"
 argument-hint: "[test type and scope]"
-allowed-tools:
-  - read
-  - find_file_by_name
-  - grep
-  - write
-  - exec
-permissions:
-  allow:
-    - Read(./tests/**/*)
-    - Read(./plans/**/*)
-    - Read(./src/**/*)
-    - Read(./.agents/references/**/*)
-    - Read(./knowledge/**/*)
-    - Write(./test-results/**/*)
-    - Exec(yarn test*)
-    - Exec(npm run test*)
-    - Exec(python -m pytest*)
-    - Exec(dotnet test*)
-  deny:
-    - web_search
 ---
 
 # Audition Tests
 
-Execute test suites to validate implementation, capture results, and generate artifacts for analysis. This skill runs tests created by the `arrange` skill and provides outputs for the `critique` skill to analyze.
+Execute test suites to validate implementation, capture results, and generate artifacts for analysis. This skill runs tests created by the `arrange` skill and provides outputs for the `orchestrate` skill's visual regression routing.
 
 ## Pre-flight
 
-- Working folder: `{{workspace_dir}}` - the root of the project/workspace
-- Target folders: `{{workspace_dir}}/tests/` and `{{workspace_dir}}/test-results/`
+- `{{WORKSPACE}}` = the workspace root. At the start of a session, if not already resolved, run `git rev-parse --show-toplevel` (fall back to your cwd outside a repo) and reuse the result for the session.
+- Working folder: `{{WORKSPACE}}` - the resolved workspace root
+- Target folders: `{{WORKSPACE}}/tests/` and `{{WORKSPACE}}/test-results/`
 - Required input: Test type and scope from orchestrate
 
 ## References
 
-Reference specs are in `{{workspace_dir}}/.agents/references/`. Read them on-demand when the workflow requires them — do NOT read all upfront.
+Reference specs are in `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/`. Read them on-demand when the workflow requires them — do NOT read all upfront.
+
+### Always needed
+- **`Repo Fingerprint`:** Read `{{WORKSPACE}}/knowledge/repo-fingerprint.md` (the working file, not the spec) — to identify the current testing stack and invocation command
 
 ### On-demand (read only when needed)
-- **`Testing Tech Preferences` (quick):** Read `testing-tech-preferences-quick.md` — only if an unusual/non-standard test framework is in use
-- **`Repo Fingerprint`:** Read `{{workspace_dir}}/knowledge/repo-fingerprint.md` (the working file, not the spec) — to identify the current testing stack
+- **`Testing Tech Preferences`:** Read `testing-tech-preferences.md` — only if an unusual/non-standard test framework is in use
+- **`Testing Principles`:** Read `testing-principles.md` — only if interpreting failures requires methodology context
 
 ### Cross-references
 For how references relate to each other, see `references-map.md`.
@@ -52,13 +36,13 @@ For how references relate to each other, see `references-map.md`.
 
 ## Core Workflow
 
-### Phase 1: Test Discovery
+### Phase 0: Test Discovery
 
 1. **Read Asset Specifications:** Load `Testing Tech Preferences` and `Repo Fingerprint` to understand the testing stack
-2. **Locate Test Files:** Find test files matching the specified scope using `find_file_by_name` and `grep`
+2. **Locate Test Files:** Find test files matching the specified scope
 3. **Identify Test Framework:** Determine which testing framework is in use (Vitest, Jest, pytest, xUnit, etc.)
 
-### Phase 2: Test Execution
+### Phase 1: Test Execution
 
 1. **Select Execution Command:** Choose appropriate command based on testing framework:
    - **Vitest:** `yarn test` or `npm run test`
@@ -69,7 +53,7 @@ For how references relate to each other, see `references-map.md`.
 3. **Capture Results:** Collect test output, exit codes, and any generated artifacts
 4. **Generate Screenshots:** For E2E tests, ensure screenshots are captured to `test-results/` or framework-specific location
 
-### Phase 3: Result Processing
+### Phase 2: Result Processing
 
 1. **Analyze Test Output:** Parse test results to identify:
    - Pass/fail status
@@ -120,7 +104,7 @@ If test execution fails:
 ## Integration Points
 
 - **Input from:** `orchestrate` skill (test scope and type)
-- **Output to:** `critique` skill (screenshots and test results for visual analysis)
+- **Output to:** `orchestrate` skill (screenshots and test results for visual regression routing)
 - **References:** Test files created by `arrange` skill
 - **Context:** Implementation from `play` skill milestones
 

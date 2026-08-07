@@ -4,8 +4,8 @@
 
 ## File Location and Naming
 
-- **Directory:** `{{workspace_dir}}/knowledge/`
-- **Filename:** `{{workspace_dir}}/knowledge/repo-fingerprint.md`
+- **Directory:** `{{WORKSPACE}}/knowledge/`
+- **Filename:** `{{WORKSPACE}}/knowledge/repo-fingerprint.md`
 - **Creation:** Create lazily when the compose skill first needs technical stack information
 - **Updates:** Update only when significant technology changes are detected
 

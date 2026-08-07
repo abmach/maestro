@@ -152,8 +152,8 @@ Before writing any code:
 
 - [ ] Confirm with user what interface changes are needed
 - [ ] Confirm with user which behaviors to test (prioritize)
-- [ ] Identify opportunities for [deep modules]({{workspace_dir}}/.agents/references/design-principles.md#deep-modules) (small interface, deep implementation)
-- [ ] Design interfaces for [testability]({{workspace_dir}}/.agents/references/design-principles.md#interface-design-for-testability)
+- [ ] Identify opportunities for [deep modules]({{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/design-principles.md#deep-modules) (small interface, deep implementation)
+- [ ] Design interfaces for [testability]({{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/design-principles.md#interface-design-for-testability)
 - [ ] List the behaviors to test (not implementation steps)
 - [ ] Get user approval on the plan
 
@@ -190,7 +190,7 @@ Rules:
 
 #### 4. Refactor Phase
 
-After all tests pass, look for [refactor candidates]({{workspace_dir}}/.agents/references/design-principles.md#refactoring-candidates):
+After all tests pass, look for [refactor candidates]({{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/design-principles.md#refactoring-candidates):
 
 - [ ] Extract duplication
 - [ ] Deepen modules (move complexity behind simple interfaces)

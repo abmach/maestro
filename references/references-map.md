@@ -4,7 +4,7 @@
 
 ## Reference Files
 
-All reference specs live in `{{workspace_dir}}/.agents/references/`:
+All reference specs live in `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/`:
 
 | Reference | File | Defines |
 | --------- | ---- | ------- |
@@ -26,23 +26,13 @@ These are the actual working files created/maintained in the workspace, followin
 
 | Content | Location | Spec |
 | ------- | -------- | ---- |
-| Plans | `{{workspace_dir}}/plans/` | `Plan` |
-| Plans Index | `{{workspace_dir}}/plans/index.md` | `Plans Index` |
-| Issues | `{{workspace_dir}}/issues/` | `Issue` |
-| Issues Index | `{{workspace_dir}}/issues/index.md` | `Issues Index` |
-| Contexts | `{{workspace_dir}}/knowledge/contexts.md` | `Contexts` |
-| ADRs | `{{workspace_dir}}/knowledge/adrs/` | `ADRs` |
-| Repo Fingerprint | `{{workspace_dir}}/knowledge/repo-fingerprint.md` | `Repo Fingerprint` |
-
-## Quick Specs
-
-Compact versions of the largest reference files, containing only templates and required fields:
-
-| Quick Spec | File | Full Spec |
-| ---------- | ---- | --------- |
-| `Plan` (quick) | `plan-quick.md` | `plan.md` |
-| `Issue` (quick) | `issue-quick.md` | `issue.md` |
-| `Testing Tech Preferences` (quick) | `testing-tech-preferences-quick.md` | `testing-tech-preferences.md` |
+| Plans | `{{WORKSPACE}}/plans/` | `Plan` |
+| Plans Index | `{{WORKSPACE}}/plans/index.md` | `Plans Index` |
+| Issues | `{{WORKSPACE}}/issues/` | `Issue` |
+| Issues Index | `{{WORKSPACE}}/issues/index.md` | `Issues Index` |
+| Contexts | `{{WORKSPACE}}/knowledge/contexts.md` | `Contexts` |
+| ADRs | `{{WORKSPACE}}/knowledge/adrs/` | `ADRs` |
+| Repo Fingerprint | `{{WORKSPACE}}/knowledge/repo-fingerprint.md` | `Repo Fingerprint` |
 
 ## Relationship Map
 

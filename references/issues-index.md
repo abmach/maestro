@@ -4,9 +4,9 @@
 
 ## File Location and Naming
 
-- **Directory:** `{{workspace_dir}}/issues/`
-- **Index file:** `{{workspace_dir}}/issues/index.md` — central registry for all issues
-- **Directory creation:** Create `{{workspace_dir}}/issues/` lazily when the first issue is needed
+- **Directory:** `{{WORKSPACE}}/issues/`
+- **Index file:** `{{WORKSPACE}}/issues/index.md` — central registry for all issues
+- **Directory creation:** Create `{{WORKSPACE}}/issues/` lazily when the first issue is needed
 
 ## Writing Rules
 
@@ -102,7 +102,7 @@ Use these priority indicators:
 ### Creating Issues
 
 When a new issue is reported:
-1. Create issue file in `{{workspace_dir}}/issues/` with appropriate type and number
+1. Create issue file in `{{WORKSPACE}}/issues/` with appropriate type and number
 2. Add entry to index.md with status 🟢 Open
 3. Set severity and priority based on impact assessment
 4. Place in appropriate position within Open section (sorted by priority/severity/recency)
