@@ -17,18 +17,18 @@ Maintain the single source of truth for repository documentation, API changes, a
 
 ## References
 
-Reference specs are in `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/`. Read them on-demand when the workflow requires them — do NOT read all upfront.
+Read reference specs on-demand when the workflow requires them — do NOT read all upfront.
 
 ### Always needed
-- **`Plan`:** Read `plan.md` — for Plan format, milestone fields, and status management
-- **`Plans Index`:** Read `plans-index.md` — for index lookup and status updates
+- **`Plan`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/plan.md` — for Plan format, milestone fields, and status management
+- **`Plans Index`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/plans-index.md` — for index lookup and status updates
 
 ### On-demand (read only when needed)
 - **`Repo Fingerprint`:** Read `{{WORKSPACE}}/knowledge/repo-fingerprint.md` (the working file) — only if the Plan introduced new tech that should be reflected in the fingerprint
-- **`Tech Preferences`:** Read `tech-preferences.md` — only if documentation standards or formatting are ambiguous
+- **`Tech Preferences`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/tech-preferences.md` — only if documentation standards or formatting are ambiguous
 
 ### Cross-references
-For how references relate to each other, see `references-map.md`.
+For how references relate to each other, see `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/references-map.md`.
 
 ## Validation
 

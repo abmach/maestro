@@ -17,21 +17,21 @@ Elaborate existing `Plan`s with detailed, actionable guidance distilled from hig
 
 ## References
 
-Reference specs are in `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/`. Read them on-demand when the workflow requires them — do NOT read all upfront.
+Read reference specs on-demand when the workflow requires them — do NOT read all upfront.
 
 ### Always needed
-- **`Plan`:** Read `plan.md` — for Plan format, milestone fields, and status management
-- **`Plans Index`:** Read `plans-index.md` — for index lookup and status updates
+- **`Plan`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/plan.md` — for Plan format, milestone fields, and status management
+- **`Plans Index`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/plans-index.md` — for index lookup and status updates
 
 ### On-demand (read only when needed)
-- **`Contexts`:** Read `contexts.md` — when checking domain language for elaborations
-- **`Repo Fingerprint`:** Read `repo-fingerprint.md` — when checking tech stack for elaborations
-- **`Testing Principles`:** Read `testing-principles.md` — when elaborating test strategy
-- **`Design Principles`:** Read `design-principles.md` — when elaborating code patterns
-- **`Tech Preferences`:** Read `tech-preferences.md` — when elaborating tech choices
+- **`Contexts`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/contexts.md` — when checking domain language for elaborations
+- **`Repo Fingerprint`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/repo-fingerprint.md` — when checking tech stack for elaborations
+- **`Testing Principles`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/testing-principles.md` — when elaborating test strategy
+- **`Design Principles`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/design-principles.md` — when elaborating code patterns
+- **`Tech Preferences`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/tech-preferences.md` — when elaborating tech choices
 
 ### Cross-references
-For how references relate to each other, see `references-map.md`.
+For how references relate to each other, see `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/references-map.md`.
 
 ## Validation
 

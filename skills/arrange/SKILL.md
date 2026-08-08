@@ -17,18 +17,18 @@ Create and update clean, reliable, and maintainable integration and E2E test sui
 
 ## References
 
-Reference specs are in `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/`. Read them on-demand when the workflow requires them — do NOT read all upfront.
+Read reference specs on-demand when the workflow requires them — do NOT read all upfront.
 
 ### Always needed
-- **`Plan`:** Read `plan.md` — for Plan format and test tier requirements
-- **`Testing Tech Preferences`:** Read `testing-tech-preferences.md` — for framework selection and config
+- **`Plan`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/plan.md` — for Plan format and test tier requirements
+- **`Testing Tech Preferences`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/testing-tech-preferences.md` — for framework selection and config
 
 ### On-demand (read only when needed)
 - **`Repo Fingerprint`:** Read `{{WORKSPACE}}/knowledge/repo-fingerprint.md` (the working file, not the spec) — only if test framework isn't obvious from the fingerprint
-- **`Testing Principles`:** Read `testing-principles.md` — only if test design questions arise that the Plan doesn't answer
+- **`Testing Principles`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/testing-principles.md` — only if test design questions arise that the Plan doesn't answer
 
 ### Cross-references
-For how references relate to each other, see `references-map.md`.
+For how references relate to each other, see `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/references-map.md`.
 
 ## Validation
 

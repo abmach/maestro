@@ -17,17 +17,17 @@ Execute test suites to validate implementation, capture results, and generate ar
 
 ## References
 
-Reference specs are in `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/`. Read them on-demand when the workflow requires them — do NOT read all upfront.
+Read reference specs on-demand when the workflow requires them — do NOT read all upfront.
 
 ### Always needed
 - **`Repo Fingerprint`:** Read `{{WORKSPACE}}/knowledge/repo-fingerprint.md` (the working file, not the spec) — to identify the current testing stack and invocation command
 
 ### On-demand (read only when needed)
-- **`Testing Tech Preferences`:** Read `testing-tech-preferences.md` — only if an unusual/non-standard test framework is in use
-- **`Testing Principles`:** Read `testing-principles.md` — only if interpreting failures requires methodology context
+- **`Testing Tech Preferences`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/testing-tech-preferences.md` — only if an unusual/non-standard test framework is in use
+- **`Testing Principles`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/testing-principles.md` — only if interpreting failures requires methodology context
 
 ### Cross-references
-For how references relate to each other, see `references-map.md`.
+For how references relate to each other, see `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/references-map.md`.
 
 ## Validation
 

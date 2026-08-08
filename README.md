@@ -9,6 +9,7 @@ maestro/
 ├── Install-Maestro.ps1      # Installer script
 ├── VERSION                  # Bundle version (read by installer)
 ├── skills/                  # Agent Skills (loaded on-demand when invoked)
+│   ├── prelude/             # Bootstrap a non-Maestro workspace (Repo Fingerprint, Contexts, ADRs)
 │   ├── compose/             # Create technical Plans from feature requests
 │   ├── rehearse/            # Stress-test plans against domain language
 │   ├── elaborate/           # Distill detail from stronger models into plans
@@ -34,9 +35,11 @@ maestro/
     └── references-map.md
 ```
 
-**7 skills** + **2 agents** + **12 reference specs**.
+**8 skills** + **2 agents** + **12 reference specs**.
 
 ## The workflow
+
+Once when adopting Maestro into an existing project, run `/prelude` first to create the knowledge artifacts (Repo Fingerprint, Contexts, ADRs). The workflow below then takes over.
 
 ```
   User request
@@ -141,6 +144,14 @@ The installer records the bundle version in each target's `MAESTRO_VERSION` file
    - `/orchestrate AUTH-001`
 4. `play` and `tune` are subagents — invoke with `@play` / `@tune`, or let `orchestrate` spawn them automatically.
 
+### First run on an existing project
+
+```
+0. /prelude                            → scans the workspace and creates
+                                          Repo Fingerprint, Contexts, ADRs
+                                          (one-time setup; re-run only to refresh)
+```
+
 ### Typical flow
 
 ```
@@ -154,7 +165,7 @@ The installer records the bundle version in each target's `MAESTRO_VERSION` file
 5. /score <plan-id>                    → updates docs (if Docs Affected=true)
 ```
 
-Items 2, 3, and 5 are optional. `orchestrate` is the main entry point for execution.
+Step 0 is once-per-project. Items 2, 3, and 5 are optional. `orchestrate` is the main entry point for execution.
 
 ## What Maestro creates in your repo
 

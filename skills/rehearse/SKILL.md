@@ -17,16 +17,16 @@ Interview relentlessly about every aspect of a plan to reach shared understandin
 
 ## References
 
-Reference specs are in `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/`. Read them on-demand when the workflow requires them — do NOT read all upfront.
+Read reference specs on-demand when the workflow requires them — do NOT read all upfront.
 
 ### Always needed
-- **`Contexts`:** Read `contexts.md` — for glossary format (rehearse reads and writes `{{WORKSPACE}}/knowledge/contexts.md`)
+- **`Contexts`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/contexts.md` — for glossary format (rehearse reads and writes `{{WORKSPACE}}/knowledge/contexts.md`)
 
 ### On-demand (read only when needed)
-- **`ADRs`:** Read `adrs.md` — only when an architectural decision meets ADR criteria during the interview (3 criteria already inlined in workflow step 8). Read for the ADR format template at that moment.
+- **`ADRs`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/adrs.md` — only when an architectural decision meets ADR criteria during the interview (3 criteria already inlined in workflow step 8). Read for the ADR format template at that moment.
 
 ### Cross-references
-For how references relate to each other, see `references-map.md`.
+For how references relate to each other, see `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/references-map.md`.
 
 ## Validation
 

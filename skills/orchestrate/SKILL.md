@@ -17,19 +17,19 @@ Coordinate feature implementation workflows by executing existing `Plan`s, deleg
 
 ## References
 
-Reference specs are in `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/`. Read them on-demand when the workflow requires them — do NOT read all upfront.
+Read reference specs on-demand when the workflow requires them — do NOT read all upfront.
 
 ### Always needed
-- **`Plan`:** Read `plan.md` — for Plan format, milestone fields, and status management
-- **`Plans Index`:** Read `plans-index.md` — for index lookup and status updates
+- **`Plan`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/plan.md` — for Plan format, milestone fields, and status management
+- **`Plans Index`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/plans-index.md` — for index lookup and status updates
 
 ### On-demand (read only when needed)
-- **`Issue`:** Read `issue.md` — when a milestone fails and an Issue must be created
-- **`Issues Index`:** Read `issues-index.md` — when updating the issues index after a failure
-- **`Repo Fingerprint`:** Read `repo-fingerprint.md` — when updating `{{WORKSPACE}}/knowledge/repo-fingerprint.md` in Phase 3
+- **`Issue`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/issue.md` — when a milestone fails and an Issue must be created
+- **`Issues Index`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/issues-index.md` — when updating the issues index after a failure
+- **`Repo Fingerprint`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/repo-fingerprint.md` — when updating `{{WORKSPACE}}/knowledge/repo-fingerprint.md` in Phase 3
 
 ### Cross-references
-For how references relate to each other, see `references-map.md`.
+For how references relate to each other, see `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/references-map.md`.
 
 ## Validation
 

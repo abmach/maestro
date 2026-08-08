@@ -17,21 +17,21 @@ Analyze requirements and create structured technical `Plan`s with precise specif
 
 ## References
 
-Reference specs are in `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/`. Read them on-demand when the workflow requires them — do NOT read all upfront.
+Read reference specs on-demand when the workflow requires them — do NOT read all upfront.
 
 ### Always needed
-- **`Plan`:** Read `plan.md` — for Plan format, milestone DAG, and development specifications (compose creates Plans)
-- **`Plans Index`:** Read `plans-index.md` — for index format (compose updates the index every invocation)
+- **`Plan`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/plan.md` — for Plan format, milestone DAG, and development specifications (compose creates Plans)
+- **`Plans Index`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/plans-index.md` — for index format (compose updates the index every invocation)
 
 ### On-demand (read only when needed)
 - **`Repo Fingerprint`:** Read `{{WORKSPACE}}/knowledge/repo-fingerprint.md` (working file) — if it exists, to understand current tech stack
 - **`Contexts`:** Read `{{WORKSPACE}}/knowledge/contexts.md` (working file) — if it exists, to understand domain language.
 - **`ADRs`:** Read `{{WORKSPACE}}/knowledge/adrs/` (working files) — if they exist, to review relevant architectural decisions.
-- **`Issue`:** Read `issue.md` — only if `{{WORKSPACE}}/issues/index.md` exists, to identify relevant `Issue`s.
-- **`Issues Index`:** Read `issues-index.md` — only if `{{WORKSPACE}}/issues/index.md` exists.
+- **`Issue`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/issue.md` — only if `{{WORKSPACE}}/issues/index.md` exists, to identify relevant `Issue`s.
+- **`Issues Index`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/issues-index.md` — only if `{{WORKSPACE}}/issues/index.md` exists.
 
 ### Cross-references
-For how references relate to each other, see `references-map.md`.
+For how references relate to each other, see `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/references-map.md`.
 
 ## Validation
 

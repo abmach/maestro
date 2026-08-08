@@ -18,20 +18,20 @@ Resolve `Issue`s by investigating problems, implementing fixes, and documenting 
 
 ## References
 
-Reference specs are in `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/`. Read them on-demand when the workflow requires them — do NOT read all upfront.
+Read reference specs on-demand when the workflow requires them — do NOT read all upfront.
 
 ### Always needed
-- **`Issue`:** Read `issue.md` — for Issue format, types, and status workflow
-- **`Issues Index`:** Read `issues-index.md` — for index format and status updates
+- **`Issue`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/issue.md` — for Issue format, types, and status workflow
+- **`Issues Index`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/issues-index.md` — for index format and status updates
 
 ### On-demand (read only when needed)
-- **`Testing Principles`:** Read `testing-principles.md` — when applying TDD to reproduce and fix the issue
-- **`Design Principles`:** Read `design-principles.md` — during optional refactor phase
-- **`Repo Fingerprint`:** Read `repo-fingerprint.md` — only if `{{WORKSPACE}}/knowledge/repo-fingerprint.md` exists and tech stack is ambiguous
-- **`Contexts`:** Read `contexts.md` — only if `{{WORKSPACE}}/knowledge/contexts.md` exists and domain terminology matters
+- **`Testing Principles`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/testing-principles.md` — when applying TDD to reproduce and fix the issue
+- **`Design Principles`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/design-principles.md` — during optional refactor phase
+- **`Repo Fingerprint`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/repo-fingerprint.md` — only if `{{WORKSPACE}}/knowledge/repo-fingerprint.md` exists and tech stack is ambiguous
+- **`Contexts`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/contexts.md` — only if `{{WORKSPACE}}/knowledge/contexts.md` exists and domain terminology matters
 
 ### Cross-references
-For how references relate to each other, see `references-map.md`.
+For how references relate to each other, see `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/references-map.md`.
 
 ## Validation
 

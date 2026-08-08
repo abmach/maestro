@@ -18,19 +18,19 @@ Implement `Plan` milestones using test-driven development methodology with red-g
 
 ## References
 
-Reference specs are in `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/`. Read them on-demand when the workflow requires them — do NOT read all upfront.
+Read reference specs on-demand when the workflow requires them — do NOT read all upfront.
 
 ### Always needed
-- **`Plan`:** Read `plan.md` — for Plan format, milestone fields
-- **`Plans Index`:** Read `plans-index.md` — for index lookup
-- **`Testing Principles`:** Read `testing-principles.md` — for TDD methodology (red-green-refactor)
-- **`Design Principles`:** Read `design-principles.md` — for interface design and refactor guidance
+- **`Plan`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/plan.md` — for Plan format, milestone fields
+- **`Plans Index`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/plans-index.md` — for index lookup
+- **`Testing Principles`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/testing-principles.md` — for TDD methodology (red-green-refactor)
+- **`Design Principles`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/design-principles.md` — for interface design and refactor guidance
 
 ### On-demand (read only when needed)
-- **`Repo Fingerprint`:** Read `repo-fingerprint.md` — only if `{{WORKSPACE}}/knowledge/repo-fingerprint.md` exists and tech stack is ambiguous
+- **`Repo Fingerprint`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/repo-fingerprint.md` — only if `{{WORKSPACE}}/knowledge/repo-fingerprint.md` exists and tech stack is ambiguous
 
 ### Cross-references
-For how references relate to each other, see `references-map.md`.
+For how references relate to each other, see `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/references-map.md`.
 
 ## Validation
 
