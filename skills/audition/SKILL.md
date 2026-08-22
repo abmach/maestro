@@ -45,8 +45,8 @@ For how references relate to each other, see `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/r
 ### Phase 1: Test Execution
 
 1. **Select Execution Command:** Choose appropriate command based on testing framework:
-   - **Vitest:** `yarn test` or `npm run test`
-   - **Jest:** `yarn test` or `npm run test`
+   - **Vitest:** `<pkg-manager> test`
+   - **Jest:** `<pkg-manager> test`
    - **pytest:** `python -m pytest`
    - **xUnit:** `dotnet test`
 2. **Execute Tests:** Run the test suite using the appropriate command

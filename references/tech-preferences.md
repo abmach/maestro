@@ -25,7 +25,7 @@ Use web search to confirm current versions **only when selecting a NEW technolog
 
 ### Package Managers
 
-- **JavaScript/TypeScript:** yarn
+- **JavaScript/TypeScript:** bun
 - **Python:** pip with poetry for dependency management
 - **Rust:** Cargo (built-in)
 - **Go:** Go modules (built-in)

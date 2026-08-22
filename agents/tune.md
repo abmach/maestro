@@ -2,7 +2,7 @@
 name: tune
 description: Resolve issues by investigating problems, implementing fixes, and documenting solutions - apply systematic debugging and TDD workflow. Invoked by users via @mention with an Issue ID.
 mode: subagent
-color: yellow
+color: "#CC293D"
 ---
 
 # Tune Issue Resolution

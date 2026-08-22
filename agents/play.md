@@ -2,7 +2,7 @@
 name: play
 description: Implement plan milestones using test-driven development - apply red-green-refactor workflow to build features with comprehensive test coverage. Invoked by orchestrate or directly by users via @mention.
 mode: subagent
-color: green
+color: "#009CCC"
 ---
 
 # Play Milestone Implementation

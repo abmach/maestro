@@ -88,7 +88,7 @@ Always include specific version numbers for all technologies.
 ### Scan Key Configuration Files
 
 Examine:
-- `package.json`, `yarn.lock`, `package-lock.json` — Node.js projects
+- `package.json`, JS package manager lockfile (`bun.lockb`, `yarn.lock`, `package-lock.json`, `pnpm-lock.yaml`) — Node.js projects
 - `.csproj`, `.sln` — .NET projects
 - `requirements.txt`, `pyproject.toml` — Python projects
 - `Cargo.toml` — Rust projects
