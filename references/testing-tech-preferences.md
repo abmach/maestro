@@ -21,6 +21,18 @@ Commercial tools should only be considered when they provide essential functiona
 
 Use web search to confirm current versions **only when selecting a NEW testing technology** to introduce to the project — i.e., when no `Repo Fingerprint` exists yet, or when introducing a testing framework/library not already recorded in the existing `Repo Fingerprint`. The `Repo Fingerprint`'s recorded versions are authoritative for the existing stack; do not re-search them.
 
+## Artifact Path Contract
+
+Binding locations (see also `conventions.md`):
+
+| Content | Path | Committed |
+| ------- | ---- | --------- |
+| E2E/integration test specs | `tests/` (flat) | yes |
+| Visual regression baselines | `tests/screenshots/baselines/` | yes |
+| Runtime artifacts (actual/diff screenshots, logs, traces) | `test-results/` | no — gitignore |
+
+Configure the framework's baseline path explicitly (Playwright: top-level `snapshotPath`). Downstream consumers use only paths reported by `audition`'s result summary — never assumed locations.
+
 ## Preferences
 
 ### Unit Testing Frameworks
@@ -43,72 +55,61 @@ Use web search to confirm current versions **only when selecting a NEW testing t
   - Built-in waiting and retry mechanisms
   - Visual regression testing capabilities
   - Multi-browser support (Chromium, Firefox, WebKit)
-  - Fast execution and minimal resource usage
 - **Cypress:** JavaScript-focused, developer-friendly (free, but heavier)
   - Good for teams with strong JavaScript background
   - Real-time reload and debugging
   - Note: Heavier than Playwright, use only for specific team preferences
 - **Selenium:** Legacy support, widely adopted (free, but complex)
   - Use only when maintaining existing Selenium test suites
-  - Requires more setup and maintenance overhead
-
-**Path Conventions:**
-- **{name} placeholder**: Replaced with test-specific screenshot names
-- **Framework flexibility**: Screenshot paths are inputs to the `orchestrate` skill's visual regression routing, making them framework-agnostic
-- **Consistency**: Projects can choose to follow these conventions or use custom paths
-- **Recommended structure**: `tests/screenshots/baselines/`, `tests/screenshots/actuals/`, `tests/screenshots/diffs/`
 
 #### Playwright Configuration
 
-When initializing or configuring Playwright (`playwright.config.ts`), use this recommended configuration:
+When initializing or configuring Playwright (`playwright.config.ts`), use this canonical configuration. Option placement matters — browser-context features live under `use:`, and the snapshot baseline path is a TOP-LEVEL option:
 
 ```typescript
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
-  // Test artifacts output directory (Playwright default)
+  // Test artifacts output directory (runtime artifacts: actuals, diffs, logs — gitignored)
   outputDir: 'test-results',
 
-  // Structured reporting for Maestro integration
-  reporter: ['json', { outputFile: './test-results/summary.json' }],
+  // Structured reporting for Maestro integration (note the nested [reporter, options] form)
+  reporter: [['json', { outputFile: 'test-results/summary.json' }]],
 
-  // Screenshot configuration for debugging (temporary, git-ignored)
-  screenshot: 'only-on-failure', // Captures screenshots on test failure for debugging
+  // Visual regression baselines — TOP-LEVEL option, committed to git.
+  // expect(page).toHaveScreenshot() baselines resolve against this directory.
+  snapshotPath: 'tests/screenshots/baselines',
 
-  // Disable heavy features for performance
-  video: 'off', // Video capture adds significant overhead
-  trace: 'off', // Trace capture adds significant overhead
-
-  // Visual regression snapshot configuration
-  // Used by expect(page).toHaveScreenshot() calls in E2E tests
-  expect: {
-    snapshotPath: 'tests/screenshots/baselines',
+  // Browser context features belong under use:
+  use: {
+    screenshot: 'only-on-failure', // failure screenshots for debugging
+    video: 'off',                   // video capture adds significant overhead
+    trace: 'off',                   // trace capture adds significant overhead
   },
+
+  // Screenshot comparison tuning lives under expect.toHaveScreenshot, e.g.:
+  // expect: { toHaveScreenshot: { maxDiffPixels: 100 } }
 
   // Other project-specific Playwright configuration...
 })
 ```
 
-**Note:** Ensure the `test-results/` directory is added to `.gitignore` to avoid committing runtime test outputs. Visual regression baselines in `tests/screenshots/baselines/` SHOULD be committed to git.
+**Note:** Ensure `test-results/` is added to `.gitignore` so runtime artifacts stay out of git. Baselines under `tests/screenshots/baselines/` SHOULD be committed.
 
 #### Cypress Configuration
 
-When configuring Cypress (`cypress.config.js`), consider these settings for Maestro workflow compatibility:
-
-**Screenshot Path Configuration:**
-
-To configure Cypress to use a Playwright-like structure for consistency:
+When configuring Cypress (`cypress.config.js`), align screenshot output with the artifact contract:
 
 ```javascript
 export default defineConfig({
   e2e: {
-    screenshotsFolder: 'tests/screenshots',
+    screenshotsFolder: 'test-results/screenshots',
     // Other Cypress configuration...
   }
 })
 ```
 
-This allows Cypress projects to use the same screenshot directory structure as Playwright for consistency across projects.
+Cypress manages its own baseline comparison differently from Playwright; prefer Playwright when visual regression is a first-class requirement of the Plan.
 
 ### Test Doubles and Mocking
 
@@ -133,7 +134,7 @@ This allows Cypress projects to use the same screenshot directory structure as P
 
 ### Test Runners and Execution
 
-- **JavaScript/TypeScript:** Vitest or Jest (framework-integrated)
+- **JavaScript/TypeScript:** Vitest or Jest (framework-integrated); Playwright CLI for E2E
 - **Python:** pytest
 - **.NET:** dotnet test
 - **Rust:** cargo test
@@ -141,10 +142,9 @@ This allows Cypress projects to use the same screenshot directory structure as P
 
 ### Visual Regression Testing
 
-- **Playwright:** Screenshot comparison with pixelmatch (free, built-in, lightweight)
-- **Percy:** Cloud-based visual testing platform (commercial, paid)
-- **Chromatic:** Component-focused visual testing (commercial, free tier available)
-- **Note:** Strongly prefer Playwright's built-in screenshot comparison for simplicity, cost-effectiveness, and lightweight operation
+- **Playwright:** Built-in screenshot comparison via `expect(page).toHaveScreenshot()` (free, lightweight)
+- **Percy / Chromatic:** Cloud-based visual testing platforms (commercial)
+- **Note:** Strongly prefer Playwright's built-in screenshot comparison for simplicity and cost
 
 ### Performance Testing
 
@@ -174,7 +174,7 @@ This allows Cypress projects to use the same screenshot directory structure as P
 - **E2E Testing:** Playwright
 - **Mocking:** vi.mock (Vitest) or MSW for API mocking
 - **Coverage:** c8 (Vitest native)
-- **Visual Regression:** Playwright screenshot comparison
+- **Visual Regression:** Playwright screenshot comparison → `tests/screenshots/baselines/`
 - **Performance:** k6
 - **API Testing:** Supertest
 
@@ -197,7 +197,6 @@ This allows Cypress projects to use the same screenshot directory structure as P
 ## Deviation Guidelines
 
 Deviations from these testing preferences are acceptable when:
-
 1. **Workspace Requirements:** The existing workspace uses different testing frameworks
 2. **Specific Needs:** A project has unique testing requirements that necessitate different choices
 3. **Legacy Code:** Maintaining existing test suites requires specific tools
@@ -205,13 +204,11 @@ Deviations from these testing preferences are acceptable when:
 5. **Integration Requirements:** Specific tool integrations require particular testing frameworks
 6. **Commercial Justification:** A commercial tool provides essential functionality not available in free alternatives
 
-**Free and Lightweight Priority:** When deviating to commercial or heavier tools, explicitly justify why the free and lightweight alternatives are insufficient. Document the specific features or requirements that necessitate the deviation.
-
-When deviating, document the reason in the ADR or project documentation.
+When deviating, document the reason in an ADR or project documentation.
 
 ## Version Strategy
 
-- **Verify Online for New Selections:** Search online for the current latest stable release when introducing a testing technology not in the existing `Repo Fingerprint`. Use the `Repo Fingerprint`'s recorded versions for the existing stack.
+- **Verify Online for New Selections:** Search online for the current latest stable release when introducing a testing technology not in the existing `Repo Fingerprint`. Use the recorded versions for the existing stack.
 - **Stable Only:** Use stable releases, never alpha/beta unless explicitly required
 - **Security Updates:** Always use versions that receive security updates
 - **Breaking Changes:** Be cautious with major version upgrades in testing frameworks

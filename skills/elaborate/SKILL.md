@@ -10,8 +10,9 @@ Elaborate existing `Plan`s with detailed, actionable guidance distilled from hig
 
 ## Pre-flight
 
-- `{{WORKSPACE}}` = the workspace root (your cwd).
-- Working folder: `{{WORKSPACE}}` - the workspace root (your cwd)
+- `{{WORKSPACE}}` = workspace root. Resolve once per session and reuse: `git rev-parse --show-toplevel`; fall back to cwd outside a git repo.
+- Before your first write, read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/conventions.md` — statuses, retries, artifact paths, and file ownership are defined there and are binding.
+- Working folder: `{{WORKSPACE}}`
 - Target folders: `{{WORKSPACE}}/plans/` (you should only modify files in this folder)
 - Required input: `Plan` ID (e.g., "AUTH-001") or `Plan` file path (e.g., "plans/AUTH-001-user-authentication.md")
 
@@ -20,12 +21,13 @@ Elaborate existing `Plan`s with detailed, actionable guidance distilled from hig
 Read reference specs on-demand when the workflow requires them — do NOT read all upfront.
 
 ### Always needed
-- **`Plan`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/plan.md` — for Plan format, milestone fields, and status management
+- **`Plan`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/plan.md` — for Plan format, milestone fields (including the mandatory `Retries` header field), and elaboration format
 - **`Plans Index`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/plans-index.md` — for index lookup and status updates
 
 ### On-demand (read only when needed)
-- **`Contexts`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/contexts.md` — when checking domain language for elaborations
-- **`Repo Fingerprint`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/repo-fingerprint.md` — when checking tech stack for elaborations
+- **Contexts (working file):** Read `{{WORKSPACE}}/knowledge/contexts.md` when checking domain language for elaborations — the spec at `{{MAESTRO_CONFIG}}/references/contexts.md` defines the format only
+- **Repo Fingerprint (working file):** Read `{{WORKSPACE}}/knowledge/repo-fingerprint.md` when checking the tech stack
+- **Instruments (working file):** Read `{{WORKSPACE}}/knowledge/instruments.md` — if it exists, target the `composition` section's model as the quality bar and keep guidance executable by the `implementation` section's model (that is the whole point of elaboration)
 - **`Testing Principles`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/testing-principles.md` — when elaborating test strategy
 - **`Design Principles`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/design-principles.md` — when elaborating code patterns
 - **`Tech Preferences`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/tech-preferences.md` — when elaborating tech choices
@@ -46,7 +48,7 @@ For how references relate to each other, see `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/r
 1. **Parse Input:** Determine if input is a `Plan` ID or file path
 2. **Locate Plan:** If `Plan` ID provided, read `{{WORKSPACE}}/plans/index.md` to find the full `Plan` filename
 3. **Read Plan:** Read the full `Plan` file to understand its structure, milestones, and current detail level
-4. **Read Context:** Read relevant knowledge files (`{{WORKSPACE}}/knowledge/contexts.md`, `{{WORKSPACE}}/knowledge/repo-fingerprint.md`) to understand domain language and technical stack
+4. **Read Context:** Read the working knowledge files (`{{WORKSPACE}}/knowledge/contexts.md`, `{{WORKSPACE}}/knowledge/repo-fingerprint.md`) to understand domain language and technical stack
 
 ### Phase 1: Gap Analysis
 
@@ -69,7 +71,7 @@ For how references relate to each other, see `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/r
    - Existing similar implementations in the codebase
    - Established patterns for the technology stack
    - Relevant utility functions or helper classes
-3. **Domain Alignment:** Ensure elaboration uses terminology from `{{WORKSPACE}}/knowledge/contexts.md`
+3. **Domain Alignment:** Ensure elaboration uses terminology from the working `knowledge/contexts.md`
 
 ### Phase 3: Elaboration Generation
 
@@ -92,7 +94,7 @@ For each milestone identified as needing elaboration, add:
 - Specific test cases to implement
 - Edge cases to cover
 - Mock data requirements
-- Test file locations and naming conventions
+- Test file locations and naming conventions (unit tests co-located; E2E flat in `tests/`)
 
 **Best Practices:**
 - Performance considerations
@@ -122,15 +124,15 @@ For each milestone identified as needing elaboration, add:
 
 1. **Apply Elaborations:** Update the `Plan` file with approved elaborations
 2. **Maintain Structure:** Ensure elaborations are added without breaking the existing `Plan` structure and DAG dependencies
-3. **Preserve Metadata:** Keep original `Plan` metadata (Test Tier, Docs Affected, Status) unchanged
+3. **Preserve Metadata:** Keep original `Plan` metadata (Test Tier, Docs Affected, Status, and every milestone's `Retries` count) unchanged
 4. **Update Index:** If elaborations significantly change the `Plan` scope, consider updating the description in `{{WORKSPACE}}/plans/index.md`
 
 ## Elaboration Format
 
-Add elaborations as nested bullet points under each milestone:
+Add elaborations as nested bullet points under each milestone, preserving the canonical milestone header exactly as defined in the `Plan` spec (including `Retries`):
 
 ```markdown
-- ⏳ **Milestone 1 (ID: 1, Dependencies: [])**: [Short Title] - Specific detailed task description.
+- ⏳ **Milestone 1 (ID: 1, Dependencies: [], Retries: 0)**: [Short Title] - Specific detailed task description.
   **Implementation Guidance:**
   - Step 1: [Detailed step with file paths]
   - Step 2: [Detailed step with specific actions]
@@ -167,13 +169,13 @@ Before completing the elaboration:
 - [ ] Knowledge gathered from documentation and codebase
 - [ ] Elaborations follow project conventions and patterns
 - [ ] Code examples match existing codebase style
-- [ ] Domain language from contexts.md used correctly
+- [ ] Domain language from the working `contexts.md` used correctly
 - [ ] Testing strategies are specific and actionable
 - [ ] Error handling covers common scenarios
 - [ ] Best practices are relevant to the tech stack
 - [ ] User approval obtained for elaborations
 - [ ] `Plan` structure and DAG dependencies preserved
-- [ ] Original `Plan` metadata maintained
+- [ ] Original `Plan` metadata maintained, including per-milestone `Retries`
 
 ## Error Handling
 
@@ -185,30 +187,10 @@ Before completing the elaboration:
 
 ## Integration with Other Skills
 
-The elaborate skill integrates with:
-
-- **compose**: Can be invoked automatically after compose creates a new `Plan` to add detail before execution
+- **compose**: Typically runs compose → elaborate → orchestrate in sequence
 - **orchestrate**: Elaborated `Plan`s provide better guidance for subagent execution
-- **play**: Enhanced `Plan`s make execution more reliable and efficient
 - **rehearse**: Can be called if rehearse identifies areas needing more technical detail
-- **tune**: If tune identifies that a `Plan` needs more detail for successful implementation
-
-## Usage Patterns
-
-**Automatic Elaboration:**
-- Invoke after `compose` creates a new `Plan`
-- Run before `orchestrate` begins execution
-- Ensures all `Plan`s have sufficient detail for reliable execution
-
-**Manual Elaboration:**
-- User invokes on existing `Plan`s that are proving difficult to execute
-- Can target specific complex milestones that need more guidance
-- Useful when onboarding new team members or technologies
-
-**Selective Elaboration:**
-- Elaborate only high-risk or complex milestones
-- Focus on areas where the team has less experience
-- Target milestones that have failed in previous execution attempts
+- **tune**: May recommend elaboration when an `Issue` reveals the `Plan` lacked detail
 
 ## Execution
 

@@ -82,12 +82,6 @@ Each issue file must follow this structure:
 - **Result:** {Success/Failure/Partial}
 - **Notes:** {Additional details}
 
-### Attempt 2: {Description}
-- **Date:** {YYYY-MM-DD}
-- **Approach:** {Solution attempted}
-- **Result:** {Success/Failure/Partial}
-- **Notes:** {Additional details}
-
 ## Resolution
 
 {Final solution if issue is resolved}
@@ -96,19 +90,21 @@ Each issue file must follow this structure:
 
 {Steps to prevent similar issues in future}
 
-## Related Issues
+## Related Work
 
-- [ISSUE-TYPE-NUMBER](./issues/ISSUE-TYPE-NUMBER-issue-title.md) — Related issue description
-- [PLAN-TYPE-NUMBER](./plans/PLAN-TYPE-NUMBER-plan-title.md) — Related plan if fix requires feature work
+- [ISSUE-TYPE-NUMBER](ISSUE-TYPE-NUMBER-issue-title.md) — related issue (sibling in `issues/`)
+- [PLAN-CODE-NNN](../plans/CODE-NNN-slug.md) — related plan if fix requires feature work (note the `../plans/` path)
 
 ## References
 
-Links to relevant workspace content (NOT specification files in `.agents/references/`):
+Links to relevant workspace content (NOT specification files in the installed config directory):
 
-- [Error Logs](./path/to/logs}) — Link to relevant logs
-- [Contexts](./knowledge/contexts.md) — Domain language references
-- [ADRs](./knowledge/adrs/) — Architectural decisions that may be relevant
+- [Error Logs](../test-results/some-log.txt) — link to relevant logs
+- [Contexts](../knowledge/contexts.md) — domain language references
+- [ADRs](../knowledge/adrs/) — architectural decisions that may be relevant
 ```
+
+Relative-link rule: issue files live in `{{WORKSPACE}}/issues/`, so sibling issues are linked by bare filename and everything else via `../` (e.g., `../plans/…`, `../knowledge/…`).
 
 ## Severity Classification
 
@@ -187,13 +183,13 @@ When an issue is resolved:
 4. Move to Resolved section in index
 5. Consider if fix requires new plan or documentation update
 
-### Using the Tune Skill
+### Using the tune Agent
 
-For systematic issue resolution, use the `tune` skill:
-- **Invocation:** `/tune ISSUE-ID` (e.g., `/tune BUG-001`)
-- **Workflow:** The tune skill follows a systematic debugging and resolution process
+For systematic issue resolution, use the `tune` subagent:
+- **Invocation:** `@tune BUG-001` (or let orchestrate spawn it during Visual Regression Routing)
+- **Workflow:** tune follows a systematic debugging and resolution process
 - **Benefits:** Automated investigation, solution design, implementation, and verification
-- **Integration:** Tune automatically updates issue files and issues index throughout the resolution process
+- **Integration:** tune updates issue files and the issues index throughout the resolution process
 
 ## Example
 
@@ -255,14 +251,14 @@ Root cause identified: Token refresh mechanism not implemented. Access tokens ex
 ### Attempt 1: Extend JWT expiration to 24h
 - **Date:** 2026-06-22
 - **Approach:** Changed JWT_EXPIRATION from 1h to 24h
-- **Result:** Failed - security team rejected due to increased exposure if token is compromised
+- **Result:** Failure - security team rejected due to increased exposure if token is compromised
 - **Notes:** Security concern with long-lived access tokens
 
 ### Attempt 2: Implement refresh token flow
 - **Date:** 2026-06-23
 - **Approach:** Added refresh token mechanism with 7-day expiration
 - **Result:** Success - tokens now refresh automatically before expiration
-- **Notes:** Requires [PLAN-AUTH-002-refresh-token-implementation](./plans/AUTH-002-refresh-token-implementation.md)
+- **Notes:** Implemented via plan AUTH-002
 
 ## Resolution
 
@@ -274,14 +270,12 @@ Implemented refresh token flow with access tokens (1h expiration) and refresh to
 - Monitor authentication failures in production
 - Document token lifecycle in API documentation
 
-## Related Issues
+## Related Work
 
-- None
-- [PLAN-AUTH-002](./plans/AUTH-002-refresh-token-implementation.md) — Refresh token implementation plan that resolved this issue
+- [AUTH-002-refresh-token-implementation](../plans/AUTH-002-refresh-token-implementation.md) — Refresh token implementation plan that resolved this issue
 
 ## References
 
-- [Error Logs](./logs/auth-service-2026-06-22.log}) — Authentication error logs
-- [Contexts](./knowledge/contexts.md) — Authentication domain language
-- [ADRs](./knowledge/adrs/0001-refresh-token-strategy.md) — Decision to adopt refresh token flow over extended JWT expiration
+- [Contexts](../knowledge/contexts.md) — Authentication domain language
+- [ADRs](../knowledge/adrs/0001-refresh-token-strategy.md) — Decision to adopt refresh token flow over extended JWT expiration
 ````

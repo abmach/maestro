@@ -10,9 +10,10 @@ Analyze requirements and create structured technical `Plan`s with precise specif
 
 ## Pre-flight
 
-- `{{WORKSPACE}}` = the workspace root. At the start of a session, if not already resolved, run `git rev-parse --show-toplevel` (fall back to your cwd outside a repo) and reuse the result for the session.
-- Working folder: `{{WORKSPACE}}` - the resolved workspace root
-- Target folders: `{{WORKSPACE}}/knowledge/` and `{{WORKSPACE}}/plans/` (you should only modify files in these folders)
+- `{{WORKSPACE}}` = workspace root. Resolve once per session and reuse: `git rev-parse --show-toplevel`; fall back to cwd outside a git repo.
+- Before your first write, read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/conventions.md` — statuses, retries, artifact paths, and file ownership are defined there and are binding.
+- Working folder: `{{WORKSPACE}}`
+- Target folders: `{{WORKSPACE}}/plans/` (you should only modify files in this folder). `{{WORKSPACE}}/knowledge/` is read-only context for you
 - Required input: Feature/change request from user prompt
 
 ## References
@@ -57,14 +58,14 @@ For how references relate to each other, see `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/r
 
 Before completing the `Plan`:
 
-0. **Input Validated:** Ensure feature request is provided and clear
-1. **Rehearse Option Offered:** User was given the option to refine domain language before `Plan` creation
-2. **Context Alignment:** Use terminology from `{{WORKSPACE}}/knowledge/contexts.md` if it exists
-3. **Technical Compatibility:** Match existing codebase patterns and frameworks
-4. **No Ambiguity:** Define specific implementations, not placeholders
-5. **Specification Compliance:** Follow the exact structure from the `Plan` specification
-6. **Index Updated:** Ensure `{{WORKSPACE}}/plans/index.md` includes the new `Plan` (following `Plans Index` specification)
-7. **Issues Considered:** Relevant existing `Issue`s from `{{WORKSPACE}}/issues/index.md` are considered in `Plan` design
+1. **Input Validated:** Ensure feature request is provided and clear
+2. **Rehearse Option Offered:** User was given the option to refine domain language before `Plan` creation
+3. **Context Alignment:** Use terminology from `{{WORKSPACE}}/knowledge/contexts.md` if it exists
+4. **Technical Compatibility:** Match existing codebase patterns and frameworks
+5. **No Ambiguity:** Define specific implementations, not placeholders
+6. **Specification Compliance:** Follow the exact structure from the `Plan` specification
+7. **Index Updated:** Ensure `{{WORKSPACE}}/plans/index.md` includes the new `Plan` (following `Plans Index` specification)
+8. **Issues Considered:** Relevant existing `Issue`s from `{{WORKSPACE}}/issues/index.md` are considered in `Plan` design
 
 ## Execution
 

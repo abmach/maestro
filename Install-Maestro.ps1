@@ -11,10 +11,13 @@ so skills and agents can reference reference files via a relative path that
 resolves correctly at runtime.
 
 Supported locations:
-  .agents    — OpenCode-compatible (default). Works on OpenCode for both skills
-               and agents. Not discovered by Claude Code.
-  .claude    — Claude Code-compatible. Works on Claude Code for skills and
-               agents. Also discovered by OpenCode (Claude-compatible path).
+  .agents    — OpenCode-compatible (default). Full coverage on OpenCode (skills
+               and agents). On Oh My Pi, skills are discovered natively (canonical
+               OMP location) but the agents/ folder is ignored — prefer .omp for OMP.
+  .omp       — Oh My Pi native. Full coverage: .omp/skills/ (native provider) and
+               .omp/agents/ (OMP's only project-level subagent root).
+  .claude    — Claude Code-compatible. Full coverage on Claude Code; skills also
+               discovered by OpenCode and Oh My Pi (Claude-compatible path).
   .opencode  — OpenCode native. Same coverage as .agents but checked first by
                OpenCode when present.
 
@@ -28,8 +31,8 @@ Path to the destination repo root. Defaults to the current working directory.
 
 .PARAMETER Locations
 One or more config directories to install into. Defaults to @(".agents").
-Accepts: .agents, .claude, .opencode. Pass multiple to install to all, e.g.:
-    -Locations .agents,.claude,.opencode
+Accepts: .agents, .omp, .claude, .opencode. Pass multiple to install to all, e.g.:
+    -Locations .agents,.claude,.opencode,.omp
 
 .PARAMETER Clean
 Delete <Target>/<Location>/skills, references, and agents folders before
@@ -56,7 +59,12 @@ param(
 
 $ErrorActionPreference = "Stop"
 
-$ValidLocations = @(".agents", ".claude", ".opencode")
+# Non-interactive hosts cannot answer the overwrite prompt — fail closed with guidance.
+if (-not $Force -and -not [Environment]::UserInteractive) {
+    throw "Non-interactive session detected and an existing installation may need overwriting. Re-run with -Force to overwrite in place."
+}
+
+$ValidLocations = @(".agents", ".omp", ".claude", ".opencode")
 
 function Write-Step($msg) { Write-Host "-> $msg" -ForegroundColor Cyan }
 function Write-Ok($msg)    { Write-Host "   $msg" -ForegroundColor Green }
@@ -230,10 +238,3 @@ foreach ($loc in $Normalized) {
 
 Write-Host ""
 Write-Host "Done." -ForegroundColor Green
-
-$claudes = $Normalized | Where-Object { $_ -eq ".claude" }
-if (-not $claudes) {
-    Write-Host ""
-    Write-Warn "Note: not installed to .claude — Claude Code will not discover these skills or agents."
-    Write-Warn "      Re-run with -Locations .claude,.agents to enable Claude Code as well."
-}

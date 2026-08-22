@@ -1,6 +1,6 @@
 # Maestro
 
-A bundle of [Agent Skills](https://agentskills.io) for AI-assisted software development. Maestro gives AI coding agents (OpenCode, Claude Code, and other Agent-Skills-compatible systems) a structured workflow for planning, implementing, testing, and documenting features — without locking you to a single platform.
+A bundle of [Agent Skills](https://agentskills.io) for AI-assisted software development. Maestro gives AI coding agents (Oh My Pi, OpenCode, Claude Code, and other Agent-Skills-compatible harnesses) a structured workflow for planning, implementing, testing, and documenting features — built to spend premium models on design reasoning and cheap ones on volume work — without locking you to a single platform.
 
 ## What's in the box
 
@@ -16,30 +16,34 @@ maestro/
 │   ├── orchestrate/         # Execute plans via parallel subagents
 │   ├── arrange/             # Write integration & E2E test specs
 │   ├── audition/            # Run test suites and capture results
-│   └── score/               # Update docs after features ship
+│   ├── score/               # Update docs after features ship
+│   └── instruments/         # Assign AI models to workflow sections (per-harness guidance)
 ├── agents/                  # Subagent definitions (spawned by orchestrate or @mention)
 │   ├── play.md              # Implements plan milestones via TDD
 │   └── tune.md              # Resolves issues via systematic debugging
-└── references/              # Specs for plan/issue/ADR/contexts formats
-    ├── plan.md
-    ├── plans-index.md
-    ├── issue.md
-    ├── issues-index.md
-    ├── contexts.md
-    ├── adrs.md
-    ├── repo-fingerprint.md
-    ├── design-principles.md
-    ├── testing-principles.md
-    ├── tech-preferences.md
-    ├── testing-tech-preferences.md
-    └── references-map.md
+├── references/              # Specs for plan/issue/ADR/contexts formats
+│   ├── conventions.md       # Shared contract: statuses, retries, artifact paths, ownership
+│   ├── plan.md
+│   ├── plans-index.md
+│   ├── issue.md
+│   ├── issues-index.md
+│   ├── contexts.md
+│   ├── adrs.md
+│   ├── repo-fingerprint.md
+│   ├── design-principles.md
+│   ├── testing-principles.md
+│   ├── tech-preferences.md
+│   ├── testing-tech-preferences.md
+│   └── references-map.md
+└── tools/
+    └── validate-bundle.ps1  # Dev-time validator: frontmatter, links, contract consistency
 ```
 
-**8 skills** + **2 agents** + **12 reference specs**.
+**9 skills** + **2 agents** + **13 reference specs** + a dev-time bundle validator.
 
 ## The workflow
 
-Once when adopting Maestro into an existing project, run `/prelude` first to create the knowledge artifacts (Repo Fingerprint, Contexts, ADRs). The workflow below then takes over.
+Once when adopting Maestro into an existing project, run `/prelude` first to create the knowledge artifacts (Repo Fingerprint, Contexts, ADRs). The workflow below then takes over. Every skill and agent shares one contract — `references/conventions.md` — covering workspace resolution, status vocabularies, milestone retry semantics, artifact locations, and file ownership.
 
 ```
   User request
@@ -75,6 +79,17 @@ Once when adopting Maestro into an existing project, run `/prelude` first to cre
    Done
 ```
 
+## Why Maestro
+
+Strong models and good harnesses did not make this bundle obsolete — they changed what it is for. Four value pillars, in order of durability:
+
+1. **Cost arbitrage.** Cost is tokens × price, and implementation dominates token volume while design reasoning is small-batch. Maestro's Plans mandate exact file paths, API shapes, and test cases — and a precise spec needs a competent executor, not a premium one. Run `compose`/`rehearse`/`elaborate` on a reasoning-heavy model, `play` on a cheap fast one, and the dominant cost term drops by roughly an order of magnitude at unchanged ceiling quality. `/instruments` records the assignments; Oh My Pi applies them to spawns natively (`task.agentModelOverrides`), Claude Code and OpenCode via agent frontmatter.
+2. **Parallel throughput.** Milestones form a DAG; every ready wave spawns one worker per milestone regardless of model strength. Wall-clock savings are orthogonal to how smart your models are.
+3. **Review checkpoints before code exists.** Auditing a 200-line plan costs minutes; reviewing a 2,000-line diff costs hours. compose front-loads expensive-to-reverse decisions into the cheapest artifact to inspect.
+4. **Durable, portable process state.** Plans, issues, retries, glossary, ADRs live in your repo — they survive compaction, crashes, harness switches, and teammates. Harness features are session-scoped; this layer is repo-scoped, which is why they compose rather than compete.
+
+One rule of thumb governs the economics: **when milestones fail repeatedly, escalate the plan, not just the worker.** Three failed attempts usually mean an under-specified spec, and re-spawning stronger workers on it burns the savings the tiering created.
+
 ## Installation
 
 ### Prerequisites
@@ -105,11 +120,14 @@ Defaults to installing into `.agents/` (the Agent-Skills-compatible location, wo
 
 Supported locations and what they enable:
 
-| Location    | Skills | Agents | Platform coverage                              |
-| ----------- | ------ | ------ | ---------------------------------------------- |
-| `.agents`   | yes    | yes    | OpenCode (Claude-compatible discovery path)    |
-| `.claude`   | yes    | yes    | Claude Code; also discovered by OpenCode       |
-| `.opencode` | yes    | yes    | OpenCode native (highest precedence on OpenCode) |
+| Location    | Skills | Agents | Platform coverage                                                        |
+| ----------- | ------ | ------ | ------------------------------------------------------------------------ |
+| `.agents`   | yes    | yes    | OpenCode (full). Oh My Pi discovers the skills natively, ignores agents/ |
+| `.omp`      | yes    | yes    | Oh My Pi native — `.omp/skills/` + `.omp/agents/` (its only agent root)  |
+| `.claude`   | yes    | yes    | Claude Code; skills also discovered by OpenCode and Oh My Pi             |
+| `.opencode` | yes    | yes    | OpenCode native (highest precedence on OpenCode)                         |
+
+Maestro is **all-or-nothing**: every supported location delivers the full bundle, including the markdown-defined `play`/`tune` subagents. Harnesses that cannot discover subagent definitions (Codex CLI, Gemini CLI, GitHub Copilot, Cursor, …) are not supported — a skills-only install would silently break `orchestrate`'s delegation model. On Oh My Pi, prefer `.omp`; `.agents` delivers skills natively there but its `agents/` folder is ignored.
 
 The installer copies `skills/`, `references/`, and `agents/` to each target location and substitutes `{{MAESTRO_CONFIG}}` placeholders in every `.md` file with the location string, so reference paths resolve correctly at runtime.
 
@@ -122,6 +140,16 @@ Re-running the installer overwrites in place. To wipe stale folders before copyi
 ```
 
 The installer records the bundle version in each target's `MAESTRO_VERSION` file so you can audit which Maestro version a repo is on.
+
+Non-interactive hosts (CI) must pass `-Force`; without it the installer fails closed rather than hanging on the overwrite prompt.
+
+### Validate the bundle before installing
+
+```powershell
+pwsh ./tools/validate-bundle.ps1
+```
+
+Checks frontmatter integrity, placeholder correctness, markdown link resolution, canonical Pre-flight blocks in every skill/agent, and cross-file consistency of the retry rule. Run it after any bundle edit.
 
 ## Usage
 
@@ -163,6 +191,9 @@ The installer records the bundle version in each target's `MAESTRO_VERSION` file
                                           then arrange + audition for tests,
                                           routes visual regressions to tune
 5. /score <plan-id>                    → updates docs (if Docs Affected=true)
+6. /instruments                        → (optional) assign models per section
+                                          (cheap implementation, reasoning-heavy
+                                          composition) with per-harness guidance
 ```
 
 Step 0 is once-per-project. Items 2, 3, and 5 are optional. `orchestrate` is the main entry point for execution.
@@ -180,21 +211,32 @@ your-repo/
 │   ├── adrs/                 # Architectural Decision Records
 │   └── repo-fingerprint.md   # Tech stack snapshot
 ├── tests/                    # E2E test specs (flat, no subdirectories)
-├── test-results/             # Test output (gitignored)
+├── tests/screenshots/baselines/  # Visual regression baselines (committed)
+├── test-results/             # Test output: actuals, diffs, logs (gitignored)
 └── docs/                     # Maintained by the score skill
 ```
 
-All file formats are specified in the `references/` folder of the installed bundle.
+All file formats are specified in the `references/` folder of the installed bundle; shared behavioral rules live in `references/conventions.md`.
 
 ## Multi-platform design
 
-Maestro targets the [Agent Skills](https://agentskills.io) open standard. It works on:
+Maestro targets the [Agent Skills](https://agentskills.io) open standard. The bundle is skills **plus** markdown-defined subagents (`play`, `tune`) **plus** an orchestrator that spawns them in parallel — so a harness either supports all of that, or it is not supported:
 
-- **OpenCode** — fully compatible. Install to `.agents/`, `.opencode/`, or both.
-- **Claude Code** — fully compatible. Install to `.claude/`.
-- **Other Agent-Skills-compatible systems** — install to whichever config directory the system scans.
+| Harness | Install to | Parallel orchestration (`orchestrate` → `play`/`tune`) | Model routing (`/instruments`) |
+| ------- | ---------- | ------------------------------------------------------ | ------------------------------ |
+| Oh My Pi | `.omp` (full) or `.agents` (OpenCode only) | yes — `.omp/agents/` is its native subagent root | yes — `task.agentModelOverrides` / `modelRoles` |
+| Claude Code | `.claude` | yes — `.claude/agents/` | yes — `model:` frontmatter on agents |
+| OpenCode | `.opencode` or `.agents` | yes — native markdown agents | yes — `model:` frontmatter on agents |
 
-Skills use only standard Agent-Skills frontmatter (`name`, `description`). Agents use Claude-Code/OpenCode-compatible frontmatter (`name`, `description`, `mode: subagent`). No platform-specific tooling assumptions are baked into the bundle — the workflow text is portable.
+Skills use only standard Agent-Skills frontmatter (`name`, `description`). Agents use Claude-Code/OpenCode-compatible frontmatter (`name`, `description`, `mode: subagent`) — Oh My Pi reads the same files and ignores the extra fields. No platform-specific tooling assumptions are baked into the workflow text; only the installer is PowerShell.
+
+## When not to use it
+
+- **Solo, top-tier model, small features** — `compose` plus direct execution hits the 80% point; the full ceremony costs more than it saves.
+- **One-shot throwaway scripts** — nothing here outlives the session enough to pay for itself.
+- **Teams that won't read plans** — unreviewed Plans are pure overhead; the value collapses without the human checkpoint.
+
+It earns its keep with batch feature work (parallel waves), cost-sensitive volume (model tiering), team settings (plans as async collaboration currency), mixed fleets including local/cheap models, and long-lived repos where the glossary/ADR layer compounds.
 
 ## License
 

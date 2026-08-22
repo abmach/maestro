@@ -146,20 +146,26 @@ Use TDD when:
 
 #### 1. Planning Phase
 
-When exploring the codebase, use the project's domain glossary so that test names and interface vocabulary match the project's language, and respect ADRs in the area you're touching.
+Before writing any code, work in the mode matching your invocation:
 
-Before writing any code:
+**Interactive mode** (`@play` invoked directly by a user):
+- [ ] Confirm with the user what interface changes are needed
+- [ ] Confirm with the user which behaviors to test (prioritize)
+- [ ] Get user approval on the plan
 
-- [ ] Confirm with user what interface changes are needed
-- [ ] Confirm with user which behaviors to test (prioritize)
+**Autonomous mode** (spawned as a subagent by orchestrate — you cannot reach the user):
+- Treat the milestone's Development Specifications in the `Plan` as the approved behavior list — compose/rehearse/elaborate already put them through user sign-off. Do not prompt for confirmation.
+- List behaviors from the Plan's test specifications; prioritize critical paths and complex logic.
+- Record any ambiguity resolution or assumption in the status report's `Notes:` field instead of asking.
+
+Either mode:
 - [ ] Identify opportunities for [deep modules]({{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/design-principles.md#deep-modules) (small interface, deep implementation)
 - [ ] Design interfaces for [testability]({{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/design-principles.md#interface-design-for-testability)
 - [ ] List the behaviors to test (not implementation steps)
-- [ ] Get user approval on the plan
 
-Ask: "What should the public interface look like? Which behaviors are most important to test?"
+Ask (interactive mode only): "What should the public interface look like? Which behaviors are most important to test?"
 
-**You can't test everything.** Confirm with the user exactly which behaviors matter most. Focus testing effort on critical paths and complex logic, not every possible edge case.
+**You can't test everything.** In interactive mode, confirm priorities with the user. In autonomous mode, follow the Plan's stated priorities. Focus testing effort on critical paths and complex logic, not every possible edge case.
 
 #### 2. Tracer Bullet
 

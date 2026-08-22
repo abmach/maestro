@@ -11,8 +11,9 @@ Resolve `Issue`s by investigating problems, implementing fixes, and documenting 
 
 ## Pre-flight
 
-- `{{WORKSPACE}}` = the workspace root. At the start of a session, if not already resolved, run `git rev-parse --show-toplevel` (fall back to your cwd outside a repo) and reuse the result for the session.
-- Working folder: `{{WORKSPACE}}` - the resolved workspace root
+- `{{WORKSPACE}}` = workspace root. Resolve once per session and reuse: `git rev-parse --show-toplevel`; fall back to cwd outside a git repo.
+- Before your first write, read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/conventions.md` — statuses, retries, artifact paths, and file ownership are defined there and are binding.
+- Working folder: `{{WORKSPACE}}`
 - Target folders: `{{WORKSPACE}}/issues/` (read/write) and code files in the project (read/write)
 - Required input: `Issue` ID (e.g., "BUG-001", "BUILD-002", "PERF-003")
 
@@ -37,6 +38,10 @@ For how references relate to each other, see `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/r
 
 - If required input is missing or `Issue` ID doesn't exist in `Issues Index`, return failure status with error
 - If `Issue` is already resolved or marked as wontfix, return failure status with error
+
+## Execution Context
+
+Spawned by orchestrate you run autonomously — you cannot reach the user, so the high-risk gates below return status instead of asking. Invoked directly via `@tune`, you may interact with the invoking user to clarify reproduction details before investigating.
 
 ## Core Workflow
 

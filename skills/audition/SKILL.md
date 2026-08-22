@@ -10,9 +10,10 @@ Execute test suites to validate implementation, capture results, and generate ar
 
 ## Pre-flight
 
-- `{{WORKSPACE}}` = the workspace root. At the start of a session, if not already resolved, run `git rev-parse --show-toplevel` (fall back to your cwd outside a repo) and reuse the result for the session.
-- Working folder: `{{WORKSPACE}}` - the resolved workspace root
-- Target folders: `{{WORKSPACE}}/tests/` and `{{WORKSPACE}}/test-results/`
+- `{{WORKSPACE}}` = workspace root. Resolve once per session and reuse: `git rev-parse --show-toplevel`; fall back to cwd outside a git repo.
+- Before your first write, read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/conventions.md` — statuses, retries, artifact paths, and file ownership are defined there and are binding.
+- Working folder: `{{WORKSPACE}}`
+- Target folders: you only WRITE to `{{WORKSPACE}}/test-results/`. Tests under `tests/` are read-only for you — never modify test files or source code.
 - Required input: Test type and scope from orchestrate
 
 ## References
@@ -20,7 +21,7 @@ Execute test suites to validate implementation, capture results, and generate ar
 Read reference specs on-demand when the workflow requires them — do NOT read all upfront.
 
 ### Always needed
-- **`Repo Fingerprint`:** Read `{{WORKSPACE}}/knowledge/repo-fingerprint.md` (the working file, not the spec) — to identify the current testing stack and invocation command
+- **Repo Fingerprint (working file):** Read `{{WORKSPACE}}/knowledge/repo-fingerprint.md` — to identify the current testing stack and invocation command
 
 ### On-demand (read only when needed)
 - **`Testing Tech Preferences`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/testing-tech-preferences.md` — only if an unusual/non-standard test framework is in use
@@ -38,59 +39,70 @@ For how references relate to each other, see `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/r
 
 ### Phase 0: Test Discovery
 
-1. **Read Asset Specifications:** Load `Testing Tech Preferences` and `Repo Fingerprint` to understand the testing stack
+1. **Read Asset Specifications:** Load the working Repo Fingerprint (and `Testing Tech Preferences` if the stack is unusual) to understand the testing stack
 2. **Locate Test Files:** Find test files matching the specified scope
-3. **Identify Test Framework:** Determine which testing framework is in use (Vitest, Jest, pytest, xUnit, etc.)
+3. **Identify Test Framework AND Runner Command:** Determine which framework is in use and how it is actually invoked:
+   - Inspect the project's test configuration and scripts (`package.json` scripts, `playwright.config.ts`, `pytest.ini`, etc.)
+   - Verify which runner backs a script before trusting it — an npm `test` script may run Vitest, Jest, or Playwright
+   - Typical invocations: `npx vitest run <scope>`, `npx jest <scope>`, `npx playwright test <scope>`, `python -m pytest <scope>`, `dotnet test`
 
 ### Phase 1: Test Execution
 
-1. **Select Execution Command:** Choose appropriate command based on testing framework:
-   - **Vitest:** `<pkg-manager> test`
-   - **Jest:** `<pkg-manager> test`
-   - **pytest:** `python -m pytest`
-   - **xUnit:** `dotnet test`
-2. **Execute Tests:** Run the test suite using the appropriate command
-3. **Capture Results:** Collect test output, exit codes, and any generated artifacts
-4. **Generate Screenshots:** For E2E tests, ensure screenshots are captured to `test-results/` or framework-specific location
+1. Execute the test suite with the verified command
+2. Capture results: output, exit codes, and any generated artifacts
+3. For E2E runs, confirm screenshot artifacts were produced where the framework config directs them (baselines → `tests/screenshots/baselines/`; runtime actuals/diffs → `test-results/`)
 
 ### Phase 2: Result Processing
 
-1. **Analyze Test Output:** Parse test results to identify:
-   - Pass/fail status
-   - Failed test cases
-   - Error messages and stack traces
-   - Coverage information (if available)
-2. **Generate Summary:** Create structured summary of test results
-3. **Capture Artifacts:** Ensure screenshots, logs, and other artifacts are properly saved
+1. **Analyze Test Output:** Parse test results to identify pass/fail status, failed cases, error messages, stack traces, and coverage information (if available)
+2. **Resolve Artifact Paths:** Collect the concrete paths of every artifact downstream consumers may need — failure screenshots, baseline paths, diff images, logs, machine-readable summaries (e.g., `test-results/summary.json`). Never report a path you have not confirmed exists
+3. **Generate Summary:** Create a structured summary of test results in the Output Format below
 
 ## Output Format
 
+The result summary is the contract between audition and orchestrate's visual regression routing. Paths must be explicit and verified.
+
 ### Success Case
 
-- **Status:** All tests passed
-- **Test Count:** Number of tests executed
-- **Duration:** Test execution time
-- **Coverage:** Code coverage percentage (if available)
-- **Artifacts:** Paths to generated screenshots and logs
+```
+STATUS: All tests passed
+Test Count: <number executed>
+Duration: <execution time>
+Coverage: <percentage, if available>
+Artifacts:
+  summary: <path to machine-readable result file, if any>
+  logs: <path>
+  screenshots: <paths, if captured>
+```
 
 ### Failure Case
 
-- **Status:** Tests failed
-- **Failed Tests:** List of failed test cases with error messages
-- **Error Details:** Stack traces and specific error information
-- **Artifacts:** Paths to failure screenshots, logs, and debug artifacts
-- **Recommendations:** Suggested next steps for debugging
+```
+STATUS: Tests failed
+Failed Tests: <list of failed test cases with one-line error messages>
+Error Details: <stack traces and specific error information>
+Visual Regressions:
+  - test: <test name>
+    baseline: <verified path under tests/screenshots/baselines/>
+    actual: <verified path under test-results/>
+    diff: <verified path under test-results/>
+Artifacts:
+  summary: <path>
+  logs: <path>
+Recommendations: <suggested next steps for debugging>
+```
+
+For non-visual failures, omit the `Visual Regressions` block. Every listed path must exist on disk at reporting time.
 
 ## Quality Checklist
 
 Before completing the test execution:
 
-- [ ] Correct test framework identified
-- [ ] Appropriate execution command selected
+- [ ] Correct test framework and runner command identified and verified
 - [ ] Tests executed successfully (or failures properly captured)
-- [ ] Test results properly parsed and summarized
-- [ ] Screenshots and artifacts captured for visual analysis
-- [ ] Structured output generated for downstream skills
+- [ ] Test results parsed and summarized per the Output Format
+- [ ] Screenshots and artifacts located and reported as verified paths
+- [ ] Baseline vs runtime-artifact locations distinguished correctly
 - [ ] No background test processes left running
 
 ## Error Handling
@@ -104,10 +116,10 @@ If test execution fails:
 ## Integration Points
 
 - **Input from:** `orchestrate` skill (test scope and type)
-- **Output to:** `orchestrate` skill (screenshots and test results for visual regression routing)
+- **Output to:** `orchestrate` skill (result summary with verified artifact paths for visual regression routing)
 - **References:** Test files created by `arrange` skill
 - **Context:** Implementation from `play` skill milestones
 
 ## Execution
 
-Use the test scope from the invocation, then proceed with Phase 1: Test Discovery.
+Use the test scope from the invocation, then proceed with Phase 0: Test Discovery.

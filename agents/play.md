@@ -11,10 +11,23 @@ Implement `Plan` milestones using test-driven development methodology with red-g
 
 ## Pre-flight
 
-- `{{WORKSPACE}}` = the workspace root. At the start of a session, if not already resolved, run `git rev-parse --show-toplevel` (fall back to your cwd outside a repo) and reuse the result for the session.
-- Working folder: `{{WORKSPACE}}` - the resolved workspace root
+- `{{WORKSPACE}}` = workspace root. Resolve once per session and reuse: `git rev-parse --show-toplevel`; fall back to cwd outside a git repo.
+- Before your first write, read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/conventions.md` — statuses, retries, artifact paths, and file ownership are defined there and are binding.
+- Working folder: `{{WORKSPACE}}`
 - Target folders: `{{WORKSPACE}}/plans/` (read-only) and code files in the project (read/write)
 - Required input: `Plan` ID/code (e.g., "AUTH-001") and milestone ID to implement
+
+## Execution Context
+
+Your capabilities depend on who invoked you — check before Phase 1 and follow the matching mode:
+
+**Autonomous mode (spawned by orchestrate):**
+- You cannot reach the user. Never ask questions, never wait for confirmation.
+- The `Plan`'s Development Specifications ARE the approved behavior list — the user signed off on them during compose/rehearse/elaborate. Treat them as the "confirm with user" step of the TDD planning phase (see `Testing Principles`).
+- If the milestone is ambiguous, choose the interpretation most consistent with existing codebase patterns, implement it, and record the assumption in the status report's `Notes:` field.
+
+**Interactive mode (invoked directly via `@play` by a user):**
+- You MAY ask the user to confirm interface changes and behavior priorities during the TDD planning phase, per `Testing Principles`.
 
 ## References
 
@@ -27,7 +40,7 @@ Read reference specs on-demand when the workflow requires them — do NOT read a
 - **`Design Principles`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/design-principles.md` — for interface design and refactor guidance
 
 ### On-demand (read only when needed)
-- **`Repo Fingerprint`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/repo-fingerprint.md` — only if `{{WORKSPACE}}/knowledge/repo-fingerprint.md` exists and tech stack is ambiguous
+- **Repo Fingerprint (working file):** Read `{{WORKSPACE}}/knowledge/repo-fingerprint.md` — only if it exists and the tech stack is ambiguous
 
 ### Cross-references
 For how references relate to each other, see `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/references-map.md`.
@@ -48,8 +61,7 @@ For how references relate to each other, see `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/r
 
 ### Phase 1: Extract Milestone Requirements
 
-- Read the `Plan` file at `{{WORKSPACE}}/plans/{full_filename}.md`
-- Extract the milestone with the specified ID
+- Extract the milestone with the specified ID from the `Plan`
 - Understand the specific requirements from the milestone's development specifications:
   - Files to modify/create
   - API routes or components to implement
@@ -61,7 +73,7 @@ For how references relate to each other, see `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/r
 Follow the TDD methodology from the `Testing Principles` specification to implement the milestone:
 
 - Use the red-green-refactor workflow described in `Testing Principles`
-- Apply the planning phase: review requirements, identify behaviors, design interfaces
+- Apply the planning phase in your Execution Context mode (autonomous: Plan specs are the confirmed behavior list; interactive: confirm with the user)
 - Execute tracer bullet approach: one test → one implementation → repeat
 - Follow the incremental loop: RED → GREEN for each behavior
 - Apply refactor phase after all tests pass, using `Design Principles` for guidance
@@ -88,7 +100,7 @@ Plan ID: <plan-id>
 Files modified: <list>
 Tests written: <list>
 Tests passing: <count>
-Notes: <implementation notes, deviations, technical decisions>
+Notes: <implementation notes, deviations, assumptions made in autonomous mode, technical decisions>
 ```
 
 **On failure:**
@@ -144,4 +156,4 @@ The milestone is complete when:
 
 ## Execution
 
-Use the `Plan` ID/code and milestone ID from the invocation, then proceed with Phase 0: Setup.
+Use the `Plan` ID/code and milestone ID from the invocation, determine your Execution Context, then proceed with Phase 0: Setup.

@@ -10,8 +10,9 @@ Interview relentlessly about every aspect of a plan to reach shared understandin
 
 ## Pre-flight
 
-- `{{WORKSPACE}}` = the workspace root. At the start of a session, if not already resolved, run `git rev-parse --show-toplevel` (fall back to your cwd outside a repo) and reuse the result for the session.
-- Working folder: `{{WORKSPACE}}` - the resolved workspace root
+- `{{WORKSPACE}}` = workspace root. Resolve once per session and reuse: `git rev-parse --show-toplevel`; fall back to cwd outside a git repo.
+- Before your first write, read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/conventions.md` — statuses, retries, artifact paths, and file ownership are defined there and are binding.
+- Working folder: `{{WORKSPACE}}`
 - Target folders: `{{WORKSPACE}}/knowledge/` (you should only modify files in this folder)
 - Required input: Plan or feature description to rehearse
 
@@ -51,6 +52,15 @@ For how references relate to each other, see `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/r
 ## Documentation Constraints
 
 - **Contexts** (`{{WORKSPACE}}/knowledge/contexts.md`) should be totally devoid of implementation details. Do not treat it as a spec, a scratch pad, or a repository for implementation decisions. It is a glossary and nothing else
+
+## Quality Checklist
+
+Before completing:
+
+- [ ] Every resolved term was written to `contexts.md` immediately, not batched
+- [ ] Every ADR offered met all three criteria (hard to reverse, surprising without context, real trade-off)
+- [ ] User wording captured verbatim for edited definitions and rationales
+- [ ] `contexts.md` contains zero implementation details
 
 ## Execution
 

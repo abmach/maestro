@@ -51,7 +51,7 @@ Structure the plan as a Directed Acyclic Graph where each milestone has:
 - A unique numeric ID
 - A list of dependencies (referencing preceding milestone IDs)
 - A clear, actionable description
-- A `retry_count` field (default `0`, written as `Retries: 0` in the milestone header) — incremented by `orchestrate` on each `play` spawn for that milestone; `orchestrate` halts at 3 and marks the milestone `❌ Failed`. Persists across compaction.
+- A `retry_count` field (default `0`, written as `Retries: 0` in the milestone header) — counts spawns, not failures: orchestrate increments it immediately BEFORE each `play` spawn and refuses to spawn when `Retries >= 3`, marking the milestone `❌ Failed`. Persists across compaction. Canonical rule: `conventions.md`.
 
 Independent milestones (empty dependencies) can execute in parallel. Integration milestones depend on completion of their prerequisites.
 

@@ -154,5 +154,5 @@ When deviating, document the reason in the ADR or project documentation.
 - **Runtime:** .NET (LTS)
 - **Backend:** ASP.NET Core
 - **Database:** PostgreSQL + Entity Framework Core
-- **Frontend:** Next.js or Blazor (if using .NET-only stack)
+- **Frontend:** Blazor (if staying .NET-only), or a Vite/React/Vue/Svelte SPA consuming ASP.NET Core APIs
 - **Testing:** See [Testing Tech Preferences]({{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/testing-tech-preferences.md)

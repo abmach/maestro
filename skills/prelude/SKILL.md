@@ -9,8 +9,9 @@ Analyze an existing non-Maestro workspace and create the knowledge artifacts the
 
 ## Pre-flight
 
-- `{{WORKSPACE}}` = the workspace root. At the start of a session, if not already resolved, run `git rev-parse --show-toplevel` (fall back to your cwd outside a repo) and reuse the result for the session.
-- Working folder: `{{WORKSPACE}}` - the resolved workspace root
+- `{{WORKSPACE}}` = workspace root. Resolve once per session and reuse: `git rev-parse --show-toplevel`; fall back to cwd outside a git repo.
+- Before your first write, read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/conventions.md` — statuses, retries, artifact paths, and file ownership are defined there and are binding.
+- Working folder: `{{WORKSPACE}}`
 - Target folders: `{{WORKSPACE}}/knowledge/` (Repo Fingerprint, Contexts, ADRs) — you should only create/modify files in this folder
 - Required input: none — analyzes the current workspace
 

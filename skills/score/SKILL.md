@@ -10,9 +10,10 @@ Maintain the single source of truth for repository documentation, API changes, a
 
 ## Pre-flight
 
-- `{{WORKSPACE}}` = the workspace root. At the start of a session, if not already resolved, run `git rev-parse --show-toplevel` (fall back to your cwd outside a repo) and reuse the result for the session.
-- Working folder: `{{WORKSPACE}}` - the resolved workspace root
-- Target folders: `{{WORKSPACE}}/docs/`, `{{WORKSPACE}}/README.md`, `{{WORKSPACE}}/CHANGELOG.md` (you should only modify files in these locations)
+- `{{WORKSPACE}}` = workspace root. Resolve once per session and reuse: `git rev-parse --show-toplevel`; fall back to cwd outside a git repo.
+- Before your first write, read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/conventions.md` — statuses, retries, artifact paths, and file ownership are defined there and are binding.
+- Working folder: `{{WORKSPACE}}`
+- Target folders: `{{WORKSPACE}}/docs/`, `{{WORKSPACE}}/README.md`, `{{WORKSPACE}}/CHANGELOG.md`, plus bookkeeping writes defined in `conventions.md` (the Plan's `Docs Updated` field and the Plans Index docs marker)
 - Required input: `Plan` ID/code from orchestrate, OR no argument (batch mode — processes all pending finished plans)
 
 ## References
@@ -53,13 +54,13 @@ For how references relate to each other, see `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/r
    - API documentation if endpoints changed
    - `{{WORKSPACE}}/README.md` if user-facing features changed
    - `{{WORKSPACE}}/CHANGELOG.md` if significant changes occurred
-5. **Handle Screenshots:** If the `Plan` includes visual changes, copy relevant screenshots from `{{WORKSPACE}}/tests/screenshots/` to `{{WORKSPACE}}/docs/screenshots/` and embed them in the documentation
+5. **Handle Screenshots:** If the `Plan` includes visual changes, copy relevant screenshots into `{{WORKSPACE}}/docs/screenshots/` and embed them in the documentation. Source only paths reported by `audition`'s result summary (baselines under `tests/screenshots/baselines/`, runtime shots under `test-results/`) — never assume a location
 6. **Mark Documentation Updated:** Update the `Plan` file's `Docs Updated` field to `true`, and replace `⏳` with `📝` in the `Plans Index` (e.g., `✅⏳` → `✅📝`)
 
 ### Batch Mode
 
 1. **Scan Plans Index:** Read `{{WORKSPACE}}/plans/index.md` and identify all plans with the `✅⏳` marker (done, docs pending)
-2. **Process Each Plan:** For each pending plan, execute the Single Plan Mode workflow (steps 1-5 above)
+2. **Process Each Plan:** For each pending plan, execute the Single Plan Mode workflow (steps 1-6 above)
 3. **Summary:** After processing all plans, output a summary of which plans were documented and what files were updated
 
 ## Quality Checklist
