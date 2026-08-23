@@ -142,7 +142,7 @@ Re-running the installer overwrites in place. To wipe stale folders before copyi
 .\Install-Maestro.ps1 -Target . -Clean -Force -Locations .agents,.claude
 ```
 
-The installer records the bundle version in each target's `MAESTRO_VERSION` file so you can audit which Maestro version a repo is on.
+The installer records the bundle version in each target's `MAESTRO_VERSION` file and ships `MAESTRO_CHANGELOG.md` alongside it, so upgrade auditing is self-contained in the consuming repo.
 
 Non-interactive hosts (CI) must pass `-Force`; without it the installer fails closed rather than hanging on the overwrite prompt.
 

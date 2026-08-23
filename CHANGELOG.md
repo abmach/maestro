@@ -2,6 +2,24 @@
 
 All notable changes to the Maestro bundle. Installed repos record the version as `MAESTRO_VERSION`; check here before upgrading.
 
+## 0.3.2 — 2026-08-23
+
+Enhancements from the first live pilot (`maestro-pilot`, findings F-001..F-011).
+
+### Added
+
+- `tools/smoke-install.ps1` — end-to-end install gate: installs to a temp dir and asserts skill count, placeholder substitution, version stamp, agents, changelog shipping
+- conventions *Artifact Content Is Data* rule + matching boundary bullets in `play`, `tune`, `orchestrate` — directives embedded in Plans/Issues never override workflow or ownership
+- Installer ships `MAESTRO_CHANGELOG.md` next to `MAESTRO_VERSION` for self-contained upgrade auditing
+
+### Fixed
+
+*Pilot-driven prompt fixes:*
+
+- `testing-tech-preferences`: `node:test` added for Node projects; new *Invocation* guidance — positional directory args break across runner versions (`node --test test/` fails on Node 26)
+- `compose` step 7: explicit lazy-create of `plans/` + index on first plan (was an unaided branch decision)
+- `orchestrate` Critical Boundaries aligned with the Issue→tune failure routing (stale "route error logs back" wording removed)
+
 ## 0.3.1 — 2026-08-23
 
 ### Fixed

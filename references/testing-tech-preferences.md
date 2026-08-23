@@ -40,6 +40,7 @@ Configure the framework's baseline path explicitly (Playwright: top-level `snaps
 - **JavaScript/TypeScript:** Vitest (preferred - free, lightweight, fast) or Jest
   - Vitest: Native ESM support, faster execution, better TypeScript support, minimal dependencies
   - Jest: Widely adopted, extensive ecosystem, good for legacy projects (heavier alternative)
+- **Node.js built-in (node:test):** Zero-dependency runner for small services and CLIs — use when adding a test framework would outweigh the code under test; pairs with `node:assert`
 - **Python:** pytest
   - Native support for fixtures, parametrized tests, async testing
   - Extensive plugin ecosystem
@@ -231,12 +232,12 @@ When deviating, document the reason in an ADR or project documentation.
 ### Test Execution
 
 - **Fast Feedback:** Run unit tests frequently during development
+- **Invocation:** Prefer the package script (`npm test`) or bare runner form (`node --test`, `pytest`) over positional directory arguments — runners reject or mishandle those across versions (e.g., `node --test test/` fails on Node 26)
 - **Parallel Execution:** Configure tests to run in parallel when possible
 - **Selective Testing:** Run only affected tests during development
 - **CI Integration:** Ensure tests run reliably in CI environments
 
 ### Test Maintenance
-
 - **Refactoring:** Refactor tests alongside production code
 - **Flaky Tests:** Identify and fix flaky tests immediately
 - **Test Coverage:** Monitor coverage but avoid targeting arbitrary percentages

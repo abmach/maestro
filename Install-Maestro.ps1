@@ -194,6 +194,11 @@ those first, abort and rerun with -Clean. Continue?
         Write-Step "Writing $Location/MAESTRO_VERSION"
         Set-Content -LiteralPath $DestVersionFile -Value $Version -NoNewline
         Write-Ok "Recorded version: $Version"
+        $SrcChangelog = Join-Path $SourceRoot "CHANGELOG.md"
+        if (Test-Path -LiteralPath $SrcChangelog) {
+            Copy-Item -LiteralPath $SrcChangelog -Destination (Join-Path $DestDir "MAESTRO_CHANGELOG.md") -Force
+            Write-Ok "Shipped MAESTRO_CHANGELOG.md (migration notes for this version)"
+        }
     } else {
         Write-Warn "No VERSION file in source; MAESTRO_VERSION not written"
     }
