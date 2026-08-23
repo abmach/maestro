@@ -68,6 +68,7 @@ Execute the `Plan` as a Directed Acyclic Graph (DAG) of development milestones t
 1. **Parse Dependency Graph:** Analyze the milestones, their unique IDs, and their `dependencies` lists defined in the active `Plan`
 2. **Identify Ready Milestones:** Determine which milestones are currently "Ready" (all listed dependency IDs completed, or dependency list empty `[]`)
 3. **Spawn Wave:** For each Ready milestone whose `Retries < 3`, in one turn:
+   - **Conflict scan first:** intersect every pair of Ready milestones' *Files to modify/create* lists from the Plan. If any two share a written file, ask the user — "Milestones X and Y both modify `[file]`. Serialize (run X, then Y) or proceed in parallel at your own risk?" On serialize, split them into sequential sub-waves; `Retries` increments happen per actual spawn, so a milestone held back is not counted. Exception: if your harness isolates each spawn in its own git worktree and merges results, parallel overlap cannot corrupt siblings — skip serialization
    - **First increment that milestone's `Retries` in the Plan file.** `Retries` counts spawns, not failures: increment immediately BEFORE each `play` spawn so an in-flight attempt is always counted (canonical rule: `conventions.md`)
    - Then spawn its `play` subagent, passing **only** the `Plan` ID/code and the milestone ID as the invocation prompt (narrow step boundary)
    - If `knowledge/instruments.md` assigns an `implementation` model and the harness supports per-spawn model selection, pass that selector to the spawn
@@ -88,10 +89,10 @@ Execute the `Plan` as a Directed Acyclic Graph (DAG) of development milestones t
    - **Discard only the files the failed `play` modified** — read `Files modified:` from its STATUS block, then restore exactly those paths: `git restore --staged <files> && git restore <files> && git clean -fd <untracked-files-this-play-created>` (do NOT use `git restore .` — other parallel `play` instances are still mid-flight on the same working tree and their work must be preserved)
    - **If the failed `play` unexpectedly committed its work** (forbidden by `play`'s spec but cheap models sometimes do), do NOT auto-undo the commit — `git reset` could affect the user's prior commit. Surface the unexpected commit to the user and ask how to proceed
    - Mark the milestone as `❌ Failed` in the Plan file (immediate per-milestone write) and in the Plans Index (deferred per-wave write — see step 5)
-   - If the `play` subagent returned error details, create an appropriate `Issue` in `{{WORKSPACE}}/issues/` for tracking and add it to the Issues Index
+   - If the `play` subagent returned error details, create **one** `Issue` for this milestone-failure episode (`BUILD` or `TEST` type per failure mode) and add it to the Issues Index. If an episode Issue already exists from an earlier attempt on this milestone, append this attempt to its Resolution Attempts instead of creating a duplicate
    - Halt any downstream dependencies of this milestone in the DAG (they depend on a failed milestone)
    - Other parallel milestone subagents continue running unaffected
-7. **Retry-Halt:** A milestone whose `Retries` reached 3 is never spawned again — mark it `❌ Failed`, create an `Issue`, and halt downstream dependencies. The next wave proceeds only with independent milestones. When reporting the halt to the user, name it as a plan-quality signal: three failed attempts usually mean the milestone's spec is under-specified or mis-scoped — recommend revising the Plan (compose/elaborate) before re-running, not just re-spawning a stronger worker.
+7. **Retry-Halt:** A milestone whose `Retries` reached 3 is never spawned again — mark it `❌ Failed`, link its existing episode Issue (or create one if no attempt produced error details), and halt downstream dependencies. The next wave proceeds only with independent milestones. When reporting the halt to the user, name it as a plan-quality signal: three failed attempts usually mean the milestone's spec is under-specified or mis-scoped — recommend revising via the fix-forward convention (`issue.md`: successor plan referencing the Issue) before re-running, not just re-spawning a stronger worker.
 
 ### Phase 2: Integration Testing
 
@@ -99,11 +100,14 @@ Execute the `Plan` as a Directed Acyclic Graph (DAG) of development milestones t
    - If "No", skip to Phase 3
 2. Read the `Plan`'s `Test Tier` metadata
 3. If `Test Tier` is `smoke` or `none`, run the `Verify Cmd` from the `Plan`
-4. If `Test Tier` is `e2e`:
+4. If `Test Tier` is `integration`:
+   - First, invoke the `arrange` skill for integration specs only (API contracts, service interactions — no browser flows, no visual regression baselines)
+   - Second, invoke the `audition` skill and capture results
+   - Non-visual failures route per step 6
+5. If `Test Tier` is `e2e`:
    - First, invoke the `arrange` skill to write or update the required test files based on the `Plan` specifications
    - Second, invoke the `audition` skill to execute the tests and capture results
-   - Third, if `audition` reports visual regression failures, perform Visual Regression Routing (below), using only the artifact paths audition reported
-5. If non-visual tests fail, route error logs back to a fresh `play` subagent for resolution
+6. **Non-visual failure routing:** treat failing non-visual tests exactly like visual regressions — create a `TEST-NNN` Issue capturing the failing test names, error output, and audition's reported artifact paths, then ask "Fix now (spawns `tune`) or defer?" On "Fix now", spawn `tune` with the Issue ID and re-run `audition` on the affected tests when it returns (same loop as Visual Regression Routing steps 3–4). Never route failures back to `play`: its contract is `{plan-id} {milestone-id}` and the milestone is already Done — regressions in implemented behavior belong to `tune`.
 
 #### Visual Regression Routing
 

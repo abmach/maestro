@@ -147,6 +147,42 @@ foreach ($p in $retryTargets) {
 }
 if (-not $retryBad) { Pass "retries: spawn-counting rule present in conventions/plan/orchestrate" }
 
+# --- 7. References map completeness -------------------------------------------
+$mapBad = $false
+$mapText = [System.IO.File]::ReadAllText((Join-Path $Root "references/references-map.md"))
+$listed = @()
+foreach ($m in [regex]::Matches($mapText, '(?m)^\| `[A-Za-z ]+` \| `([a-z0-9-]+\.md)` \|')) { $listed += $m.Groups[1].Value }
+foreach ($a in @(Get-ChildItem -LiteralPath (Join-Path $Root "references") -Filter "*.md" -File)) {
+    if ($listed -notcontains $a.Name) {
+        Fail ("references-map.md: missing row for " + $a.Name)
+        $mapBad = $true
+    }
+}
+if (-not $mapBad) { Pass "references-map: every reference file listed" }
+
+# --- 8. README counts match reality --------------------------------------------
+$readme = [System.IO.File]::ReadAllText((Join-Path $Root "README.md"))
+$sCount = @(Get-ChildItem -LiteralPath (Join-Path $Root "skills") -Directory).Count
+$aCount = @(Get-ChildItem -LiteralPath (Join-Path $Root "agents") -Filter "*.md" -File).Count
+$rCount = @(Get-ChildItem -LiteralPath (Join-Path $Root "references") -Filter "*.md" -File).Count
+$expected = "\*\*$sCount skills\*\* \+ \*\*$aCount agents\*\* \+ \*\*$rCount reference specs\*\*"
+if ($readme -notmatch $expected) {
+    Fail ("README counts line does not match disk (actual: $sCount skills / $aCount agents / $rCount references)")
+} else {
+    Pass "counts: README matches disk ($sCount/$aCount/$rCount)"
+}
+
+# --- 9. Vocabulary drift --------------------------------------------------------
+$driftBad = $false
+foreach ($f in @(Get-MdFiles $Root)) {
+    $t = [System.IO.File]::ReadAllText($f.FullName)
+    foreach ($m in [regex]::Matches($t, "(?i)(play|tune)[` ]{0,3}(skill|command)s?")) {
+        Fail ($f.FullName.Substring($Root.Length) + ": '" + $m.Value.Trim() + "' — play/tune are subagents, not skills")
+        $driftBad = $true
+    }
+}
+if (-not $driftBad) { Pass "vocabulary: no play/tune-as-skill drift" }
+
 # --- Summary -------------------------------------------------------------------
 Write-Host ""
 if ($script:failures -gt 0) {

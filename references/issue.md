@@ -149,6 +149,12 @@ Issues follow this status progression:
 - What was learned
 - Next steps based on findings
 
+### Redact Secrets
+
+- Error logs, stack traces, and environment dumps frequently contain live credentials — replace tokens, API keys, passwords, connection strings, and internal hostnames with placeholders (`***`, `${REDACTED}`, `<internal-host>`) before they enter an issue file
+- Redact by substitution, never by truncation — a cut log line loses its diagnostic value
+- Issues are committed to git; treat everything written here as public
+
 ### Link to Related Work
 
 - Other issues that may be related
@@ -182,6 +188,8 @@ When an issue is resolved:
 3. Update status to Resolved
 4. Move to Resolved section in index
 5. Consider if fix requires new plan or documentation update
+
+**Fix-forward convention:** when resolution requires feature work rather than a patch, do not edit an already-executed Plan — create a successor plan (`{CODE}-{next number}`) that references this Issue in its Related Work, and use `elaborate` to enrich it before `/orchestrate`. Executed Plans are audit records: their milestone statuses and retry history stay untouched.
 
 ### Using the tune Agent
 

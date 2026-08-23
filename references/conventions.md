@@ -51,6 +51,8 @@ Issues (Issue file and Issues Index):
 
 **Visual regression contract:** baselines live under `tests/screenshots/baselines/` (Playwright top-level `snapshotPath`; see `testing-tech-preferences.md`). Every other artifact — actuals, diffs, failure shots, logs — lands under `test-results/`. Consumers (orchestrate's routing, score's docs) use **only the paths reported in `audition`'s result summary**. Never assume an artifact location you were not told.
 
+**Redaction:** any captured output written into workspace artifacts — issue Error Details, plan specifications, investigation notes — must have tokens, API keys, passwords, connection strings, and internal hostnames replaced with placeholders. Substitute, never truncate; these files are committed to git.
+
 ## File Ownership Matrix
 
 | Actor | May write | Must NOT |
@@ -64,12 +66,14 @@ Issues (Issue file and Issues Index):
 | arrange | `tests/**` + root framework configs (e.g. `playwright.config.ts`, `vitest.config.*`, `.gitignore` entries) | `src/**` |
 | audition | `test-results/**` | anything else |
 | instruments | `knowledge/instruments.md` only (installed agent/config files only after explicit per-file user approval) | everything else |
+| interlude | nothing — strictly read-only status overview | any write, anywhere |
 | score | `docs/**`, `README.md`, `CHANGELOG.md` + the Plan's `Docs Updated` field + Plans Index docs marker | source code |
 
 Where a skill's own text states a narrower target, the skill's text governs its ambition; this matrix is the floor. Skills that must touch bookkeeping outside their primary target (score → Plan/Index markers, arrange → root configs) have that exception stated in their own Target Folders line.
 
 ## Index Write Protocol (parallel safety)
 
+- **One active orchestration per workspace.** Concurrent `orchestrate` runs race the shared working tree, the Plans Index, and the Issues Index no matter how correct each DAG is. If the Plans Index shows 🔄 In progress, resolve it first (re-run `/orchestrate` — crash recovery reconciles — or abort).
 - **Per-milestone status:** written to the Plan *file* immediately on each `play` return. Safe because orchestrate is the single writer of Plan files.
 - **Plans Index:** one batched read-modify-write per wave, after all plays in the wave settle.
 - **Crash recovery** reconciles the Plans Index *from* the Plan file. The Plan file is per-milestone ground truth.

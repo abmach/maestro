@@ -8,6 +8,7 @@ A bundle of [Agent Skills](https://agentskills.io) for AI-assisted software deve
 maestro/
 ├── Install-Maestro.ps1      # Installer script
 ├── VERSION                  # Bundle version (read by installer)
+├── CHANGELOG.md             # Version history + upgrade/migration notes
 ├── skills/                  # Agent Skills (loaded on-demand when invoked)
 │   ├── prelude/             # Bootstrap a non-Maestro workspace (Repo Fingerprint, Contexts, ADRs)
 │   ├── compose/             # Create technical Plans from feature requests
@@ -17,7 +18,8 @@ maestro/
 │   ├── arrange/             # Write integration & E2E test specs
 │   ├── audition/            # Run test suites and capture results
 │   ├── score/               # Update docs after features ship
-│   └── instruments/         # Assign AI models to workflow sections (per-harness guidance)
+│   ├── instruments/         # Assign AI models to workflow sections (per-harness guidance)
+│   └── interlude/           # Read-only status report: plans, issues, docs, next action
 ├── agents/                  # Subagent definitions (spawned by orchestrate or @mention)
 │   ├── play.md              # Implements plan milestones via TDD
 │   └── tune.md              # Resolves issues via systematic debugging
@@ -39,7 +41,7 @@ maestro/
     └── validate-bundle.ps1  # Dev-time validator: frontmatter, links, contract consistency
 ```
 
-**9 skills** + **2 agents** + **13 reference specs** + a dev-time bundle validator.
+**10 skills** + **2 agents** + **13 reference specs** + a dev-time bundle validator.
 
 ## The workflow
 
@@ -133,8 +135,7 @@ The installer copies `skills/`, `references/`, and `agents/` to each target loca
 
 ### Idempotent re-runs and upgrades
 
-Re-running the installer overwrites in place. To wipe stale folders before copying (useful after a skill rename or removal upstream):
-
+Re-running the installer overwrites in place. To wipe stale folders before copying (useful after a skill rename or removal upstream — check `CHANGELOG.md` for renames and behavioral migrations):
 ```powershell
 .\Install-Maestro.ps1 -Target . -Clean -Force -Locations .agents,.claude
 ```

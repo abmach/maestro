@@ -14,6 +14,7 @@
 Each plan must specify a `Test Tier` to indicate the level of automated testing required:
 
 - **e2e** — Full end-to-end testing with comprehensive Playwright test coverage for major features and user flows
+- **integration** — Integration testing via `arrange` + `audition` for multi-component behavior (API contracts, service interactions, data flow between modules) without browser/E2E flows or visual regression
 - **smoke** — Basic smoke testing with minimal automated tests for smaller changes and bug fixes
 - **none** — No automated testing required for trivial changes that don't affect user-facing behavior
 
@@ -57,7 +58,9 @@ Independent milestones (empty dependencies) can execute in parallel. Integration
 
 ### DAG Milestone Requirements
 
-The DAG should only contain **development milestones** — things the `play` skill can implement (features, components, API endpoints, schema changes, etc.). Do not include testing or documentation as milestones.
+The DAG should only contain **development milestones** — things the `play` agent can implement (features, components, API endpoints, schema changes, etc.). Do not include testing or documentation as milestones.
+
+**File-overlap rule:** milestones whose *Files to modify/create* lists overlap must either be merged into one milestone or ordered via an explicit dependency. Shared read-only references (imported types, consumed helpers) don't count — only files both milestones WRITE. orchestrate enforces this at spawn time; a well-formed Plan never triggers that warning.
 
 ### Be Specific and Unambiguous
 
@@ -120,7 +123,7 @@ Use the standard status legend for both the overall plan and individual mileston
 
 > Brief one-line summary of the feature or change.
 
-## Test Tier: e2e/smoke/none
+## Test Tier: e2e/integration/smoke/none
 
 ## Docs Affected: true/false
 
@@ -130,7 +133,12 @@ Use the standard status legend for both the overall plan and individual mileston
 
 ## Status: ✅ Done/🔄 In progress/⏳ Pending/⚠️ Blocked/❌ Failed
 
+## Assumptions & Open Questions (optional)
+
+{Ambiguities resolved during planning and questions deferred to implementation. `play` resolves residual ambiguity autonomously and reports deviations in its status Notes — anything load-bearing belongs here explicitly, so review happens before code exists.}
+
 ## Milestones
+
 
 (✅ Done, 🔄 In progress, ⏳ Pending, ⚠️ Blocked, ❌ Failed)
 
@@ -226,6 +234,10 @@ Implement JWT-based authentication with login, registration, and password reset 
 ## Docs Updated: false
 
 ## Verify Cmd: yarn test && yarn lint
+
+## Assumptions & Open Questions
+
+- HS256 chosen over RS256 for simplicity — revisit if key management becomes a requirement.
 
 ## Status: ⏳ Pending
 

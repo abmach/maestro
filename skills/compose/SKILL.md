@@ -53,6 +53,7 @@ For how references relate to each other, see `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/r
 8. **Check Existing Issues:** If `{{WORKSPACE}}/issues/index.md` exists, read it to identify relevant `Issue`s that the `Plan` might resolve or need to consider
 9. **Create Plan:** Generate a new `Plan` in `{{WORKSPACE}}/plans/` following the `Plan` specification
 10. **Update Index:** Update the `{{WORKSPACE}}/plans/index.md` with the new `Plan` and status ⏳ Pending
+11. **Completion Note:** If domain language shifted while planning — new terms coined, existing ones sharpened — point the user at `/rehearse`; it captures glossary updates and ADR-worthy decisions in `knowledge/`. You suggest only: `knowledge/` stays read-only for you.
 
 ## Quality Checklist
 
