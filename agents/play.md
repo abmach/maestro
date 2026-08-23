@@ -97,7 +97,7 @@ After milestone verification (or on failure), return a structured status report.
 STATUS: Done
 Milestone ID: <id>
 Plan ID: <plan-id>
-Files modified: <list>
+Files modified: <workspace-relative paths, comma-separated, single line — orchestrate parses this for surgical git restore>
 Tests written: <list>
 Tests passing: <count>
 Notes: <implementation notes, deviations, assumptions made in autonomous mode, technical decisions>
@@ -111,8 +111,7 @@ Plan ID: <plan-id>
 Failure type: <compilation|test|lint|other>
 Error details: <error messages, stack traces>
 Reproduction: <steps to reproduce>
-Files modified before failure: <list>
-```
+Files modified before failure: <workspace-relative paths, comma-separated, single line>
 
 ### Phase 5: Error Handling
 

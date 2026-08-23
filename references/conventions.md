@@ -43,11 +43,10 @@ Issues (Issue file and Issues Index):
 | ---- | --------- | ---------- |
 | `plans/` + `plans/index.md` | yes | compose (create), orchestrate/score/elaborate (status + content) |
 | `issues/` + `issues/index.md` | yes | orchestrate (create on failure/regression), tune (status + investigation) |
-| `knowledge/` (`contexts.md`, `adrs/`, `repo-fingerprint.md`) | yes | prelude (bootstrap), rehearse (inline updates) |
+| `knowledge/` (`contexts.md`, `adrs/`, `repo-fingerprint.md`, `instruments.md`) | yes | prelude (bootstrap), rehearse (inline updates), instruments (`instruments.md` only), orchestrate (`repo-fingerprint.md` refresh at Phase-3 finalization) |
 | `tests/` | yes | arrange — flat, no subdirectories |
 | `tests/screenshots/baselines/` | yes | first audition run or `--update-snapshots` |
 | `test-results/` | **no** (gitignore) | audition runtime artifacts: actual/diff screenshots, logs, `summary.json` |
-| `knowledge/instruments.md` | yes | instruments (model assignments per workflow section) |
 
 **Visual regression contract:** baselines live under `tests/screenshots/baselines/` (Playwright top-level `snapshotPath`; see `testing-tech-preferences.md`). Every other artifact — actuals, diffs, failure shots, logs — lands under `test-results/`. Consumers (orchestrate's routing, score's docs) use **only the paths reported in `audition`'s result summary**. Never assume an artifact location you were not told.
 
@@ -60,8 +59,8 @@ Issues (Issue file and Issues Index):
 | compose | `plans/**` | code, tests, `knowledge/` |
 | prelude, rehearse | `knowledge/**` | `plans/`, code |
 | elaborate | the chosen Plan in `plans/**` | code, `knowledge/` |
-| orchestrate | `plans/**`, `issues/**` (bookkeeping only) | any code/test/doc *content*; git state mutations beyond the surgical discard in its Phase 1 |
 | play | project source + co-located unit tests | `plans/**`, `issues/**`, git commits |
+| orchestrate | `plans/**`, `issues/**` (bookkeeping only) + `knowledge/repo-fingerprint.md` refresh at finalization | any code/test/doc *content*; git state mutations beyond the surgical discard in its Phase 1 |
 | tune | `issues/**` + fix code | `plans/**` (recommend a plan instead) |
 | arrange | `tests/**` + root framework configs (e.g. `playwright.config.ts`, `vitest.config.*`, `.gitignore` entries) | `src/**` |
 | audition | `test-results/**` | anything else |

@@ -2,6 +2,20 @@
 
 All notable changes to the Maestro bundle. Installed repos record the version as `MAESTRO_VERSION`; check here before upgrading.
 
+## 0.3.1 — 2026-08-23
+
+### Fixed
+
+- Installer accepts comma-joined `-Locations` under `pwsh -File` (CLI mode binds a single string; multi-location installs were previously rejected as invalid) — caught by the first end-to-end install smoke test
+
+### Changed
+
+- `tune` claims an Issue (🔄 In Progress) at Phase 0 instead of Implementation — a crash mid-investigation now leaves accurate recovery state
+- `tune` gains the No Git Commits boundary (parity with `play`)
+- `play`/`tune` status blocks specify the `Files modified:` format (workspace-relative, comma-separated, single line) — orchestrate parses it for surgical git restore
+- orchestrate granted the narrow `knowledge/repo-fingerprint.md` refresh right; conventions matrix aligned with its own Phase 3
+- prelude readiness report mentions `/instruments` and `/interlude`; README workflow footnote covers around-the-pipeline skills
+
 ## 0.3.0 — 2026-08-23
 
 Behavioral changes. **Upgrade with `-Clean`** if any skill was renamed since your installed version.

@@ -50,8 +50,10 @@ Spawned by orchestrate you run autonomously — you cannot reach the user, so th
 1. Read the `Issues Index` at `{{WORKSPACE}}/issues/index.md` to find the full `Issue` filename for the given `Issue` ID
 2. Construct the full `Issue` file path: `{{WORKSPACE}}/issues/{full_filename}.md`
 3. Read the `Issue` file to understand the problem, error details, and context
+4. **Claim the Issue:** set its status to 🔄 In Progress in the issue file and move it to the In Progress section of the Issues Index — immediately, so a crash mid-investigation still leaves accurate recovery state
 
 ### Phase 1: Investigation
+
 
 1. **Analyze Problem:** Review error details, reproduction steps, and environment information
 2. **Explore Codebase:** Search and read code to locate relevant files and understand the system
@@ -68,20 +70,19 @@ Spawned by orchestrate you run autonomously — you cannot reach the user, so th
 
 ### Phase 3: Implementation
 
-1. **Update Issue Status:** Change `Issue` status to "In Progress" in the `Issue` file
-2. **Update Issues Index:** Move `Issue` to "In Progress" section in `Issues Index`
-3. **Apply TDD Approach:** If applicable, write a test that reproduces the `Issue` before fixing:
+1. **Issue already claimed:** status was set to 🔄 In Progress during Phase 0 — no bookkeeping here
+2. **Apply TDD Approach:** If applicable, write a test that reproduces the `Issue` before fixing:
    - Write a failing test that captures the `Issue` behavior (RED)
    - This ensures the fix addresses the actual problem
    - Provides regression protection for the future
-4. **Implement Fix:** Apply the solution using appropriate tools (edit, write, exec)
-5. **Test Fix:** Verify the fix resolves the `Issue`:
+3. **Implement Fix:** Apply the solution using appropriate tools (edit, write, exec)
+4. **Test Fix:** Verify the fix resolves the `Issue`:
    - Run the reproduction test to confirm it now passes (GREEN)
    - Reproduce the `Issue` manually to confirm it's fixed
    - Run relevant tests to ensure no regressions
    - Check for side effects in related functionality
-6. **Refactor if Needed:** If the code can be improved while keeping the test green, apply refactoring (REFACTOR)
-7. **Document Resolution Attempt:** Add resolution attempt details to the `Issue` file
+5. **Refactor if Needed:** If the code can be improved while keeping the test green, apply refactoring (REFACTOR)
+6. **Document Resolution Attempt:** Add resolution attempt details to the `Issue` file
 
 ### Phase 4: Verification
 
@@ -128,6 +129,7 @@ Issue file updated: <path with investigation notes>
 
 ## Critical Boundaries
 
+- **No Git Commits:** Modify the working tree only — never commit. The caller and user own git state; an unexpected commit breaks rollback assumptions just as it does for `play`.
 - **No Direct Production Changes:** Do not make changes to production systems when invoked autonomously. For production-impacting `Issue`s, return a status recommending user review before applying changes.
 - **Security First:** For security `Issue`s (SEC-***), return a status recommending explicit user approval before any changes are applied.
 - **Data Safety:** For `Issue`s involving data loss or corruption, ensure proper backups before changes; if backup not possible, return a status recommending user intervention.

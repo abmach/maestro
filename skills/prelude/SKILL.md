@@ -103,6 +103,8 @@ Summarize what Maestro now knows about the workspace:
 - **Next steps:** inform the user:
   - "Maestro is ready. To start a new feature: `/compose <feature description>` to design a Plan, then `/orchestrate <plan-id>` to execute it."
   - "To refine domain language further as terms emerge: `/rehearse <plan or feature>` — it will extend `contexts.md` inline."
+  - "Optional, once: `/instruments` — assign models per workflow section (cheap implementation, reasoning-heavy composition)."
+  - "Anytime: `/interlude` — a read-only snapshot of plans, issues, and pending docs."
 
 ## Quality Checklist
 

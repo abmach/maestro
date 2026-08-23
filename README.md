@@ -81,6 +81,8 @@ Once when adopting Maestro into an existing project, run `/prelude` first to cre
    Done
 ```
 
+Around the pipeline: `/instruments` (once — model assignments), `/interlude` (anytime — status snapshot), `@play PLAN-001 M2` / `@tune BUG-004` (direct invocation when you don't need orchestration).
+
 ## Why Maestro
 
 Strong models and good harnesses did not make this bundle obsolete — they changed what it is for. Four value pillars, in order of durability:

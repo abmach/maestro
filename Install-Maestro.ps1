@@ -213,14 +213,19 @@ if (-not (Test-Path -LiteralPath $SrcSkills -PathType Container)) {
     throw "Source skills/ not found at: $SrcSkills (run this script from the maestro repo root)"
 }
 
+# Accept both `-.Locations a,b` (interactive: PS binds an array) and
+# `pwsh -File ... -Locations a,b` (-File mode: binds ONE string) by splitting commas here.
 $Normalized = foreach ($loc in $Locations) {
-    $trimmed = $loc.Trim()
-    $first = $trimmed.Substring(0,1)
-    if ($first -ne '.') { $trimmed = ".$trimmed" }
-    if ($ValidLocations -notcontains $trimmed) {
-        throw "Invalid location '$loc'. Valid: $($ValidLocations -join ', ')"
+    foreach ($part in $loc.Split(',')) {
+        $trimmed = $part.Trim()
+        if (-not $trimmed) { continue }
+        $first = $trimmed.Substring(0, 1)
+        if ($first -ne '.') { $trimmed = ".$trimmed" }
+        if ($ValidLocations -notcontains $trimmed) {
+            throw "Invalid location '$trimmed'. Valid: $($ValidLocations -join ', ')"
+        }
+        $trimmed
     }
-    $trimmed
 }
 
 if (-not $Normalized) { $Normalized = @(".agents") }
