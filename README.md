@@ -94,7 +94,7 @@ The installer copies `skills/`, `references/`, and `agents/` to each target loca
     -Target D:\repos\my-app -Locations .omp,.claude -Force
 ```
 
-Downloads the repo archive to a temp dir, runs the bundled installer, cleans up after itself. Pin an immutable tag with `-Version v0.4.0-public` instead of trusting the moving `main` branch — this executes remote code, so review or pin.
+Downloads the repo archive to a temp dir, runs the bundled installer, cleans up after itself. Pin an immutable tag with `-Version v0.4.0-public` instead of trusting the moving `main` branch — this executes remote code, so review or pin. The repo must be publicly readable; private/bot-challenged downloads fail with guidance instead of executing anything.
 
 ### Idempotent re-runs and upgrades
 

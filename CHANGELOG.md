@@ -2,6 +2,13 @@
 
 All notable changes to the Maestro bundle. Installed repos record the version as `MAESTRO_VERSION`; check here before upgrading.
 
+## 0.4.2 — 2026-08-23
+
+### Fixed
+
+- Web bootstrap: hardened against private repos and Cloudflare bot challenges — validates the download starts with zip magic bytes and contains no HTML/challenge markers, failing with actionable guidance instead of executing a downloaded HTML page
+- README: *Direct web install* documents the public-visibility prerequisite
+
 ## 0.4.1 — 2026-08-23
 
 ### Added

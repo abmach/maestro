@@ -51,6 +51,16 @@ try {
         Invoke-WebRequest -Uri $url -OutFile $archive -UseBasicParsing
     }
 
+    # Access sanity: private repos / bot-protection return HTML (sign-in page or
+    # Cloudflare challenge) instead of an archive. Fail with actionable guidance
+    # BEFORE extraction. Real zips start with the PK magic bytes.
+    $bytes = [System.IO.File]::ReadAllBytes($archive)
+    $head = [System.Text.Encoding]::ASCII.GetString($bytes, 0, [Math]::Min(4096, $bytes.Length))
+    if ($head -notmatch '^PK' -or $head -match '<html' -or $head -match '_cf_chl_opt' -or $head -match 'sign_in') {
+        Remove-Item -LiteralPath $archive -Force -ErrorAction SilentlyContinue
+        throw "GitLab did not return an archive (repo is private, or bot-protection challenged this client). Make the project public / run from an unrestricted network, or clone the repo and run .\Install-Maestro.ps1 locally."
+    }
+
     Expand-Archive -LiteralPath $archive -DestinationPath $tmp
 
     # Locate the extracted source root: either a wrapped "<repo>-<ref>" dir
