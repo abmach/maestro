@@ -53,6 +53,17 @@ maestro/
 - PowerShell 7+ (`pwsh`)
 - A target repo (the maestro bundle gets copied into the repo's config directory)
 
+### Recommended: clone and run
+
+```bash
+git clone https://gitlab.com/arthur_b_machado/maestro.git
+cd maestro
+.\Install-Maestro.ps1 -Target D:\repos\my-app -Locations .omp,.claude -Force
+```
+
+Cloned files are plain local files you can read before running — nothing is downloaded and executed in one step.
+
+
 ### Install into a target repo
 
 ```powershell
@@ -85,6 +96,23 @@ Supported locations and what they enable:
 
 Maestro is **all-or-nothing**: every supported location delivers the full bundle, including the markdown-defined `play`/`tune` subagents. Harnesses that cannot discover subagent definitions (Codex CLI, Gemini CLI, GitHub Copilot, Cursor, …) are not supported — a skills-only install would silently break `orchestrate`'s delegation model. On Oh My Pi, prefer `.omp`; `.agents` delivers skills natively there but its `agents/` folder is ignored.
 
+### Scope: project or user
+
+| | Project (default) | User |
+| --- | --- | --- |
+| Install target | repo root | your home (`~`) — e.g. `~/.omp`, `~/.claude` |
+| Shared via git | yes — commit the config dir; teammates inherit everything | no — personal install |
+| Upgrades | per-repo, explicit re-run | one command updates **every** project at once |
+| Precedence | project config overrides user config where both exist (harness-native) | |
+
+Project is the default because Maestro's core value is shared, committed Plans and conventions. Use `-Scope User` on personal machines when you want Maestro available in every session — including projects without any install:
+
+```powershell
+./Install-Maestro.ps1 -Locations .omp,.claude -Force -Scope User
+```
+
+(With `-Scope User`, omit `-Target` to install into your profile root.)
+
 The installer copies `skills/`, `references/`, and `agents/` to each target location and substitutes `{{MAESTRO_CONFIG}}` placeholders in every `.md` file with the location string, so reference paths resolve correctly at runtime.
 
 ### Direct web install (no clone)
@@ -113,19 +141,6 @@ Re-running the installer overwrites in place. To wipe stale folders before copyi
 The installer records the bundle version in each target's `MAESTRO_VERSION` file and ships `MAESTRO_CHANGELOG.md` alongside it, so upgrade auditing is self-contained in the consuming repo.
 
 Non-interactive hosts (CI) must pass `-Force`; without it the installer fails closed rather than hanging on the overwrite prompt.
-
-### PowerShell module
-
-Build a distributable module from the current sources:
-
-```powershell
-pwsh ./tools/build-module.ps1     # → dist/module/Maestro (v-stamped, payload included)
-Import-Module ./dist/module/Maestro
-Install-Maestro -Target D:\Personal\my-app -Locations .omp,.claude -Force
-Test-MaestroBundle                # validator passthrough
-```
-
-The module wraps the same canonical scripts — zero logic duplication. Publishing to the PowerShell Gallery is intentionally deferred until there is external demand; `dist/` is a build artifact and gitignored.
 
 ### Validate the bundle before installing
 

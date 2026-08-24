@@ -16,12 +16,3 @@ smoke-install:
   script:
     - pwsh -NoProfile -File tools/smoke-install.ps1
 
-build-module:
-  stage: test
-  script:
-    - pwsh -NoProfile -File tools/build-module.ps1
-    - pwsh -NoProfile -Command "Import-Module ./dist/module/Maestro; (Get-Command Install-Maestro) -ne \$null"
-  artifacts:
-    paths:
-      - dist/module/Maestro/
-    expire_in: 1 week

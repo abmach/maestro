@@ -60,6 +60,21 @@ try {
 
     # --- changelog shipped ---
     if (-not (Test-Path (Join-Path $tmp ".omp/MAESTRO_CHANGELOG.md"))) { Fail "missing MAESTRO_CHANGELOG.md" } else { Pass "changelog: MAESTRO_CHANGELOG.md shipped" }
+
+    # --- user-scope pass (isolated fake profile via explicit Target override) ---
+    $fakeHome = Join-Path $tmp "fakehome"
+    New-Item -ItemType Directory -Path $fakeHome | Out-Null
+    & $pwshExe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root "Install-Maestro.ps1") -Target $fakeHome -Locations ".omp,.claude" -Force -Scope User *> (Join-Path $tmp "user-scope-log.txt")
+    if ($LASTEXITCODE -ne 0) {
+        Fail ("user-scope install exited nonzero (see user-scope-log.txt)")
+    }
+    else {
+        $uCount = @(Get-ChildItem -LiteralPath (Join-Path $fakeHome ".omp/skills") -Directory).Count
+        $uVersion = ([System.IO.File]::ReadAllText((Join-Path $fakeHome ".omp/MAESTRO_VERSION"))).Trim()
+        if ($uCount -ne $srcSkills) { Fail ("user-scope skills: $uCount, expected $srcSkills") }
+        elseif ($uVersion -ne $want) { Fail ("user-scope MAESTRO_VERSION '$uVersion' != '$want'") }
+        else { Pass "user-scope: skills installed under isolated fake profile" }
+    }
 }
 finally {
     if ($Keep) { Write-Host ("temp kept: " + $tmp) -ForegroundColor Yellow }

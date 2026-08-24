@@ -53,6 +53,7 @@ is not used. Implies overwrite-in-place via Copy-Item -Force.
 param(
     [string]$Target = (Get-Location).Path,
     [string[]]$Locations = @(".agents"),
+    [ValidateSet('Project', 'User')][string]$Scope = 'Project',
     [switch]$Clean,
     [switch]$Force
 )
@@ -235,15 +236,26 @@ $Normalized = foreach ($loc in $Locations) {
 
 if (-not $Normalized) { $Normalized = @(".agents") }
 
+# Resolve effective install root. Project scope installs into the given repo;
+# User scope installs into your profile so the bundle is usable everywhere.
+# An explicit -Target together with -Scope User overrides the profile root
+# (documented testing hook).
+$EffectiveTarget = $Target
+if ($Scope -eq 'User') {
+    if ($PSBoundParameters.ContainsKey('Target')) { $EffectiveTarget = $Target }
+    else { $EffectiveTarget = [Environment]::GetFolderPath('UserProfile') }
+    Write-Host ("  scope    : user (" + $EffectiveTarget + ")")
+}
+
 Write-Host "Installing Maestro" -ForegroundColor White
 Write-Host "  from     : $SourceRoot" -ForegroundColor DarkGray
-Write-Host "  target   : $Target" -ForegroundColor DarkGray
+Write-Host "  target   : $EffectiveTarget" -ForegroundColor DarkGray
 Write-Host "  locations: $($Normalized -join ', ')" -ForegroundColor DarkGray
 if ($Clean) { Write-Host "  mode     : clean" -ForegroundColor DarkGray }
 elseif ($Force) { Write-Host "  mode     : force-overwrite" -ForegroundColor DarkGray }
 
 foreach ($loc in $Normalized) {
-    Install-SingleLocation -SourceRoot $SourceRoot -TargetRoot $Target -Location $loc -CleanFlag ([bool]$Clean) -ForceFlag ([bool]$Force)
+    Install-SingleLocation -SourceRoot $SourceRoot -TargetRoot $EffectiveTarget -Location $loc -CleanFlag ([bool]$Clean) -ForceFlag ([bool]$Force)
 }
 
 Write-Host ""

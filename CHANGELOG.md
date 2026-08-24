@@ -2,6 +2,23 @@
 
 All notable changes to the Maestro bundle. Installed repos record the version as `MAESTRO_VERSION`; check here before upgrading.
 
+## 0.5.0 — 2026-08-23
+
+Installation scopes.
+
+### Added
+
+- `Install-Maestro.ps1 -Scope User`: installs once into your profile (`~/.omp`, `~/.claude`, …) so Maestro is available in every session and project. `-Scope Project` remains the default (team-first: commit the config dir). An explicit `-Target` alongside `-Scope User` overrides the profile root (testing hook).
+- Installer smoke test gained a user-scope pass.
+
+### Removed
+
+- Experimental PowerShell-module packaging (`tools/build-module.ps1`, dist artifact, CI build stage) pending a real distribution need — the canonical install remains clone-and-run or web bootstrap.
+
+### Changed
+
+- README: installation section leads with the recommended clone flow and documents the project/user scope tradeoffs.
+
 ## 0.4.4 — 2026-08-23
 
 ### Changed
