@@ -1,6 +1,6 @@
 # Builds the distributable PowerShell module (dist/module/MaestroKit/) from the
 # repo sources. The module wraps the canonical scripts — zero logic duplication:
-# Install-Maestro / Test-MaestroBundle / Invoke-MaestroSmokeInstall invoke the
+# Install-Maestro / Test-MaestroKit / Invoke-MaestroSmokeInstall invoke the
 # bundled Install-Maestro.ps1, tools/validate-bundle.ps1 and tools/smoke-install.ps1.
 param(
     [string]$Root,
@@ -30,11 +30,11 @@ $manifest = @"
     ModuleVersion        = '$Version'
     GUID                 = 'b7e3a9c4-5d18-4f6a-9c2e-1a0d8f4b7e33'
     Author               = 'Arthur Biazon Machado'
-    Description          = 'MaestroKit - the Maestro agent-skills bundle: plan/implement/test/document workflow installer and validators.'
+    Description          = 'MaestroKit - plan/implement/test/document workflow installer, validators and packaging for AI coding agents.'
     Copyright            = '(c) 2026 Arthur Biazon Machado. MIT licensed.'
     PowerShellVersion    = '7.0'
     CompatiblePSEditions = @('Core')
-    FunctionsToExport    = @('Install-Maestro', 'Test-MaestroBundle', 'Invoke-MaestroSmokeInstall')
+    FunctionsToExport    = @('Install-Maestro', 'Test-MaestroKit', 'Invoke-MaestroSmokeInstall')
     PrivateData          = @{
         PSData = @{
             Tags         = @('AgentSkills', 'AI', 'ClaudeCode', 'OpenCode', 'OhMyPi', 'Workflow')
@@ -76,7 +76,7 @@ function Install-Maestro {
     & (Join-Path $script:BundleRoot "Install-Maestro.ps1") @invokeArgs
 }
 
-function Test-MaestroBundle {
+function Test-MaestroKit {
     <#
     .SYNOPSIS
     Runs the source-bundle consistency validator against a checkout of the Maestro repo.
@@ -109,7 +109,7 @@ function Invoke-MaestroSmokeInstall {
     & $smoke @invokeArgs
 }
 
-Export-ModuleMember -Function Install-Maestro, Test-MaestroBundle, Invoke-MaestroSmokeInstall
+Export-ModuleMember -Function Install-Maestro, Test-MaestroKit, Invoke-MaestroSmokeInstall
 '@
 Set-Content -LiteralPath (Join-Path $OutputDir "$($ModuleName).psm1") -Value $psm1 -Encoding UTF8
 

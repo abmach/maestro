@@ -2,6 +2,12 @@
 
 All notable changes to the Maestro bundle. Installed repos record the version as `MAESTRO_VERSION`; check here before upgrading.
 
+## 0.6.1 — 2026-08-23
+
+### Changed
+
+- `Test-MaestroBundle` renamed to **`Test-MaestroKit`** to align the public API with the module identity (v0.6.0 shipped minutes ago; no external consumers). Installer/module descriptions aligned likewise.
+
 ## 0.6.0 — 2026-08-23
 
 The bundle ships as an official PowerShell module: **MaestroKit**.
@@ -41,6 +47,14 @@ Installation scopes.
 ### Changed
 
 - README: installation section leads with the recommended clone flow and documents the project/user scope tradeoffs.
+
+## 0.6.1 — 2026-08-23
+
+### Changed
+
+- `Test-MaestroBundle` renamed to **`Test-MaestroKit`** to align the public API with the module identity (v0.6.0 shipped minutes ago; no external consumers). Also aligned installer/module descriptions.
+
+## 0.6.0 — 2026-08-23
 
 ## 0.4.4 — 2026-08-23
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env pwsh
 <#
 .SYNOPSIS
-Install the Maestro bundle (skills, references, agents) into one or more config dirs of a target repo.
+Install MaestroKit (skills, references, agents) into one or more config dirs of a target repo.
 
 .DESCRIPTION
 Copies `skills/`, `references/`, and `agents/` from the Maestro source repo into

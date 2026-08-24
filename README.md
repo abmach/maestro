@@ -141,7 +141,7 @@ pwsh ./tools/build-module.ps1     # -> dist/module/MaestroKit
 Import-Module ./dist/module/MaestroKit
 Install-Maestro -Target D:\repos\my-app -Locations .omp,.claude -Force
 Install-Maestro -Scope User       # or install once into your profile
-Test-MaestroBundle                # validator passthrough
+Test-MaestroKit                # validator passthrough
 ```
 
 Same canonical scripts inside — zero logic duplication. Ideal for `-Scope User` installs on personal machines and for PSGallery publishing later.
