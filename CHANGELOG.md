@@ -2,6 +2,12 @@
 
 All notable changes to the Maestro bundle. Installed repos record the version as `MAESTRO_VERSION`; check here before upgrading.
 
+## 0.4.4 — 2026-08-23
+
+### Changed
+
+- README + bootstrap docs: the GitHub-raw one-liner is now the *default* documented web install (no Cloudflare challenges, audience lives there); the GitLab-raw variant is kept as an explicitly labeled fallback. The bundle archive itself still downloads from the GitLab origin (single source of truth)
+
 ## 0.4.3 — 2026-08-23
 
 ### Added

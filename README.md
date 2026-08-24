@@ -90,6 +90,13 @@ The installer copies `skills/`, `references/`, and `agents/` to each target loca
 ### Direct web install (no clone)
 
 ```powershell
+& ([scriptblock]::Create((irm https://raw.githubusercontent.com/abmach/maestro/main/tools/install-from-web.ps1))) `
+    -Target D:\repos\my-app -Locations .omp,.claude -Force
+```
+
+Fallback (same bootstrap, served from the GitLab origin):
+
+```powershell
 & ([scriptblock]::Create((irm https://gitlab.com/arthur_b_machado/maestro/-/raw/main/tools/install-from-web.ps1))) `
     -Target D:\repos\my-app -Locations .omp,.claude -Force
 ```

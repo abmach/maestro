@@ -11,8 +11,11 @@ anything afterwards; the downloaded sources are cleaned up.
 Canonical one-liner (note the scriptblock wrapper — plain `irm | iex` cannot
 pass parameters):
 
-  & ([scriptblock]::Create((irm https://gitlab.com/arthur_b_machado/maestro/-/raw/main/tools/install-from-web.ps1))) `
+  & ([scriptblock]::Create((irm https://raw.githubusercontent.com/abmach/maestro/main/tools/install-from-web.ps1))) `
       -Target D:\repos\my-app -Locations .omp,.claude -Force
+
+The same bootstrap is also served from GitLab:
+https://gitlab.com/arthur_b_machado/maestro/-/raw/main/tools/install-from-web.ps1
 
 Pin an immutable release instead of the moving main branch:
 
