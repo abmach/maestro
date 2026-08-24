@@ -57,7 +57,7 @@ For how references relate to each other, see `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/r
    - **Framework-Specific Best Practices:** Apply framework-specific best practices (e.g., semantic selectors for UI tests)
 5. **Configuration:** Set up testing framework configuration as needed, applying the canonical templates from `Testing Tech Preferences`:
    - Configure test runners, reporters, and output directories (`test-results/`)
-   - Set the visual-regression baseline path (`snapshotPath` → `tests/screenshots/baselines/`)
+   - Set the visual-regression baseline path (`snapshotDir` + flat `snapshotPathTemplate: 'tests/screenshots/baselines/{arg}{ext}'`)
    - Set up code coverage collection if required
    - Configure test databases or test environments if needed
    - Ensure `.gitignore` covers `test-results/` (baselines stay committed)
@@ -78,7 +78,7 @@ Before completing the test writing:
 - [ ] `Plan` file successfully read and understood
 - [ ] Integration and E2E test types determined correctly
 - [ ] Appropriate testing frameworks selected per `Testing Tech Preferences`
-- [ ] Framework configuration follows the canonical templates (runner options under `use:`, top-level `snapshotPath`)
+- [ ] Framework configuration follows the canonical templates (runner options under `use:`, baselines via `snapshotDir` + full-path `snapshotPathTemplate`)
 - [ ] Baseline path configured to `tests/screenshots/baselines/`; runtime output to `test-results/`
 - [ ] Test files created/updated according to `Plan` specifications, flat in `tests/`
 - [ ] Test isolation ensured (tests can run independently)

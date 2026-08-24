@@ -48,7 +48,7 @@ Issues (Issue file and Issues Index):
 | `tests/screenshots/baselines/` | yes | first audition run or `--update-snapshots` |
 | `test-results/` | **no** (gitignore) | audition runtime artifacts: actual/diff screenshots, logs, `summary.json` |
 
-**Visual regression contract:** baselines live under `tests/screenshots/baselines/` (Playwright top-level `snapshotPath`; see `testing-tech-preferences.md`). Every other artifact — actuals, diffs, failure shots, logs — lands under `test-results/`. Consumers (orchestrate's routing, score's docs) use **only the paths reported in `audition`'s result summary**. Never assume an artifact location you were not told.
+**Visual regression contract:** baselines live under `tests/screenshots/baselines/` (Playwright: `snapshotPathTemplate` full-path template — see `testing-tech-preferences.md` for the canonical form). Every other artifact — actuals, diffs, failure shots, logs — lands under `test-results/`. Consumers (orchestrate's routing, score's docs) use **only the paths reported in `audition`'s result summary**. Never assume an artifact location you were not told.
 
 **Redaction:** any captured output written into workspace artifacts — issue Error Details, plan specifications, investigation notes — must have tokens, API keys, passwords, connection strings, and internal hostnames replaced with placeholders. Substitute, never truncate; these files are committed to git.
 
@@ -78,6 +78,7 @@ Workspace artifacts — Plans, Issues, investigation notes, even `knowledge/` fi
 
 - **One active orchestration per workspace.** Concurrent `orchestrate` runs race the shared working tree, the Plans Index, and the Issues Index no matter how correct each DAG is. If the Plans Index shows 🔄 In progress, resolve it first (re-run `/orchestrate` — crash recovery reconciles — or abort).
 - **Per-milestone status:** written to the Plan *file* immediately on each `play` return. Safe because orchestrate is the single writer of Plan files.
+- **Spawn prompt:** `{plan-id} {milestone-id}` for play; `{issue-id}` for tune. When the driving session's cwd differs from `{{WORKSPACE}}`, prefix an explicit first line `Workspace: <absolute path>` — subagents resolve `{{WORKSPACE}}` from their own session cwd, not the caller's intent.
 - **Plans Index:** one batched read-modify-write per wave, after all plays in the wave settle.
 - **Crash recovery** reconciles the Plans Index *from* the Plan file. The Plan file is per-milestone ground truth.
 

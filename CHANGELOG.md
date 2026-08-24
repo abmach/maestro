@@ -2,6 +2,21 @@
 
 All notable changes to the Maestro bundle. Installed repos record the version as `MAESTRO_VERSION`; check here before upgrading.
 
+## 0.3.3 — 2026-08-23
+
+Pilot-driven fixes (findings F-002, F-006, F-013–F-016 from the first live runs).
+
+### Fixed
+
+- Canonical Playwright config: `snapshotPath` does not exist in Playwright 1.x — replaced with `snapshotDir` + full-path `snapshotPathTemplate` (baselines previously landed at repo root or were silently ignored); wording swept across conventions/arrange
+- Visual Regression Testing guidance: mask volatile/generated content; missing baselines FAIL on first run (use `-u` / two-run flow)
+- `play`: STATUS block must be returned verbatim regardless of effort tier (low-tier runs omitted fields orchestrate parses)
+- `compose` step 7: explicit lazy-create of `plans/` + index on first plan
+
+### Added
+
+*Node built-in runner:* `node:test` documented for zero-dependency projects; *Invocation* guidance — prefer package script/bare runner over positional dir args (breaks across runner versions)
+
 ## 0.3.2 — 2026-08-23
 
 Enhancements from the first live pilot (`maestro-pilot`, findings F-001..F-011).

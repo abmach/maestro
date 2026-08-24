@@ -31,7 +31,7 @@ Binding locations (see also `conventions.md`):
 | Visual regression baselines | `tests/screenshots/baselines/` | yes |
 | Runtime artifacts (actual/diff screenshots, logs, traces) | `test-results/` | no — gitignore |
 
-Configure the framework's baseline path explicitly (Playwright: top-level `snapshotPath`). Downstream consumers use only paths reported by `audition`'s result summary — never assumed locations.
+Configure the framework's baseline location explicitly (Playwright: `snapshotDir` plus a full-path `snapshotPathTemplate`; there is no `snapshotPath` option). Downstream consumers use only paths reported by `audition`'s result summary — never assumed locations.
 
 ## Preferences
 
@@ -77,9 +77,11 @@ export default defineConfig({
   // Structured reporting for Maestro integration (note the nested [reporter, options] form)
   reporter: [['json', { outputFile: 'test-results/summary.json' }]],
 
-  // Visual regression baselines — TOP-LEVEL option, committed to git.
-  // expect(page).toHaveScreenshot() baselines resolve against this directory.
-  snapshotPath: 'tests/screenshots/baselines',
+  // Visual regression baselines — committed to git.
+  // snapshotPathTemplate is a FULL path template: include directory segments
+  // literally, or baselines land at the repo root. {arg} = screenshot name.
+  snapshotDir: 'tests/screenshots/baselines',
+  snapshotPathTemplate: 'tests/screenshots/baselines/{arg}{ext}',
 
   // Browser context features belong under use:
   use: {
@@ -146,6 +148,8 @@ Cypress manages its own baseline comparison differently from Playwright; prefer 
 - **Playwright:** Built-in screenshot comparison via `expect(page).toHaveScreenshot()` (free, lightweight)
 - **Percy / Chromatic:** Cloud-based visual testing platforms (commercial)
 - **Note:** Strongly prefer Playwright's built-in screenshot comparison for simplicity and cost
+- **Determinism:** mask volatile/generated content before comparing (timestamps, generated ids, random seeds) — `toHaveScreenshot(name, { mask: [...] })`; unmasked volatility produces phantom diffs between identical-looking runs
+- **First run:** a missing baseline is written and the test FAILS (CI-style default) — run once with `-u` (`--update-snapshots=missing`) or accept the two-run flow; baselines are then committed
 
 ### Performance Testing
 
