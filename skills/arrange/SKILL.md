@@ -61,6 +61,7 @@ For how references relate to each other, see `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/r
    - Set up code coverage collection if required
    - Configure test databases or test environments if needed
    - Ensure `.gitignore` covers `test-results/` (baselines stay committed)
+   - Ensure the E2E framework dependency is installed locally (e.g., `npm i -D @playwright/test`) before handoff — a cached-global `npx` cannot resolve the config's imports
 6. **Test Creation:** Create or update E2E test files flat in the `{{WORKSPACE}}/tests/` directory (e.g., `tests/auth.spec.ts`, `tests/login.spec.ts`) following the `Plan` specifications and test design principles. Do NOT create subdirectories inside `tests/`
 
 ## Input & Output Interface

@@ -2,6 +2,15 @@
 
 All notable changes to the Maestro bundle. Installed repos record the version as `MAESTRO_VERSION`; check here before upgrading.
 
+## 0.3.4 — 2026-08-23
+
+R2 follow-ups (sub-notes from the fix-regression run).
+
+### Added
+
+- README: `tools/smoke-install.ps1` documented in the tree; Oh My Pi session-cwd note for project-agent discovery (run from target repo root or install at user level)
+- `arrange` Step 5: ensure the E2E framework dependency is installed locally before handoff — cached-global `npx` cannot resolve config imports
+
 ## 0.3.3 — 2026-08-23
 
 Pilot-driven fixes (findings F-002, F-006, F-013–F-016 from the first live runs).

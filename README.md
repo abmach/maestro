@@ -38,7 +38,8 @@ maestro/
 │   ├── testing-tech-preferences.md
 │   └── references-map.md
 └── tools/
-    └── validate-bundle.ps1  # Dev-time validator: frontmatter, links, contract consistency
+    ├── validate-bundle.ps1  # Dev-time validator: frontmatter, links, contract consistency
+    └── smoke-install.ps1    # End-to-end installer gate (temp dir, substitution, version stamp)
 ```
 
 **10 skills** + **2 agents** + **13 reference specs** + a dev-time bundle validator.
@@ -230,6 +231,8 @@ Maestro targets the [Agent Skills](https://agentskills.io) open standard. The bu
 | Oh My Pi | `.omp` (full) or `.agents` (OpenCode only) | yes — `.omp/agents/` is its native subagent root | yes — `task.agentModelOverrides` / `modelRoles` |
 | Claude Code | `.claude` | yes — `.claude/agents/` | yes — `model:` frontmatter on agents |
 | OpenCode | `.opencode` or `.agents` | yes — native markdown agents | yes — `model:` frontmatter on agents |
+
+On Oh My Pi, run sessions from the target repo root (or install agent definitions at user level, `~/.omp/agent/agents/`) — project-agent discovery is session-cwd-bound, so `play`/`tune` resolve only when the session lives in the workspace that has them installed.
 
 Skills use only standard Agent-Skills frontmatter (`name`, `description`). Agents use Claude-Code/OpenCode-compatible frontmatter (`name`, `description`, `mode: subagent`) — Oh My Pi reads the same files and ignores the extra fields. No platform-specific tooling assumptions are baked into the workflow text; only the installer is PowerShell.
 
