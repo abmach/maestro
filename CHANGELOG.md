@@ -2,6 +2,13 @@
 
 All notable changes to the Maestro bundle. Installed repos record the version as `MAESTRO_VERSION`; check here before upgrading.
 
+## 0.4.1 — 2026-08-23
+
+### Added
+
+- Web bootstrap: `tools/install-from-web.ps1` — one-liner install without cloning. Downloads the repo archive, extracts to temp, runs the bundled installer, cleans up. Supports `-Version` pinning to an immutable tag (remote-code caveat documented) and an `-ArchivePath` offline override
+- README: *Direct web install* section with the canonical scriptblock one-liner
+
 ## 0.4.0 — 2026-08-23
 
 Public-release readiness.

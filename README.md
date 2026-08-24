@@ -87,6 +87,15 @@ Maestro is **all-or-nothing**: every supported location delivers the full bundle
 
 The installer copies `skills/`, `references/`, and `agents/` to each target location and substitutes `{{MAESTRO_CONFIG}}` placeholders in every `.md` file with the location string, so reference paths resolve correctly at runtime.
 
+### Direct web install (no clone)
+
+```powershell
+& ([scriptblock]::Create((irm https://gitlab.com/arthur_b_machado/maestro/-/raw/main/tools/install-from-web.ps1))) `
+    -Target D:\repos\my-app -Locations .omp,.claude -Force
+```
+
+Downloads the repo archive to a temp dir, runs the bundled installer, cleans up after itself. Pin an immutable tag with `-Version v0.4.0-public` instead of trusting the moving `main` branch — this executes remote code, so review or pin.
+
 ### Idempotent re-runs and upgrades
 
 Re-running the installer overwrites in place. To wipe stale folders before copying (useful after a skill rename or removal upstream — check `CHANGELOG.md` for renames and behavioral migrations):
