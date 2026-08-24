@@ -2,6 +2,18 @@
 
 All notable changes to the Maestro bundle. Installed repos record the version as `MAESTRO_VERSION`; check here before upgrading.
 
+## 0.7.0 — 2026-08-23
+
+### Added
+
+- `CONTRIBUTING.md`: maintainer guide (validation gates, signing routes, module packaging/publishing, release checklist)
+- GitHub Actions workflow for the public mirror; README states the mirrors-and-contributions policy
+- Consumer-facing Gallery instructions (incl. `Save-Module` ephemeral usage) marked as pending first publish
+
+### Changed
+
+- README restructured to be end-user aimed: maintainer tooling moved to CONTRIBUTING.md; installation methods ordered clone-first, web one-liner second, Gallery module third
+
 ## 0.6.2 — 2026-08-23
 
 ### Added

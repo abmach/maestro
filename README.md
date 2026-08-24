@@ -132,19 +132,25 @@ Fallback (same bootstrap, served from the GitLab origin):
 
 Downloads the repo archive to a temp dir, runs the bundled installer, cleans up after itself. `-Version v0.4.0-public` pins **what gets installed** to an immutable tag (the downloader itself always comes from `main`) — this executes remote code, so review or pin. The repo must be publicly readable; private/bot-challenged downloads fail with guidance instead of executing anything.
 
-### PowerShell module — MaestroKit
+### PowerShell Gallery — MaestroKit
 
-Build a distributable module from current sources:
+Once the first package is published, machines with PowerShell 7 get the no-clone route from the Gallery:
 
 ```powershell
-pwsh ./tools/build-module.ps1     # -> dist/module/MaestroKit
-Import-Module ./dist/module/MaestroKit
-Install-Maestro -Target D:\repos\my-app -Locations .omp,.claude -Force
-Install-Maestro -Scope User       # or install once into your profile
-Test-MaestroKit                # validator passthrough
+Install-Module MaestroKit -Scope CurrentUser
+Import-Module MaestroKit
+
+# Deploy into your profile — usable in every session and project:
+Install-Maestro -Scope User -Locations .omp,.claude,.opencode -Force
+
+# Or per-project (team inherits via git):
+cd D:\repos\my-app
+Install-Maestro -Locations .omp,.claude,.opencode -Force
 ```
 
-Same canonical scripts inside — zero logic duplication. Ideal for `-Scope User` installs on personal machines and for PSGallery publishing later.
+Prefer nothing persisted on disk? `Save-Module MaestroKit -Path $env:TEMP\mk` fetches the same payload without registering it — `Import-Module` from that path for one-off use, delete when done.
+
+Publishing status: first Gallery release is the next step — see CONTRIBUTING.md.
 
 ### Idempotent re-runs and upgrades
 
@@ -156,14 +162,6 @@ Re-running the installer overwrites in place. To wipe stale folders before copyi
 The installer records the bundle version in each target's `MAESTRO_VERSION` file and ships `MAESTRO_CHANGELOG.md` alongside it, so upgrade auditing is self-contained in the consuming repo.
 
 Non-interactive hosts (CI) must pass `-Force`; without it the installer fails closed rather than hanging on the overwrite prompt.
-
-### Validate the bundle before installing
-
-```powershell
-pwsh ./tools/validate-bundle.ps1
-```
-
-Checks frontmatter integrity, placeholder correctness, markdown link resolution, canonical Pre-flight blocks in every skill/agent, and cross-file consistency of the retry rule. Run it after any bundle edit.
 
 ## The workflow
 
@@ -297,7 +295,7 @@ On Oh My Pi, run sessions from the target repo root (or install agent definition
 
 Skills use only standard Agent-Skills frontmatter (`name`, `description`). Agents use Claude-Code/OpenCode-compatible frontmatter (`name`, `description`, `mode: subagent`) — Oh My Pi reads the same files and ignores the extra fields. No platform-specific tooling assumptions are baked into the workflow text; only the installer is PowerShell.
 
-**Mirrors & contributions:** development happens on GitLab; the GitHub repository (if present) is an automated read-only mirror — please open issues and pull requests on GitLab.
+**Mirrors & contributions:** development happens on GitLab; the GitHub repository (if present) is an automated read-only mirror — please open issues and pull requests on GitLab. Maintainers and contributors: see CONTRIBUTING.md for validation gates, code signing, module packaging and the release flow.
 
 ## When not to use it
 
