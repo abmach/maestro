@@ -2,6 +2,12 @@
 
 All notable changes to the Maestro bundle. Installed repos record the version as `MAESTRO_VERSION`; check here before upgrading.
 
+## 0.6.2 — 2026-08-23
+
+### Added
+
+- PSGallery publishing tooling: `tools/publish-gallery.ps1` (version-guarded Publish-Module wrapper) and automatic per-version *ReleaseNotes* embedded into the built module manifest from the latest CHANGELOG section.
+
 ## 0.6.1 — 2026-08-23
 
 ### Changed
@@ -47,14 +53,6 @@ Installation scopes.
 ### Changed
 
 - README: installation section leads with the recommended clone flow and documents the project/user scope tradeoffs.
-
-## 0.6.1 — 2026-08-23
-
-### Changed
-
-- `Test-MaestroBundle` renamed to **`Test-MaestroKit`** to align the public API with the module identity (v0.6.0 shipped minutes ago; no external consumers). Also aligned installer/module descriptions.
-
-## 0.6.0 — 2026-08-23
 
 ## 0.4.4 — 2026-08-23
 

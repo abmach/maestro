@@ -14,6 +14,17 @@ if (-not $OutputDir) { $OutputDir = Join-Path $Root ("dist/module/" + $ModuleNam
 
 $Version = ([System.IO.File]::ReadAllText((Join-Path $Root "VERSION"))).Trim()
 
+# Latest CHANGELOG section becomes the gallery ReleaseNotes (flattened;
+# single quotes doubled so the psd1 literal stays valid).
+$clLines = (Get-Content -LiteralPath (Join-Path $Root "CHANGELOG.md")) -split "\r?\n"
+$firstSection = ($clLines | Select-String -Pattern "^## " | Select-Object -First 1).LineNumber
+$sectionLines = @()
+for ($i = $firstSection - 1; $i -lt $clLines.Count; $i++) {
+    if ($i -gt $firstSection - 1 -and $clLines[$i] -match "^## ") { break }
+    if ($clLines[$i].Trim()) { $sectionLines += $clLines[$i].Trim() }
+}
+$ReleaseNotesFlat = ($sectionLines -join ' ').Replace("'", "''")
+
 if (Test-Path -LiteralPath $OutputDir) { Remove-Item -LiteralPath $OutputDir -Recurse -Force }
 New-Item -ItemType Directory -Path $OutputDir -Force | Out-Null
 
@@ -40,7 +51,7 @@ $manifest = @"
             Tags         = @('AgentSkills', 'AI', 'ClaudeCode', 'OpenCode', 'OhMyPi', 'Workflow')
             LicenseUri   = 'https://gitlab.com/arthur_b_machado/maestro/-/blob/main/LICENSE'
             ProjectUri   = 'https://gitlab.com/arthur_b_machado/maestro'
-            ReleaseNotes = 'See CHANGELOG.md shipped alongside this module.'
+            ReleaseNotes = '$ReleaseNotesFlat'
         }
     }
 }
