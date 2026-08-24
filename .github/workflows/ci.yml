@@ -1,0 +1,26 @@
+name: ci
+
+# Runs on the GitHub mirror (gitlab.com runs .gitlab-ci.yml instead).
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bundle consistency validator
+        shell: pwsh
+        run: ./tools/validate-bundle.ps1
+      - name: End-to-end install smoke test
+        shell: pwsh
+        run: ./tools/smoke-install.ps1
+
+  build-module:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build distributable module
+        shell: pwsh
+        run: ./tools/build-module.ps1

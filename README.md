@@ -260,6 +260,8 @@ On Oh My Pi, run sessions from the target repo root (or install agent definition
 
 Skills use only standard Agent-Skills frontmatter (`name`, `description`). Agents use Claude-Code/OpenCode-compatible frontmatter (`name`, `description`, `mode: subagent`) — Oh My Pi reads the same files and ignores the extra fields. No platform-specific tooling assumptions are baked into the workflow text; only the installer is PowerShell.
 
+**Mirrors & contributions:** development happens on GitLab; the GitHub repository (if present) is an automated read-only mirror — please open issues and pull requests on GitLab.
+
 ## When not to use it
 
 - **Solo, top-tier model, small features** — `compose` plus direct execution hits the 80% point; the full ceremony costs more than it saves.

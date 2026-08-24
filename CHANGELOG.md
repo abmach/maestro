@@ -2,6 +2,12 @@
 
 All notable changes to the Maestro bundle. Installed repos record the version as `MAESTRO_VERSION`; check here before upgrading.
 
+## 0.4.3 — 2026-08-23
+
+### Added
+
+- GitHub readiness: `.github/workflows/ci.yml` (validate + install-smoke + module build on ubuntu-latest) so the public GitHub mirror carries green checks; README states the mirrors-and-contributions policy (GitLab is home, GitHub is a read-only mirror)
+
 ## 0.4.2 — 2026-08-23
 
 ### Fixed
