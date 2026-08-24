@@ -2,6 +2,15 @@
 
 All notable changes to the Maestro bundle. Installed repos record the version as `MAESTRO_VERSION`; check here before upgrading.
 
+## 0.3.5 — 2026-08-23
+
+Documentation restructure for first public release.
+
+### Changed
+
+- README: *Installation* now directly follows *What's in the box* (was buried behind the workflow and rationale sections)
+- README: *Why Maestro* reframed positively for first-time readers — no obsolescence-defense framing; states what the bundle is built for, not what it survived
+
 ## 0.3.4 — 2026-08-23
 
 R2 follow-ups (sub-notes from the fix-regression run).

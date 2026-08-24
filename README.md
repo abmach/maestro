@@ -44,57 +44,6 @@ maestro/
 
 **10 skills** + **2 agents** + **13 reference specs** + a dev-time bundle validator.
 
-## The workflow
-
-Once when adopting Maestro into an existing project, run `/prelude` first to create the knowledge artifacts (Repo Fingerprint, Contexts, ADRs). The workflow below then takes over. Every skill and agent shares one contract — `references/conventions.md` — covering workspace resolution, status vocabularies, milestone retry semantics, artifact locations, and file ownership.
-
-```
-  User request
-       │
-       ▼
-   compose ──▶ Creates a Plan (DAG of milestones)
-       │
-       ▼
-   rehearse ──▶ (optional) Sharpens domain language, challenges assumptions
-       │
-       ▼
-   elaborate ──▶ (optional) Adds detail distilled from stronger models
-       │
-       ▼
-   orchestrate ──── spawns ──▶ play (parallel, one per ready milestone)
-       │                         │
-       │                         ▼
-       │                    Returns structured status (Done/Failed)
-       │
-       ├──▶ arrange (writes E2E tests from Plan)
-       ├──▶ audition (runs tests, captures results)
-       │
-       │  ┌── Visual regression failures?
-       │  │    1. Cross-reference Plan: intended change? → update baseline
-       │  │    2. Real defect? → create Issue, ask user: fix now or defer
-       │  │    3. Fix now → spawn tune subagent
-       │  └─
-       │
-       ▼
-   score (updates README/docs/changelog if Plan's Docs Affected = true)
-       │
-       ▼
-   Done
-```
-
-Around the pipeline: `/instruments` (once — model assignments), `/interlude` (anytime — status snapshot), `@play PLAN-001 M2` / `@tune BUG-004` (direct invocation when you don't need orchestration).
-
-## Why Maestro
-
-Strong models and good harnesses did not make this bundle obsolete — they changed what it is for. Four value pillars, in order of durability:
-
-1. **Cost arbitrage.** Cost is tokens × price, and implementation dominates token volume while design reasoning is small-batch. Maestro's Plans mandate exact file paths, API shapes, and test cases — and a precise spec needs a competent executor, not a premium one. Run `compose`/`rehearse`/`elaborate` on a reasoning-heavy model, `play` on a cheap fast one, and the dominant cost term drops by roughly an order of magnitude at unchanged ceiling quality. `/instruments` records the assignments; Oh My Pi applies them to spawns natively (`task.agentModelOverrides`), Claude Code and OpenCode via agent frontmatter.
-2. **Parallel throughput.** Milestones form a DAG; every ready wave spawns one worker per milestone regardless of model strength. Wall-clock savings are orthogonal to how smart your models are.
-3. **Review checkpoints before code exists.** Auditing a 200-line plan costs minutes; reviewing a 2,000-line diff costs hours. compose front-loads expensive-to-reverse decisions into the cheapest artifact to inspect.
-4. **Durable, portable process state.** Plans, issues, retries, glossary, ADRs live in your repo — they survive compaction, crashes, harness switches, and teammates. Harness features are session-scoped; this layer is repo-scoped, which is why they compose rather than compete.
-
-One rule of thumb governs the economics: **when milestones fail repeatedly, escalate the plan, not just the worker.** Three failed attempts usually mean an under-specified spec, and re-spawning stronger workers on it burns the savings the tiering created.
-
 ## Installation
 
 ### Prerequisites
@@ -154,6 +103,57 @@ pwsh ./tools/validate-bundle.ps1
 ```
 
 Checks frontmatter integrity, placeholder correctness, markdown link resolution, canonical Pre-flight blocks in every skill/agent, and cross-file consistency of the retry rule. Run it after any bundle edit.
+
+## The workflow
+
+Once when adopting Maestro into an existing project, run `/prelude` first to create the knowledge artifacts (Repo Fingerprint, Contexts, ADRs). The workflow below then takes over. Every skill and agent shares one contract — `references/conventions.md` — covering workspace resolution, status vocabularies, milestone retry semantics, artifact locations, and file ownership.
+
+```
+  User request
+       │
+       ▼
+   compose ──▶ Creates a Plan (DAG of milestones)
+       │
+       ▼
+   rehearse ──▶ (optional) Sharpens domain language, challenges assumptions
+       │
+       ▼
+   elaborate ──▶ (optional) Adds detail distilled from stronger models
+       │
+       ▼
+   orchestrate ──── spawns ──▶ play (parallel, one per ready milestone)
+       │                         │
+       │                         ▼
+       │                    Returns structured status (Done/Failed)
+       │
+       ├──▶ arrange (writes E2E tests from Plan)
+       ├──▶ audition (runs tests, captures results)
+       │
+       │  ┌── Visual regression failures?
+       │  │    1. Cross-reference Plan: intended change? → update baseline
+       │  │    2. Real defect? → create Issue, ask user: fix now or defer
+       │  │    3. Fix now → spawn tune subagent
+       │  └─
+       │
+       ▼
+   score (updates README/docs/changelog if Plan's Docs Affected = true)
+       │
+       ▼
+   Done
+```
+
+Around the pipeline: `/instruments` (once — model assignments), `/interlude` (anytime — status snapshot), `@play PLAN-001 M2` / `@tune BUG-004` (direct invocation when you don't need orchestration).
+
+## Why Maestro
+
+Maestro is built for the current generation of strong models and capable harnesses, and it earns its keep through four value pillars, in order of durability:
+
+1. **Cost arbitrage.** Cost is tokens × price, and implementation dominates token volume while design reasoning is small-batch. Maestro's Plans mandate exact file paths, API shapes, and test cases — and a precise spec needs a competent executor, not a premium one. Run `compose`/`rehearse`/`elaborate` on a reasoning-heavy model, `play` on a cheap fast one, and the dominant cost term drops by roughly an order of magnitude at unchanged ceiling quality. `/instruments` records the assignments; Oh My Pi applies them to spawns natively (`task.agentModelOverrides`), Claude Code and OpenCode via agent frontmatter.
+2. **Parallel throughput.** Milestones form a DAG; every ready wave spawns one worker per milestone regardless of model strength. Wall-clock savings are orthogonal to how smart your models are.
+3. **Review checkpoints before code exists.** Auditing a 200-line plan costs minutes; reviewing a 2,000-line diff costs hours. compose front-loads expensive-to-reverse decisions into the cheapest artifact to inspect.
+4. **Durable, portable process state.** Plans, issues, retries, glossary, ADRs live in your repo — they survive compaction, crashes, harness switches, and teammates. Harness features are session-scoped; this layer is repo-scoped, which is why they compose rather than compete.
+
+One rule of thumb governs the economics: **when milestones fail repeatedly, escalate the plan, not just the worker.** Three failed attempts usually mean an under-specified spec, and re-spawning stronger workers on it burns the savings the tiering created.
 
 ## Usage
 
