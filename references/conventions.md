@@ -5,7 +5,7 @@
 ## Workspace Resolution
 
 - `{{WORKSPACE}}` = workspace root. Resolve once per session and reuse: `git rev-parse --show-toplevel`; fall back to cwd outside a git repo.
-- **Spec files** live at `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/` (installed bundle). They define *formats*.
+- **Spec files** live in the installed config directory: **Project scope** -> `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/` (relative, portable inside the repo); **User scope** -> the installer bakes an absolute path into every skill (`<profile>/.omp/references/...`), so spec reads resolve no matter which project the session runs in. They define *formats*.
 - **Working files** live in the workspace (`knowledge/`, `plans/`, `issues/`). They hold *project truth*.
 - Never confuse the two: to check domain language, read `knowledge/contexts.md`, not `references/contexts.md`. Read the spec only to learn the format before writing.
 

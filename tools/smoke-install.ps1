@@ -44,6 +44,7 @@ try {
 
     # --- no unresolved placeholders anywhere ---
     $stray = @(Get-ChildItem -LiteralPath $tmp -Filter "*.md" -Recurse -File | Where-Object {
+        $_.Name -ne "MAESTRO_CHANGELOG.md" -and
         ([System.IO.File]::ReadAllText($_.FullName)) -match "\{\{MAESTRO_CONFIG\}\}"
     })
     if ($stray.Count -gt 0) { Fail ("unresolved {{MAESTRO_CONFIG}} in: " + (($stray | ForEach-Object { $_.Name }) -join ", ")) } else { Pass "placeholders: zero unresolved" }
@@ -74,6 +75,8 @@ try {
         if ($uCount -ne $srcSkills) { Fail ("user-scope skills: $uCount, expected $srcSkills") }
         elseif ($uVersion -ne $want) { Fail ("user-scope MAESTRO_VERSION '$uVersion' != '$want'") }
         else { Pass "user-scope: skills installed under isolated fake profile" }
+    $composeAbs = ([System.IO.File]::ReadAllText((Join-Path $fakeHome ".omp/skills/compose/SKILL.md"))).Contains((($fakeHome -replace '\\','/')) + "/.omp/references/conventions.md")
+    if ($composeAbs) { Pass "user-scope: spec paths baked absolute" } else { Fail "user-scope: absolute spec path missing in installed skills" }
     }
 }
 finally {

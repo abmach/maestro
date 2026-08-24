@@ -2,6 +2,15 @@
 
 All notable changes to the Maestro bundle. Installed repos record the version as `MAESTRO_VERSION`; check here before upgrading.
 
+## 0.5.1 — 2026-08-23
+
+### Fixed
+
+- User-scope installs now bake an **absolute, forward-slashed** path into the `{{MAESTRO_CONFIG}}` substitution, so every skill's mandatory spec reads (`references/conventions.md` etc.) resolve from any project directory. Previously they anchored to `{{WORKSPACE}}`, which under User scope pointed at project dirs that don't contain the bundle. Project scope keeps the portable relative form.
+- conventions *Workspace Resolution* documents both scopes explicitly; install smoke test asserts absolute spec paths under User scope.
+- Placeholder resolution formalized: skill texts write `[{{WORKSPACE}}/]{{MAESTRO_CONFIG}}/…`; at install time the pair collapses — Project keeps `{{WORKSPACE}}` runtime-resolved with the harness folder baked; User bakes an absolute profile root instead.
+- Install smoke: `MAESTRO_CHANGELOG.md` excluded from the unresolved-placeholder scan (it legitimately documents the placeholder); byte-level assertions verify both scopes' resolved spec paths.
+
 ## 0.5.0 — 2026-08-23
 
 Installation scopes.

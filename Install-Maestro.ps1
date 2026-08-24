@@ -80,6 +80,16 @@ function Install-SingleLocation {
         [bool]$ForceFlag
     )
 
+    # Placeholder resolution (see conventions.md): skill texts write
+    #   [{{WORKSPACE}}/]{{MAESTRO_CONFIG}}/references/...
+    # Project scope keeps {{WORKSPACE}} runtime-resolved and bakes the harness
+    # folder; User scope bakes an absolute profile root instead.
+    $script:MaestroConfigPath = if ($Scope -eq 'User') {
+        (($EffectiveTarget -replace '\\', '/') + "/" + $Location)
+    } else {
+        ("{{WORKSPACE}}/" + $Location)
+    }
+
     $SourceSkills = Join-Path $SourceRoot "skills"
     $SourceRefs   = Join-Path $SourceRoot "references"
     $SourceAgents = Join-Path $SourceRoot "agents"
@@ -159,7 +169,7 @@ those first, abort and rerun with -Clean. Continue?
             } else {
                 if ($item.Extension -eq ".md") {
                     $content = [System.IO.File]::ReadAllText($item.FullName, [System.Text.Encoding]::UTF8)
-                    $content = $content -replace '\{\{MAESTRO_CONFIG\}\}', $Location
+                    $content = $content -replace '(\{\{WORKSPACE\}\}/)?\{\{MAESTRO_CONFIG\}\}', $script:MaestroConfigPath
                     [System.IO.File]::WriteAllText($destItem, $content, (New-Object System.Text.UTF8Encoding $false))
                 } else {
                     Copy-Item -LiteralPath $item.FullName -Destination $destItem -Force
@@ -246,6 +256,7 @@ if ($Scope -eq 'User') {
     else { $EffectiveTarget = [Environment]::GetFolderPath('UserProfile') }
     Write-Host ("  scope    : user (" + $EffectiveTarget + ")")
 }
+
 
 Write-Host "Installing Maestro" -ForegroundColor White
 Write-Host "  from     : $SourceRoot" -ForegroundColor DarkGray
