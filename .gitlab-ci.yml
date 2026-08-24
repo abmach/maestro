@@ -16,3 +16,7 @@ smoke-install:
   script:
     - pwsh -NoProfile -File tools/smoke-install.ps1
 
+build-module:
+  stage: test
+  script:
+    - pwsh -NoProfile -File tools/build-module.ps1

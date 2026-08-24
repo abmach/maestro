@@ -41,10 +41,11 @@ maestro/
 │   └── references-map.md
 └── tools/
     ├── validate-bundle.ps1  # Dev-time validator: frontmatter, links, contract consistency
-    └── smoke-install.ps1    # End-to-end installer gate (temp dir, substitution, version stamp)
+│   ├── smoke-install.ps1    # End-to-end installer gate (temp dir, substitution, version stamp)
+│   └── build-module.ps1     # Assembles the distributable MaestroKit module
 ```
 
-**10 skills** + **2 agents** + **13 reference specs** + a dev-time bundle validator.
+**10 skills** + **2 agents** + **13 reference specs** + dev-time tooling (bundle validator, install smoke test, MaestroKit module builder).
 
 ## Installation
 
@@ -130,6 +131,20 @@ Fallback (same bootstrap, served from the GitLab origin):
 ```
 
 Downloads the repo archive to a temp dir, runs the bundled installer, cleans up after itself. `-Version v0.4.0-public` pins **what gets installed** to an immutable tag (the downloader itself always comes from `main`) — this executes remote code, so review or pin. The repo must be publicly readable; private/bot-challenged downloads fail with guidance instead of executing anything.
+
+### PowerShell module — MaestroKit
+
+Build a distributable module from current sources:
+
+```powershell
+pwsh ./tools/build-module.ps1     # -> dist/module/MaestroKit
+Import-Module ./dist/module/MaestroKit
+Install-Maestro -Target D:\repos\my-app -Locations .omp,.claude -Force
+Install-Maestro -Scope User       # or install once into your profile
+Test-MaestroBundle                # validator passthrough
+```
+
+Same canonical scripts inside — zero logic duplication. Ideal for `-Scope User` installs on personal machines and for PSGallery publishing later.
 
 ### Idempotent re-runs and upgrades
 

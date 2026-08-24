@@ -2,6 +2,20 @@
 
 All notable changes to the Maestro bundle. Installed repos record the version as `MAESTRO_VERSION`; check here before upgrading.
 
+## 0.6.0 — 2026-08-23
+
+The bundle ships as an official PowerShell module: **MaestroKit**.
+
+### Added
+
+- `tools/build-module.ps1` assembles `dist/module/MaestroKit` — payload plus thin wrappers (`Install-Maestro`, `Test-MaestroBundle`, `Invoke-MaestroSmokeInstall`) over the canonical scripts; zero logic duplication
+- `Install-Maestro` wrapper passes `-Scope Project|User` through, so user-scope installs work straight from the module
+- CI: build-module stage (GitLab) and module-build job (GitHub Actions mirror)
+
+### Notes
+
+- Name chosen to reflect full contents (skills + agents + reference contracts + tooling); plain `Maestro` is squatted on PSGallery, `MaestroSkills` undersold the scope. Gallery publishing deferred until external demand — artifact is release-ready either way.
+
 ## 0.5.1 — 2026-08-23
 
 ### Fixed
