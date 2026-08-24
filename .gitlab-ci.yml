@@ -1,0 +1,27 @@
+stages:
+  - test
+
+default:
+  image: mcr.microsoft.com/powershell:7.4-ubuntu-22.04
+  before_script:
+    - pwsh -NoProfile -Command "Set-PSDebug -Trace 0"
+
+validate:
+  stage: test
+  script:
+    - pwsh -NoProfile -File tools/validate-bundle.ps1
+
+smoke-install:
+  stage: test
+  script:
+    - pwsh -NoProfile -File tools/smoke-install.ps1
+
+build-module:
+  stage: test
+  script:
+    - pwsh -NoProfile -File tools/build-module.ps1
+    - pwsh -NoProfile -Command "Import-Module ./dist/module/Maestro; (Get-Command Install-Maestro) -ne \$null"
+  artifacts:
+    paths:
+      - dist/module/Maestro/
+    expire_in: 1 week

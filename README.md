@@ -2,6 +2,8 @@
 
 A bundle of [Agent Skills](https://agentskills.io) for AI-assisted software development. Maestro gives AI coding agents (Oh My Pi, OpenCode, Claude Code, and other Agent-Skills-compatible harnesses) a structured workflow for planning, implementing, testing, and documenting features — built to spend premium models on design reasoning and cheap ones on volume work — without locking you to a single platform.
 
+[![pipeline status](https://gitlab.com/arthur_b_machado/maestro/badges/main/pipeline.svg)](https://gitlab.com/arthur_b_machado/maestro/-/commits/main)
+
 ## What's in the box
 
 ```
@@ -95,6 +97,19 @@ Re-running the installer overwrites in place. To wipe stale folders before copyi
 The installer records the bundle version in each target's `MAESTRO_VERSION` file and ships `MAESTRO_CHANGELOG.md` alongside it, so upgrade auditing is self-contained in the consuming repo.
 
 Non-interactive hosts (CI) must pass `-Force`; without it the installer fails closed rather than hanging on the overwrite prompt.
+
+### PowerShell module
+
+Build a distributable module from the current sources:
+
+```powershell
+pwsh ./tools/build-module.ps1     # → dist/module/Maestro (v-stamped, payload included)
+Import-Module ./dist/module/Maestro
+Install-Maestro -Target D:\Personal\my-app -Locations .omp,.claude -Force
+Test-MaestroBundle                # validator passthrough
+```
+
+The module wraps the same canonical scripts — zero logic duplication. Publishing to the PowerShell Gallery is intentionally deferred until there is external demand; `dist/` is a build artifact and gitignored.
 
 ### Validate the bundle before installing
 

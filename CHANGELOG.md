@@ -2,6 +2,16 @@
 
 All notable changes to the Maestro bundle. Installed repos record the version as `MAESTRO_VERSION`; check here before upgrading.
 
+## 0.4.0 — 2026-08-23
+
+Public-release readiness.
+
+### Added
+
+- PowerShell module packaging: `tools/build-module.ps1` assembles `dist/module/Maestro` (payload + thin `Install-Maestro` / `Test-MaestroBundle` / `Invoke-MaestroSmokeInstall` wrappers over the canonical scripts; zero logic duplication). Gallery publishing deferred until external demand.
+- `.gitlab-ci.yml`: validate / smoke-install / build-module stages with module artifact upload
+- README: CI pipeline badge
+
 ## 0.3.5 — 2026-08-23
 
 Documentation restructure for first public release.
