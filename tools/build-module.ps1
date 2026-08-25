@@ -64,16 +64,18 @@ $psm1 = @'
 
 $script:BundleRoot = $PSScriptRoot
 
+<#
+.SYNOPSIS
+Installs the Maestro bundle (skills, references, agents) into a target repo
+(-Scope Project, the default) or into your profile (-Scope User).
+.NOTES
+Audience: everyone - primary deployment entry point.
+.EXAMPLE
+Install-Maestro -Target D:\repos\my-app -Locations .omp,.claude -Force
+.EXAMPLE
+Install-Maestro -Scope User -Locations .omp,.claude -Force
+#>
 function Install-Maestro {
-    <#
-    .SYNOPSIS
-    Installs the Maestro bundle (skills, references, agents) into a target repo
-    (-Scope Project, the default) or into your profile (-Scope User).
-    .EXAMPLE
-    Install-Maestro -Target D:\repos\my-app -Locations .omp,.claude -Force
-    .EXAMPLE
-    Install-Maestro -Scope User -Locations .omp,.claude -Force
-    #>
     [CmdletBinding()]
     param(
         [string]$Target = (Get-Location).Path,
@@ -87,11 +89,13 @@ function Install-Maestro {
     & (Join-Path $script:BundleRoot "Install-Maestro.ps1") @invokeArgs
 }
 
+<#
+.SYNOPSIS
+Runs the source-bundle consistency validator against a checkout of the Maestro repo.
+.NOTES
+Audience: maintainers + end users running post-install self-checks.
+#>
 function Test-MaestroKit {
-    <#
-    .SYNOPSIS
-    Runs the source-bundle consistency validator against a checkout of the Maestro repo.
-    #>
     [CmdletBinding()]
     param(
         [string]$Root,
@@ -103,11 +107,13 @@ function Test-MaestroKit {
     & $validator @invokeArgs
 }
 
+<#
+.SYNOPSIS
+End-to-end install gate: installs to a temp dir and asserts structure, substitution, version stamp.
+.NOTES
+Audience: maintainers + end users verifying their installed copy.
+#>
 function Invoke-MaestroSmokeInstall {
-    <#
-    .SYNOPSIS
-    End-to-end install gate: installs to a temp dir and asserts structure, substitution, version stamp.
-    #>
     [CmdletBinding()]
     param(
         [string]$Root,
