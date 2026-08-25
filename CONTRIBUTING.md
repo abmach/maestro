@@ -58,6 +58,20 @@ Version guard enforced: manifest must equal `VERSION`. Each publish requires a b
    ```
    Mirrors propagate branches and tags automatically.
 
+## Supporter recognition sync
+
+`SUPPORTERS.md` can be rebuilt from live GitHub Sponsors data:
+
+```powershell
+$env:MAESTRO_GH_TOKEN = '<PAT with read:user>'
+./tools/sync-supporters.ps1 -DryRun   # preview
+./tools/sync-supporters.ps1           # write; review diff, then commit & push via GitLab
+```
+
+Tier mapping: >= $25 Conductor's Circle, >= $10 Encore, else Applause. Cancelled sponsors drop out automatically. Conductor's Circle *Founding* permanence is honored by re-adding manually if desired (cancellations are reported by the API - the script does not silently forget founders).
+
+Or per-backer: `./tools/add-supporter.ps1 -Name X -Tier Encore`.
+
 ## Repository policy
 
 Development happens on GitLab; the GitHub repository is an automated read-only mirror — issues and PRs belong on GitLab.

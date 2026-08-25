@@ -43,7 +43,9 @@ maestro/
 └── tools/
     ├── validate-bundle.ps1  # Dev-time validator: frontmatter, links, contract consistency
 │   ├── smoke-install.ps1    # End-to-end installer gate (temp dir, substitution, version stamp)
-│   └── build-module.ps1     # Assembles the distributable MaestroKit module
+│   ├── build-module.ps1     # Assembles the distributable MaestroKit module
+│   ├── add-supporter.ps1    # Batch-add a supporter to SUPPORTERS.md
+│   └── sync-supporters.ps1  # Rebuild SUPPORTERS.md from live GitHub Sponsors data
 ```
 
 **10 skills** + **2 agents** + **13 reference specs** + dev-time tooling (bundle validator, install smoke test, MaestroKit module builder).

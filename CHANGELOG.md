@@ -2,6 +2,13 @@
 
 All notable changes to the Maestro bundle. Installed repos record the version as `MAESTRO_VERSION`; check here before upgrading.
 
+## 0.9.1 — 2026-08-23
+
+### Added
+
+- `tools/sync-supporters.ps1`: rebuilds `SUPPORTERS.md` tier sections from live GitHub Sponsors GraphQL data (tier thresholds $25/$10; cancellations drop out automatically; privacy-private sponsors never appear). `-DryRun` mode included.
+
+## 0.9.0 — 2026-08-23
 ## 0.9.0 — 2026-08-23
 
 ### Added
