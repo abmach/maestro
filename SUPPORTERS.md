@@ -7,7 +7,7 @@ Want your name here? See the ❤️ Sponsor button on the [repository](https://g
 
 _Founding supporters — this place is kept forever, even beyond the subscription._
 
-- [@oldfan](https://github.com/oldfan) - $25/mo since 2026-08 (founding)
+_No entries yet._
 
 ## 🎭 Encore
 
