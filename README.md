@@ -2,7 +2,7 @@
 
 A bundle of [Agent Skills](https://agentskills.io) for AI-assisted software development. Maestro gives AI coding agents (Oh My Pi, OpenCode, Claude Code, and other Agent-Skills-compatible harnesses) a structured workflow for planning, implementing, testing, and documenting features — built to spend premium models on design reasoning and cheap ones on volume work — without locking you to a single platform.
 
-[![pipeline status](https://gitlab.com/arthur_b_machado/maestro/badges/main/pipeline.svg)](https://gitlab.com/arthur_b_machado/maestro/-/commits/main)
+[![pipeline status](https://gitlab.com/abmach/maestro/badges/main/pipeline.svg)](https://gitlab.com/abmach/maestro/-/commits/main)
 
 ## What's in the box
 
@@ -57,7 +57,7 @@ maestro/
 ### Recommended: clone and run
 
 ```bash
-git clone https://gitlab.com/arthur_b_machado/maestro.git
+git clone https://gitlab.com/abmach/maestro.git
 cd maestro
 .\Install-Maestro.ps1 -Target D:\repos\my-app -Locations .omp,.claude -Force
 ```
@@ -126,7 +126,7 @@ The installer copies `skills/`, `references/`, and `agents/` to each target loca
 Fallback (same bootstrap, served from the GitLab origin):
 
 ```powershell
-& ([scriptblock]::Create((irm https://gitlab.com/arthur_b_machado/maestro/-/raw/main/tools/install-from-web.ps1))) `
+& ([scriptblock]::Create((irm https://gitlab.com/abmach/maestro/-/raw/main/tools/install-from-web.ps1))) `
     -Target D:\repos\my-app -Locations .omp,.claude -Force
 ```
 

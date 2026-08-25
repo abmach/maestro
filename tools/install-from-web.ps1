@@ -15,7 +15,7 @@ pass parameters):
       -Target D:\repos\my-app -Locations .omp,.claude -Force
 
 The same bootstrap is also served from GitLab:
-https://gitlab.com/arthur_b_machado/maestro/-/raw/main/tools/install-from-web.ps1
+https://gitlab.com/abmach/maestro/-/raw/main/tools/install-from-web.ps1
 
 Pin an immutable release instead of the moving main branch:
 
@@ -31,7 +31,7 @@ param(
     [string]$Version,                       # e.g. v0.4.0-public; omit for main branch
     [switch]$Clean,
     [switch]$Force,
-    [string]$RepoBase = 'https://gitlab.com/arthur_b_machado/maestro',
+    [string]$RepoBase = 'https://gitlab.com/abmach/maestro',
     [string]$ArchivePath                    # offline/testing override: use a local archive
 )
 

@@ -49,8 +49,8 @@ $manifest = @"
     PrivateData          = @{
         PSData = @{
             Tags         = @('AgentSkills', 'AI', 'ClaudeCode', 'OpenCode', 'OhMyPi', 'Workflow')
-            LicenseUri   = 'https://gitlab.com/arthur_b_machado/maestro/-/blob/main/LICENSE'
-            ProjectUri   = 'https://gitlab.com/arthur_b_machado/maestro'
+            LicenseUri   = 'https://gitlab.com/abmach/maestro/-/blob/main/LICENSE'
+            ProjectUri   = 'https://gitlab.com/abmach/maestro'
             ReleaseNotes = '$ReleaseNotesFlat'
         }
     }
