@@ -3,6 +3,7 @@
 A bundle of [Agent Skills](https://agentskills.io) for AI-assisted software development. Maestro gives AI coding agents (Oh My Pi, OpenCode, Claude Code, and other Agent-Skills-compatible harnesses) a structured workflow for planning, implementing, testing, and documenting features — built to spend premium models on design reasoning and cheap ones on volume work — without locking you to a single platform.
 
 [![pipeline status](https://gitlab.com/abmach/maestro/badges/main/pipeline.svg)](https://gitlab.com/abmach/maestro/-/commits/main)
+[![Supporters](https://img.shields.io/badge/Backers-SUPPORTERS.md-8a3ab5)](SUPPORTERS.md)
 
 ## What's in the box
 

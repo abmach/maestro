@@ -2,6 +2,13 @@
 
 All notable changes to the Maestro bundle. Installed repos record the version as `MAESTRO_VERSION`; check here before upgrading.
 
+## 0.9.0 — 2026-08-23
+
+### Added
+
+- Supporter recognition system: `SUPPORTERS.md` hall of fame (single source of truth, tiered 💎🎭👏 sections with permanent Founding rule) + README backers badge/link + `tools/add-supporter.ps1` batch helper (DryRun supported)
+
+## 0.8.2
 ## 0.8.2 — 2026-08-23
 
 ### Added
