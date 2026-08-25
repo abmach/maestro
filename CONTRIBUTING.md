@@ -40,7 +40,8 @@ pwsh ./tools/build-module.ps1          # -> dist/module/MaestroKit (gitignored a
 Assembles payload + thin wrapper functions over the canonical scripts. Publish to the PowerShell Gallery once an account/API key exists:
 
 ```powershell
-./tools/publish-gallery.ps1 -ApiKey <key>
+$env:MAESTRO_PSGALLERY_KEY = '<key>'   # once per machine
+./tools/publish-gallery.ps1
 ```
 Version guard enforced: manifest must equal `VERSION`. Each publish requires a bumped `ModuleVersion`.
 
