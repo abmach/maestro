@@ -2,6 +2,13 @@
 
 All notable changes to the Maestro bundle. Installed repos record the version as `MAESTRO_VERSION`; check here before upgrading.
 
+## 0.9.2 — 2026-08-23
+
+### Changed
+
+- README: publishing status updated (module is live); CONTRIBUTING documents supporter-sync tooling
+
+## 0.9.1
 ## 0.9.1 — 2026-08-23
 
 ### Added
