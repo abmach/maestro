@@ -49,9 +49,11 @@ For how references relate to each other, see `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/r
    - Package manager, runtime, backend framework, frontend framework, UI library
    - Testing: unit framework, E2E framework, mocking libraries, coverage tools, additional testing tools
    - Database, ORM/database tools, build tools, CI/CD
-3. **Cross-check Tech Preferences:** if a detected technology isn't in `Tech Preferences`, note it as a project deviation in the fingerprint's "Additional Context" section — the project's existing stack is authoritative; do NOT change the spec
+3. **Cross-check Tech Preferences:** if a detected technology isn't in `Tech Preferences`, note it as a project deviation in the fingerprint's "Additional Context" section — the project's existing stack is authoritative; do NOT change the spec.
+   - **Seed Stack Overrides:** wherever the detected stack diverges from built-in defaults (different framework, DB, runner…), propose a category-level entry in `{{WORKSPACE}}/knowledge/tech-preferences.md` — confirmed through the same batch gates as above ([Yes/Edit/No/Skip]). Format and precedence: *Project Overrides* in `Tech Preferences`. No divergence -> create the file containing only the documented empty-state note.
 4. **Write Fingerprint** at `{{WORKSPACE}}/knowledge/repo-fingerprint.md` following the Repo Fingerprint spec exactly (structure, section headers, version specificity)
 5. **Report** to the user: a one-line stack summary of what was detected
+   - **Stack Overrides:** N categories overridden (or "none — built-in defaults apply everywhere")
 
 ### Phase 2: Domain Language Discovery (Contexts)
 

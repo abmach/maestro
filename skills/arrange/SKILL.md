@@ -47,7 +47,7 @@ For how references relate to each other, see `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/r
 
 1. **Check Existing Tests:** Before creating new test files, check if test files already exist in `{{WORKSPACE}}/tests/` for this `Plan`. If they do, update them to match the current `Plan` specifications rather than creating new files
 2. **Test Type Determination:** Based on the `Plan` specifications, determine the types of integration and E2E tests needed
-3. **Framework Selection:** Consult `Testing Tech Preferences` to select appropriate testing frameworks for integration and E2E testing
+3. **Framework Selection:** Apply testing-category overrides from `{{WORKSPACE}}/knowledge/tech-preferences.md` first (they replace matching defaults), then consult `Testing Tech Preferences` to select appropriate testing frameworks for integration and E2E testing
 4. **Test Design:** Apply the test design cycle based on `Plan` specifications and selected frameworks:
    - **Test Structure:** Create E2E test files flat in the root `tests/` directory (e.g., `tests/auth.spec.ts`) — do NOT nest in subdirectories. Unit tests are co-located with source code by the `play` agent
    - **Visual Regression:** Include `expect(page).toHaveScreenshot('{name}.png')` calls in E2E tests for each user flow and viewport specified in the `Plan`. Baselines capture to `tests/screenshots/baselines/` via the framework's snapshot-path configuration; runtime artifacts (actuals, diffs) go to `test-results/`

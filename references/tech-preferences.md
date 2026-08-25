@@ -13,6 +13,20 @@
 
 Commercial tools should only be considered when they provide essential functionality not available in free alternatives.
 
+## Project Overrides
+
+Projects declare their actual stack in `{{WORKSPACE}}/knowledge/tech-preferences.md` (seeded by `/prelude` from detected deviations; human-editable afterwards). Precedence, strictest last:
+
+1. Built-in defaults in this file
+2. Category-level entries in the project overrides file
+3. ADRs and recorded decisions — narrative rationale; on conflict, fix the overrides file, not the ADR
+
+Rules:
+
+- Overrides are **category-level** (e.g., *Backend Framework*, *Testing/E2E*, *Database*) — never key/value micro-edits
+- Categories absent from the overrides file fall back to this file's defaults
+- An absent or empty file means: built-in defaults apply everywhere
+
 ## File Location and Naming
 
 - **Directory:** None. This file is just for reference, it's not part of the workspace.

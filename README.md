@@ -272,7 +272,8 @@ your-repo/
 ├── knowledge/                # Domain language, ADRs, repo fingerprint
 │   ├── contexts.md           # Ubiquitous language glossary
 │   ├── adrs/                 # Architectural Decision Records
-│   └── repo-fingerprint.md   # Tech stack snapshot
+│   ├── repo-fingerprint.md   # Tech stack snapshot
+│   └── tech-preferences.md   # Stack overrides (category-level)
 ├── tests/                    # E2E test specs (flat, no subdirectories)
 ├── tests/screenshots/baselines/  # Visual regression baselines (committed)
 ├── test-results/             # Test output: actuals, diffs, logs (gitignored)

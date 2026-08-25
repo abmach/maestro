@@ -144,7 +144,7 @@ Do not spawn `play` for visual regressions. `play` implements new milestones; vi
 1. **Update plan status:** Update the `{{WORKSPACE}}/plans/index.md` status to `✅ Done`
    - If `Docs Affected` is `true`: append `⏳` after the status emoji (e.g., `✅⏳`) to indicate documentation is pending
    - If `Docs Affected` is `false`: no docs marker (e.g., `✅`)
-2. **Update Repo Fingerprint:** If the `Plan` introduced new technologies now in the codebase, update the working file `{{WORKSPACE}}/knowledge/repo-fingerprint.md` following its spec
+2. **Update Repo Fingerprint:** If the `Plan` introduced new technologies now in the codebase, update the working file `{{WORKSPACE}}/knowledge/repo-fingerprint.md` following its spec; when a newly adopted technology contradicts a built-in default, also record a category-level entry in `{{WORKSPACE}}/knowledge/tech-preferences.md` (*Project Overrides*)
 3. **User Gate:** If `Docs Affected` is `true`, ask the user: "Documentation update is needed. Run the `score` skill now? [Yes / No]"
    - If "Yes": Invoke the `score` skill with the `Plan` ID/code (this will update `⏳` → `📝` in the index)
    - If "No": Inform the user they can run `/score {plan-id}` later, or run `/score` without arguments to process all pending finished plans at once

@@ -21,6 +21,8 @@ Commercial tools should only be considered when they provide essential functiona
 
 Use web search to confirm current versions **only when selecting a NEW testing technology** to introduce to the project — i.e., when no `Repo Fingerprint` exists yet, or when introducing a testing framework/library not already recorded in the existing `Repo Fingerprint`. The `Repo Fingerprint`'s recorded versions are authoritative for the existing stack; do not re-search them.
 
+> Project stacks may override anything in this file via `{{WORKSPACE}}/knowledge/tech-preferences.md` (see *Project Overrides* in `tech-preferences.md`).
+
 ## Artifact Path Contract
 
 Binding locations (see also `conventions.md`):

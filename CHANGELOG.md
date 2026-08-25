@@ -2,7 +2,14 @@
 
 All notable changes to the Maestro bundle. Installed repos record the version as `MAESTRO_VERSION`; check here before upgrading.
 
-## 0.7.0 — 2026-08-23
+## 0.8.0 — 2026-08-23
+
+### Added
+
+- **Stack declarations**: projects can override built-in technology defaults category-by-category via a new working file, `knowledge/tech-preferences.md` (seeded by `/prelude` from detected deviations, human-editable, committed with the repo). Precedence chain documented everywhere relevant: built-in defaults < stack overrides < ADRs.
+- Consumers wired: compose/arrange/elaborate read declared overrides before built-in preferences; orchestrate records new-technology overrides at finalization; conventions/references-map/README updated.
+
+## 0.7.0 — 2026-08-23 — 2026-08-23
 
 ### Added
 

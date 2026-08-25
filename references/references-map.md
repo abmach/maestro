@@ -36,6 +36,7 @@ These are the actual working files created/maintained in the workspace, followin
 | ADRs | `{{WORKSPACE}}/knowledge/adrs/` | `ADRs` |
 | Instruments | `{{WORKSPACE}}/knowledge/instruments.md` | format defined by the `instruments` skill |
 | Repo Fingerprint | `{{WORKSPACE}}/knowledge/repo-fingerprint.md` | `Repo Fingerprint` |
+| Stack Overrides | `{{WORKSPACE}}/knowledge/tech-preferences.md` | format defined by *Project Overrides* in `Tech Preferences` |
 
 ## Relationship Map
 
@@ -48,5 +49,6 @@ How references relate to each other — consult these when working on a specific
 - **Testing Principles** references: `Design Principles` (testable interfaces), `Repo Fingerprint` (current testing stack), `Tech Preferences` (testing tools), `Contexts` (domain language in tests)
 - **Design Principles** references: `Repo Fingerprint` (current stack), `Tech Preferences` (new tech), `ADRs` (documented decisions), `Contexts` (domain language)
 - **Testing Tech Preferences** references: `Testing Principles` (methodology), `Tech Preferences` (general tech), `Repo Fingerprint` (current testing stack)
-- **Tech Preferences** references: `Testing Tech Preferences` (testing-specific), `Repo Fingerprint` (current stack)
+- **Tech Preferences** references: `Testing Tech Preferences` (testing-specific), `Repo Fingerprint` (current stack), *Stack Overrides* via the project's `knowledge/tech-preferences.md`
+- **Conventions** references: every other reference — it binds their shared vocabulary, statuses, and precedence rules
 - **Conventions** references: everything above — it binds their shared vocabulary, retry semantics, artifact paths, and ownership rules; every skill and agent reads it before its first write

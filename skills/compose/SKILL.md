@@ -26,6 +26,7 @@ Read reference specs on-demand when the workflow requires them — do NOT read a
 
 ### On-demand (read only when needed)
 - **`Repo Fingerprint`:** Read `{{WORKSPACE}}/knowledge/repo-fingerprint.md` (working file) — if it exists, to understand current tech stack
+- **Stack Overrides (working file):** Read `{{WORKSPACE}}/knowledge/tech-preferences.md` if present — declared categories replace built-in preference defaults while shaping the Plan
 - **`Contexts`:** Read `{{WORKSPACE}}/knowledge/contexts.md` (working file) — if it exists, to understand domain language.
 - **`ADRs`:** Read `{{WORKSPACE}}/knowledge/adrs/` (working files) — if they exist, to review relevant architectural decisions.
 - **`Issue`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/issue.md` — only if `{{WORKSPACE}}/issues/index.md` exists, to identify relevant `Issue`s.

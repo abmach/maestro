@@ -27,6 +27,7 @@ Read reference specs on-demand when the workflow requires them — do NOT read a
 ### On-demand (read only when needed)
 - **Contexts (working file):** Read `{{WORKSPACE}}/knowledge/contexts.md` when checking domain language for elaborations — the spec at `{{MAESTRO_CONFIG}}/references/contexts.md` defines the format only
 - **Repo Fingerprint (working file):** Read `{{WORKSPACE}}/knowledge/repo-fingerprint.md` when checking the tech stack
+- **Stack Overrides (working file):** Read `{{WORKSPACE}}/knowledge/tech-preferences.md` if present — declared categories steer which technologies guidance targets
 - **Instruments (working file):** Read `{{WORKSPACE}}/knowledge/instruments.md` — if it exists, target the `composition` section's model as the quality bar and keep guidance executable by the `implementation` section's model (that is the whole point of elaboration)
 - **`Testing Principles`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/testing-principles.md` — when elaborating test strategy
 - **`Design Principles`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/design-principles.md` — when elaborating code patterns
