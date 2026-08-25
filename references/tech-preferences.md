@@ -27,6 +27,36 @@ Rules:
 - Categories absent from the overrides file fall back to this file's defaults
 - An absent or empty file means: built-in defaults apply everywhere
 
+### Overrides file format
+
+Category headings mirror this file's sections; one short declaration each. Minimal example:
+
+```markdown
+# Stack Overrides
+
+Overrides replace matching built-in defaults category-by-category.
+Seeded by /prelude on 2026-08-23; edit freely — committed with the repo.
+
+## Backend Framework
+
+Remix on Node 22 (team mandate — see ADR-0007).
+
+## Testing/E2E
+
+Cypress instead of Playwright; existing suite predates Maestro.
+
+## Database
+
+PostgreSQL 16 for everything; SQLite only inside unit tests.
+```
+
+Empty state (no divergences detected) is the same file with only the header, intro line and:
+
+```markdown
+No overrides yet — built-in defaults apply everywhere.
+/prelude will re-offer seeding whenever a non-default technology appears.
+```
+
 ## File Location and Naming
 
 - **Directory:** None. This file is just for reference, it's not part of the workspace.

@@ -2,6 +2,12 @@
 
 All notable changes to the Maestro bundle. Installed repos record the version as `MAESTRO_VERSION`; check here before upgrading.
 
+## 0.8.1 — 2026-08-23
+
+### Added
+
+- *Project Overrides* now documents the overrides-file format with a minimal example (category headings, seeded-by line) and the explicit empty state.
+
 ## 0.8.0 — 2026-08-23
 
 ### Added
