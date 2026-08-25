@@ -153,7 +153,7 @@ Install-Maestro -Locations .omp,.claude,.opencode -Force
 
 Prefer nothing persisted on disk? `Save-Module MaestroKit -Path $env:TEMP\mk` fetches the same payload without registering it — `Import-Module` from that path for one-off use, delete when done.
 
-Publishing status: first Gallery release is the next step — see CONTRIBUTING.md.
+MaestroKit is published on the [PowerShell Gallery](https://www.powershellgallery.com/packages/MaestroKit).
 
 ### Idempotent re-runs and upgrades
 
