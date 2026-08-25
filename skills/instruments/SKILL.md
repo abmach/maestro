@@ -56,7 +56,7 @@ Sections are fixed; do not invent new ones. If a workflow stage seems unrepresen
 For each requested section (all sections if no argument):
 
 1. Present the section, what plays in it, and its current assignment (`session default` if unset)
-2. Ask: "Which model should play [section]? Give a model selector your harness understands (e.g., `anthropic/claude-opus-4-6`, `openai/gpt-5.4:high`), an Oh My Pi role alias (`@fast`, `@good`, or a custom role), or 'skip' to leave as session default."
+2. Ask: "Which model should play [section]? Give a model selector your harness understands (e.g., `anthropic/claude-opus-4-6`, `openai/gpt-5.4:high`), a model selector your harness understands, or 'skip' to leave as session default."
 3. Record exactly what the user supplies. Never guess, complete, or "fix" a model name — an invalid selector fails at spawn time and that is the user's call to make.
 
 ### Phase 2: Write Assignments
@@ -90,7 +90,7 @@ don't re-derive them.}
 
 Report how each detected harness applies the assignments:
 
-- **Oh My Pi (`.omp/` present):** Subagent models route through settings — set `task.agentModelOverrides` (e.g., `play: <implementation model>`, `tune: <debugging model>`) in project `.omp/config.yml` or via `/agents`; or define role aliases in `modelRoles` and reference them as `model: "@role"` in agent frontmatter. Skills themselves run on the session model: switch the session model to match the section before invoking it, or rely on orchestrate's spawn hints.
+- **Oh My Pi (`.omp/` present):** Subagent models route through settings — set `task.agentModelOverrides` (e.g., `play: <implementation model>`, `tune: <debugging model>`) in project `.omp/config.yml`, or define named roles in `modelRoles` and reference them as `model: "@role"` in agent frontmatter. Skills themselves run on the session model. Skills themselves run on the session model: switch the session model to match the section before invoking it, or rely on orchestrate's spawn hints.
 - **Claude Code (`.claude/` present):** Add a `model:` field to the frontmatter of installed `.claude/agents/play.md` (implementation) and `tune.md` (debugging). Skills run on the session model.
 - **OpenCode (`.opencode/` or `.agents/` present):** Set the `model:` field in the agent markdown frontmatter. Skills run on the session model.
 
