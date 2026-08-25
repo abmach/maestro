@@ -19,7 +19,7 @@ https://gitlab.com/abmach/maestro/-/raw/main/tools/install-from-web.ps1
 
 Pin an immutable release instead of the moving main branch:
 
-  ... -Version v0.4.0-public ...
+  ... -Version v0.8.1 ...
 
 Remote code disclosure: this downloads and EXECUTES code from the given URL.
 Review the source or pin -Version before running blind.
@@ -28,7 +28,7 @@ Review the source or pin -Version before running blind.
 param(
     [string]$Target = (Get-Location).Path,
     [string[]]$Locations = @(".agents"),
-    [string]$Version,                       # e.g. v0.4.0-public; omit for main branch
+    [string]$Version,                       # e.g. v0.8.1; omit for main branch
     [switch]$Clean,
     [switch]$Force,
     [string]$RepoBase = 'https://gitlab.com/abmach/maestro',

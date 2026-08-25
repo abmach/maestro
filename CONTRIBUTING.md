@@ -51,7 +51,12 @@ Version guard enforced: manifest must equal `VERSION`. Each publish requires a b
 2. `tools/validate-bundle.ps1` → green
 3. `tools/smoke-install.ps1` → green
 4. Sign scripts (once certificate exists)
-5. Commit, tag `v<version>`, push (mirrors propagate automatically)
+5. Create an annotated tag at the release commit:
+   ```powershell
+   git tag -a v<version> -m "<changelog highlights>"
+   git push origin main v<version>
+   ```
+   Mirrors propagate branches and tags automatically.
 
 ## Repository policy
 

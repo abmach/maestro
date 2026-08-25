@@ -130,7 +130,7 @@ Fallback (same bootstrap, served from the GitLab origin):
     -Target D:\repos\my-app -Locations .omp,.claude -Force
 ```
 
-Downloads the repo archive to a temp dir, runs the bundled installer, cleans up after itself. `-Version v0.4.0-public` pins **what gets installed** to an immutable tag (the downloader itself always comes from `main`) — this executes remote code, so review or pin. The repo must be publicly readable; private/bot-challenged downloads fail with guidance instead of executing anything.
+Downloads the repo archive to a temp dir, runs the bundled installer, cleans up after itself. `-Version v0.8.1` pins **what gets installed** to an immutable tag (the downloader itself always comes from `main`) — this executes remote code, so review or pin. The repo must be publicly readable; private/bot-challenged downloads fail with guidance instead of executing anything.
 
 ### PowerShell Gallery — MaestroKit
 

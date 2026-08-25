@@ -2,6 +2,14 @@
 
 All notable changes to the Maestro bundle. Installed repos record the version as `MAESTRO_VERSION`; check here before upgrading.
 
+## 0.8.2 — 2026-08-23
+
+### Added
+
+- Release tagging convention adopted: one annotated tag per CHANGELOG entry (`git tag -a v<version>`), pushed with the branch; CONTRIBUTING release checklist documents the flow.
+- README pinning example refreshed: `-Version v0.8.1` (was pointing at the pre-scope, pre-MaestroKit `v0.4.0-public`).
+
+## 0.8.1
 ## 0.8.1 — 2026-08-23
 
 ### Added
