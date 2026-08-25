@@ -2,6 +2,12 @@
 
 All notable changes to the Maestro bundle. Installed repos record the version as `MAESTRO_VERSION`; check here before upgrading.
 
+## 0.9.3 — 2026-08-23
+
+### Fixed
+
+- instruments skill: removed phantom `@fast` / `@good` role alias references — Oh My Pi does not pre-configure these; users define custom roles via `modelRoles`
+
 ## 0.9.2 — 2026-08-23
 
 ### Changed
