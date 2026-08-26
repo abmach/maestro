@@ -56,7 +56,7 @@ Sections are fixed; do not invent new ones. If a workflow stage seems unrepresen
 For each requested section (all sections if no argument):
 
 1. Present the section, what plays in it, and its current assignment (`session default` if unset)
-2. Ask: "Which model should play [section]? Give a model selector your harness understands (e.g., `anthropic/claude-opus-4-6`, `openai/gpt-5.4:high`), a model selector your harness understands, or 'skip' to leave as session default."
+2. Ask: "Which model should play [section]? Give a model selector your harness understands (e.g., `anthropic/claude-opus-4-6`, `openai/gpt-5.4:high`), an Oh My Pi built-in role (`@smol`, `@slow`, `@default`) if you use Oh My Pi, or 'skip' to leave as session default."
 3. Record exactly what the user supplies. Never guess, complete, or "fix" a model name — an invalid selector fails at spawn time and that is the user's call to make.
 
 ### Phase 2: Write Assignments
