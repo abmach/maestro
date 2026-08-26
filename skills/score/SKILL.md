@@ -54,8 +54,9 @@ For how references relate to each other, see `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/r
    - API documentation if endpoints changed
    - `{{WORKSPACE}}/README.md` if user-facing features changed
    - `{{WORKSPACE}}/CHANGELOG.md` if significant changes occurred
-5. **Handle Screenshots:** If the `Plan` includes visual changes, copy relevant screenshots into `{{WORKSPACE}}/docs/screenshots/` and embed them in the documentation. Source only paths reported by `audition`'s result summary (baselines under `tests/screenshots/baselines/`, runtime shots under `test-results/`) — never assume a location
-6. **Mark Documentation Updated:** Update the `Plan` file's `Docs Updated` field to `true`, and replace `⏳` with `📝` in the `Plans Index` (e.g., `✅⏳` → `✅📝`)
+5. **End-User Documentation:** Ask: "Does this feature need end-user documentation (rules, tutorial, guide)?" If yes, create or update files under `{{WORKSPACE}}/docs/` — written for the end user, not the developer. Internal refactors skip this naturally.
+6. **Handle Screenshots:** If the `Plan` includes visual changes, copy relevant screenshots into `{{WORKSPACE}}/docs/screenshots/` and embed them in the documentation. Source only paths reported by `audition`'s result summary (baselines under `tests/screenshots/baselines/`, runtime shots under `test-results/`) — never assume a location
+7. **Mark Documentation Updated:** Update the `Plan` file's `Docs Updated` field to `true`, and replace `⏳` with `📝` in the `Plans Index` (e.g., `✅⏳` → `✅📝`)
 
 ### Batch Mode
 
