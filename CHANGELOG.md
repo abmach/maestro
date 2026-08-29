@@ -2,6 +2,12 @@
 
 All notable changes to the Maestro bundle. Installed repos record the version as `MAESTRO_VERSION`; check here before upgrading.
 
+## 0.9.4 — 2026-08-29
+
+### Added
+
+- score skill: end-user documentation checkpoint — asks whether the feature needs player-facing docs (rules, tutorial, guide) and writes to `docs/` when applicable
+
 ## 0.9.3 — 2026-08-23
 
 ### Fixed
