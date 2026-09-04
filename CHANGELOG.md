@@ -2,6 +2,17 @@
 
 All notable changes to the Maestro bundle. Installed repos record the version as `MAESTRO_VERSION`; check here before upgrading.
 
+## 0.9.5 — 2026-09-04
+
+### Added
+
+- Plan spec: per-milestone **Why & Limits** block (`Why` / `Must not` / `If blocked`, 3 one-line bullets) — premium-model rationale and negative-scope constraints embedded in the milestone so cheaper executors read them at the point of work. Optional at compose; mandatory from `elaborate` on every milestone.
+- compose skill: adds `Why & Limits` where rationale is non-obvious or violation risk is visible; elaborate fills the rest.
+
+### Fixed
+
+- plan spec: elaboration format example milestone header now carries `Retries: 0` like every other header.
+
 ## 0.9.4 — 2026-08-29
 
 ### Added
