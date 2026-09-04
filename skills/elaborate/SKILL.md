@@ -76,7 +76,15 @@ For how references relate to each other, see `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/r
 
 ### Phase 3: Elaboration Generation
 
-For each milestone identified as needing elaboration, add:
+For **every** milestone — even ones needing no other elaboration — ensure a **`Why & Limits`** block exists (add it when missing; refine it when thin). This is mandatory: it is your constraint-transmission channel to cheaper executors, and constraints embedded in the milestone get read where rules in reference docs may not. Content:
+
+- **Why:** one line — the design rationale a `play` agent cannot infer from the task text alone (what breaks elsewhere if done differently; which milestones consume this milestone's shape)
+- **Must not:** explicit negative scope — files/areas owned by other milestones or read-only zones (`knowledge/`), forbidden actions (committing, adding dependencies), each with a one-clause reason
+- **If blocked:** `return Failed with the blocker named — do not improvise outside scope`
+
+Hard limit: 3 bullets, one line each (`Plan` spec, `Why & Limits`).
+
+For each milestone identified as needing elaboration, additionally add:
 
 **Implementation Guidance:**
 - Detailed step-by-step breakdown
@@ -134,6 +142,10 @@ Add elaborations as nested bullet points under each milestone, preserving the ca
 
 ```markdown
 - ⏳ **Milestone 1 (ID: 1, Dependencies: [], Retries: 0)**: [Short Title] - Specific detailed task description.
+  **Why & Limits:**
+  - Why: [Rationale the executor cannot infer — what breaks if done differently]
+  - Must not: [Files owned by other milestones, forbidden actions — each with a one-clause reason]
+  - If blocked: Return Failed with the blocker named — do not improvise outside scope.
   **Implementation Guidance:**
   - Step 1: [Detailed step with file paths]
   - Step 2: [Detailed step with specific actions]
@@ -168,6 +180,7 @@ Before completing the elaboration:
 - [ ] `Plan` file successfully read and understood
 - [ ] Gaps identified in existing milestones
 - [ ] Knowledge gathered from documentation and codebase
+- [ ] `Why & Limits` present on **every** milestone (mandatory — even milestones that needed no other elaboration)
 - [ ] Elaborations follow project conventions and patterns
 - [ ] Code examples match existing codebase style
 - [ ] Domain language from the working `contexts.md` used correctly

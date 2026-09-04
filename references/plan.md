@@ -81,7 +81,7 @@ The DAG should only contain **development milestones** — things the `play` age
 Elaboration format example:
 
 ```markdown
-- ⏳ **Milestone 1 (ID: 1, Dependencies: [])**: [Short Title] - Specific detailed task description.
+- ⏳ **Milestone 1 (ID: 1, Dependencies: [], Retries: 0)**: [Short Title] - Specific detailed task description.
   **Implementation Guidance:**
   - Step 1: [Detailed step with file paths]
   - Step 2: [Detailed step with specific actions]
@@ -98,6 +98,16 @@ Elaboration format example:
   - Test cases: [specific cases]
   - Mock data: [specific mock requirements]
 ```
+
+### Why & Limits (per milestone)
+
+Each milestone MAY carry a **`Why & Limits:`** sub-block, nested under the milestone bullet at the same indent as elaboration blocks:
+
+- **Why:** one line — the design rationale the executing agent cannot infer from the task text alone (what breaks elsewhere if done differently; which other milestones consume this milestone's shape)
+- **Must not:** explicit negative scope — files/areas owned by other milestones or read-only zones (e.g. `knowledge/`), forbidden actions (committing, adding dependencies), each with a one-clause reason
+- **If blocked:** typically `return Failed with the blocker named — do not improvise outside scope`
+
+Hard limit: 3 bullets, one line each. Composers MAY add it where violation risk or rationale is non-obvious; `elaborate` MUST fill it in for every milestone. It is the premium model's constraint-transmission channel to cheaper executors: constraints embedded in the milestone outperform rules living only in reference docs the executor may not read. The block is orientation, not the execution authority (that stays `Development Specifications`); orchestrate and `play` read it but never edit it, and it survives status transitions unchanged.
 
 ### Status Management
 
@@ -143,6 +153,10 @@ Use the standard status legend for both the overall plan and individual mileston
 (✅ Done, 🔄 In progress, ⏳ Pending, ⚠️ Blocked, ❌ Failed)
 
 - ⏳ **Milestone 1 (ID: 1, Dependencies: [], Retries: 0)**: [Short Title] - Specific detailed task description.
+  **Why & Limits:** (optional at compose; mandatory after elaboration — see Writing Rules)
+  - Why: [Rationale the executor cannot infer — what breaks if done differently]
+  - Must not: [Files owned by other milestones, forbidden actions — each with a one-clause reason]
+  - If blocked: Return Failed with the blocker named — do not improvise outside scope.
 - ⏳ **Milestone 2 (ID: 2, Dependencies: [], Retries: 0)**: [Short Title] - Independent milestone (can run in parallel with Milestone 1).
 - ⏳ **Milestone 3 (ID: 3, Dependencies: [1, 2], Retries: 0)**: [Short Title] - Integration milestone (requires both Milestone 1 and 2 to be completed first).
 - ...
@@ -246,6 +260,10 @@ Implement JWT-based authentication with login, registration, and password reset 
 (✅ Done, 🔄 In progress, ⏳ Pending, ⚠️ Blocked, ❌ Failed)
 
 - ⏳ **Milestone 1 (ID: 1, Dependencies: [], Retries: 0)**: [Database Schema] - Create User table with email, password_hash, created_at, updated_at fields in `src/database/schema/users.sql`.
+  **Why & Limits:**
+  - Why: all later milestones read this schema — field names here are the shared contract for Milestones 2–5.
+  - Must not: do not touch `src/api/**` (Milestones 2–3 own it); no migration tooling (repo convention is plain SQL files).
+  - If blocked: return Failed with the blocker named — do not improvise outside scope.
 - ⏳ **Milestone 2 (ID: 2, Dependencies: [], Retries: 0)**: [Auth API Endpoints] - Implement POST /api/auth/register, POST /api/auth/login, POST /api/auth/logout in `src/api/routes/auth.ts`.
 - ⏳ **Milestone 3 (ID: 3, Dependencies: [1, 2], Retries: 0)**: [JWT Middleware] - Create authentication middleware in `src/middleware/auth.ts` that validates JWT tokens and attaches user to request.
 - ⏳ **Milestone 4 (ID: 4, Dependencies: [3], Retries: 0)**: [Frontend Login Form] - Build login component at `src/components/auth/LoginForm.tsx` with email/password fields and form validation.

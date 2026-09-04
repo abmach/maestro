@@ -52,7 +52,7 @@ For how references relate to each other, see `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/r
 6. **Analyze Workspace:** Examine current codebase structure, existing patterns, and technical constraints
 7. **Check Existing Plans:** Read `{{WORKSPACE}}/plans/index.md` to avoid conflicts with ongoing work — on this project's first plan, `plans/` and its index are created lazily here per the `Plan` spec
 8. **Check Existing Issues:** If `{{WORKSPACE}}/issues/index.md` exists, read it to identify relevant `Issue`s that the `Plan` might resolve or need to consider
-9. **Create Plan:** Generate a new `Plan` in `{{WORKSPACE}}/plans/` following the `Plan` specification
+9. **Create Plan:** Generate a new `Plan` in `{{WORKSPACE}}/plans/` following the `Plan` specification — add a per-milestone `Why & Limits` block where rationale is non-obvious or violation risk is visible (optional at compose; `elaborate` fills the rest)
 10. **Update Index:** Update the `{{WORKSPACE}}/plans/index.md` with the new `Plan` and status ⏳ Pending
 11. **Completion Note:** If domain language shifted while planning — new terms coined, existing ones sharpened — point the user at `/rehearse`; it captures glossary updates and ADR-worthy decisions in `knowledge/`. You suggest only: `knowledge/` stays read-only for you.
 
