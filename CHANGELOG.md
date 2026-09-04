@@ -2,6 +2,13 @@
 
 All notable changes to the Maestro bundle. Installed repos record the version as `MAESTRO_VERSION`; check here before upgrading.
 
+## 0.9.6 — 2026-09-04
+
+### Changed
+
+- README: explicit positioning against native plan mode (Claude Code / OpenCode / Oh My Pi), plus a troubleshooting note for plan-mode write failures and their default-on settings.
+- Docs-only release; no skill, spec, or agent changes.
+
 ## 0.9.5 — 2026-09-04
 
 ### Added

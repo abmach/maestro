@@ -206,6 +206,8 @@ Once when adopting Maestro into an existing project, run `/prelude` first to cre
 
 Around the pipeline: `/instruments` (once — model assignments), `/interlude` (anytime — status snapshot), `@play PLAN-001 M2` / `@tune BUG-004` (direct invocation when you don't need orchestration).
 
+> **If writes fail with permission or plan-mode errors:** all three harnesses ship a native plan mode that blocks the workspace writes `compose`, `rehearse`, and `orchestrate` depend on. It never activates on its own, but it can be *on by default* — Claude Code `permissions.defaultMode`, OpenCode's default agent, Oh My Pi's `plan.defaultOnStartup` — or toggled by a stray `Shift+Tab`/`Tab`/`Alt+Shift+P`. If Maestro skills fail on writes, check that first.
+
 ## Why Maestro
 
 Maestro is built for the current generation of strong models and capable harnesses, and it earns its keep through four value pillars, in order of durability:
@@ -216,6 +218,8 @@ Maestro is built for the current generation of strong models and capable harness
 4. **Durable, portable process state.** Plans, issues, retries, glossary, ADRs live in your repo — they survive compaction, crashes, harness switches, and teammates. Harness features are session-scoped; this layer is repo-scoped, which is why they compose rather than compete.
 
 One rule of thumb governs the economics: **when milestones fail repeatedly, escalate the plan, not just the worker.** Three failed attempts usually mean an under-specified spec, and re-spawning stronger workers on it burns the savings the tiering created.
+
+Native plan mode is the incumbent this competes with: Claude Code, OpenCode, and Oh My Pi all ship one — but those plans die with the session and execute serially in a single context. Maestro's Plans are committed to your repo, indexed, resumable after crashes, and executed as a parallel milestone DAG on tiered models.
 
 ## Usage
 
