@@ -90,6 +90,15 @@ Each issue file must follow this structure:
 
 {Steps to prevent similar issues in future}
 
+**Spec Gap (optional):** when the root cause traces to the Plan that produced the code — not to the implementation — classify where the intent was lost, so the repair lands in the right layer:
+
+- `surfacing` — the authoring dialogue never surfaced the intent → improve compose/rehearse questioning
+- `capture` — the intent surfaced but the Plan captured it vaguely → improve the Plan format (EARS rules, validation tables, Non-Goals)
+- `construction` — the Plan was right but the executor crossed a boundary → strengthen `Why & Limits` `Must not` lines or `knowledge/principles.md`
+- `verification` — the gap survived because completion was declared without evidence → strengthen the Plan's test specs or `Verify Cmd`
+
+A recurring gap of the same class is a defect in the workflow, not in one Plan: repair the workflow itself (the bundle's skill texts in the local config copy) rather than patching each new Plan.
+
 ## Related Work
 
 - [ISSUE-TYPE-NUMBER](ISSUE-TYPE-NUMBER-issue-title.md) — related issue (sibling in `issues/`)

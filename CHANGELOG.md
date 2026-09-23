@@ -2,6 +2,32 @@
 
 All notable changes to the Maestro bundle. Installed repos record the version as `MAESTRO_VERSION`; check here before upgrading.
 
+## 0.10.0 — 2026-09-22
+
+### Added
+
+- **Plan intent layer**: Plans now carry an `Intent` section — Purpose, FR-numbered Outcomes (EARS grammar for conditional/error rules), and Non-Goals with rationale — with depth proportional to the Test Tier. Milestones tag the FRs they implement via `Covers:`; every FR must be covered by at least one milestone. EARS sentence patterns and input/output validation tables replace adjective-only prose in Business Logic.
+- **`cue` skill**: the named human approval gate. Runs the readiness audit (intent completeness, FR coverage, blocking questions, DAG integrity), presents a one-screen review digest, and flips `Approved: pending` → `approved` on the user's explicit sign-off. Draft is not approved; file existence is not approval.
+- **Plan approval gate (breaking)**: `orchestrate` refuses to execute any Plan whose `Approved` field does not read `approved` — a missing field counts as not approved.
+- **`critique` agent**: fresh-context reviewer spawned by orchestrate's new Phase-2 Critique Gate. Verifies FR coverage, `Why & Limits` boundaries, and Non-Goals compliance; classifies gaps as implementation (route to `tune`) or spec (route to the user with a successor-plan recommendation). Strictly read-only.
+- **Living current-state layer**: new working file `knowledge/system-behavior.md` (spec: `references/system-behavior.md`). `score` harvests shipped capabilities and contracts into it at every completed Plan — offered regardless of `Docs Affected`; `tune` updates it in place when a fix changes behavior. Executed Plans stay frozen as audit records; this file replaces them as living truth.
+- **Standing principles**: new working file `knowledge/principles.md` (spec: `references/principles.md`). `prelude` bootstraps it from confirmed ADRs and codebase conventions; `rehearse` and `tune` promote invariants as they crystallize; `compose` embeds the relevant rules in milestone `Must not` lines instead of restating them everywhere.
+- **Spec Gap classification**: Issue Prevention gains an optional gap class (`surfacing`/`capture`/`construction`/`verification`) so recurring root causes repair the workflow itself, not just the next Plan. `tune` writes it when the cause traces to the Plan.
+- **interlude signals**: the status report adds underspecification/regression flags — failed milestones with `Retries >= 3`, open Issues linked to Done plans, 🔒 unapproved drafts, and the ✅⏳ harvest backlog.
+
+### Changed
+
+- Milestone headers gain a `Covers: [FR-###]` field (canonical form updated in every template and example); `play` status blocks now report `Requirements covered:`; `arrange` derives validation/error tests from the FR list and audits assertion strength.
+- `elaborate` completes the Intent layer before elaborating milestones, and resets `Approved` to `pending` when it modifies an already-approved Plan (re-approval required).
+- Plans Index entries carry `🔒` while unapproved (approval marker precedes docs markers); `cue` removes it on approval.
+- `prelude` now also bootstraps Principles (readiness report walks Phases 1–5); `rehearse` probes Purpose and crystallizes principles during the interview.
+- compose/orchestrate/score skill texts, checklists, and descriptions updated for the new contract; conventions.md gains the approval rules, 🔒 marker vocabulary, ownership-matrix rows for `cue`/`critique`, and the two new knowledge files.
+
+### Migration
+
+- Run `/cue <plan-id>` once on every existing pending Plan before re-running `/orchestrate` — the approval gate fail-closes on Plans without `Approved: approved`.
+- Existing executed Plans keep working as audit records; no Intent/Covers backfill is required for them.
+
 ## 0.9.6 — 2026-09-04
 
 ### Changed

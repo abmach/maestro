@@ -1,18 +1,18 @@
 ---
 name: prelude
-description: Initialize a non-Maestro workspace by scanning the codebase to create Repo Fingerprint, Contexts, and ADRs so the bundle is ready to use; invoke via "/prelude" once when adopting Maestro into an existing project
+description: Initialize a non-Maestro workspace by scanning the codebase to create Repo Fingerprint, Contexts, ADRs, and Principles so the bundle is ready to use; invoke via "/prelude" once when adopting Maestro into an existing project
 ---
 
 # Prelude: Initialize Workspace for Maestro
 
-Analyze an existing non-Maestro workspace and create the knowledge artifacts the bundle relies on (Repo Fingerprint, Contexts, ADRs) so that compose, rehearse, orchestrate, and the rest of the workflow have ground truth to operate against. One-shot setup skill — invoke once per project (re-run only to refresh).
+Analyze an existing non-Maestro workspace and create the knowledge artifacts the bundle relies on (Repo Fingerprint, Contexts, ADRs, Principles) so that compose, rehearse, orchestrate, and the rest of the workflow have ground truth to operate against. One-shot setup skill — invoke once per project (re-run only to refresh).
 
 ## Pre-flight
 
 - `{{WORKSPACE}}` = workspace root. Resolve once per session and reuse: `git rev-parse --show-toplevel`; fall back to cwd outside a git repo.
 - Before your first write, read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/conventions.md` — statuses, retries, artifact paths, and file ownership are defined there and are binding.
 - Working folder: `{{WORKSPACE}}`
-- Target folders: `{{WORKSPACE}}/knowledge/` (Repo Fingerprint, Contexts, ADRs) — you should only create/modify files in this folder
+- Target folders: `{{WORKSPACE}}/knowledge/` (Repo Fingerprint, Contexts, ADRs, Principles) — you should only create/modify files in this folder
 - Required input: none — analyzes the current workspace
 
 ## References
@@ -23,6 +23,7 @@ Read reference specs on-demand when the workflow requires them — do NOT read a
 - **`Repo Fingerprint`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/repo-fingerprint.md` — for the fingerprint format, structure, and the list of config files to scan
 - **`Contexts`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/contexts.md` — for the glossary format, area headers, Language section, Term/Avoid convention
 - **`ADRs`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/adrs.md` — for the ADR format, template, numbering, and the 3-criteria gate (hard to reverse, surprising without context, result of a real trade-off)
+- **`Principles`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/principles.md` — for the invariants file's format, load-bearing bar, and promotion rules
 
 ### On-demand (read only when needed)
 - **`Tech Preferences`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/tech-preferences.md` — only if a detected stack component is unfamiliar and you want to confirm whether it counts as a deviation worth noting
@@ -40,7 +41,7 @@ For how references relate to each other, see `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/r
 
 1. **Resolve Workspace Root** per the Pre-flight convention
 2. **Check Existing State:** scan for existing `{{WORKSPACE}}/knowledge/repo-fingerprint.md`, `contexts.md`, and any `{{WORKSPACE}}/knowledge/adrs/` entries — informs the user which artifacts already exist
-3. **Inform User:** state the plan — "Prelude will: (1) build Repo Fingerprint by scanning config files, (2) propose domain-language terms for Contexts, (3) archaeologize git history for ADR candidates. Confirm to proceed? [Yes / No]". Abort on "No".
+3. **Inform User:** state the plan — "Prelude will: (1) build Repo Fingerprint by scanning config files, (2) propose domain-language terms for Contexts, (3) archaeologize git history for ADR candidates, (4) distill standing Principles from confirmed ADRs and codebase conventions. Confirm to proceed? [Yes / No]". Abort on "No".
 
 ### Phase 1: Repo Fingerprint
 
@@ -95,15 +96,23 @@ For how references relate to each other, see `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/r
 5. **Lazily create `{{WORKSPACE}}/knowledge/adrs/`** when the first ADR is confirmed (per the ADRs spec's directory-creation rule)
 6. **Report** to the user: "ADRs created: [N — list of titles]. Skipped: [count]."
 
-### Phase 4: Readiness Report
+### Phase 4: Standing Principles
+
+1. **Distill candidates** from (a) ADRs confirmed in Phase 3 — decisions whose rule generalizes beyond one feature, and (b) conventions visible in the codebase (money as integer cents, ownership filters, repository-layer-only DB access)
+2. **Filter per the `Principles` spec:** every line must be load-bearing — a rule a competent executor would follow anyway is dropped
+3. **Present in batches** with the user as the source of truth: "Candidate principle: '{rule}' (source: {ADR-NNNN / codebase convention}). Include? [Yes as-is / Edit / No / Skip rest]"
+4. **Write** `{{WORKSPACE}}/knowledge/principles.md` following the `Principles` spec (numbered one-line rules, short file). If zero confirmed, create the file with the spec's empty-state note: rules emerge during rehearse/tune work
+
+### Phase 5: Readiness Report
 
 Summarize what Maestro now knows about the workspace:
 
 - **Repo Fingerprint:** one-line stack summary
 - **Contexts:** N terms captured across M areas (or "no terms captured — will emerge during feature work")
 - **ADRs:** N ADRs written (list titles, or "no ADR-worthy decisions found in git history")
+- **Principles:** N standing rules distilled (or "none found — will emerge during feature work")
 - **Next steps:** inform the user:
-  - "Maestro is ready. To start a new feature: `/compose <feature description>` to design a Plan, then `/orchestrate <plan-id>` to execute it."
+  - "Maestro is ready. To start a new feature: `/compose <feature description>` to design a Plan, `/cue <plan-id>` to approve it, then `/orchestrate <plan-id>` to execute it."
   - "To refine domain language further as terms emerge: `/rehearse <plan or feature>` — it will extend `contexts.md` inline."
   - "Optional, once: `/instruments` — assign models per workflow section (cheap implementation, reasoning-heavy composition)."
   - "Anytime: `/interlude` — a read-only snapshot of plans, issues, and pending docs."
@@ -119,9 +128,10 @@ Before reporting readiness:
 - [ ] Every ADR written meets all 3 criteria from the ADRs spec — no ADRs created for non-ADR-worthy decisions
 - [ ] ADR numbering is sequential, zero-padded, slugged
 - [ ] User was consulted for every domain-term and ADR confirmation — nothing auto-committed without sign-off
+- [ ] `{{WORKSPACE}}/knowledge/principles.md` exists with only load-bearing, user-confirmed rules (or the empty-state note)
 - [ ] All file paths followed `{{WORKSPACE}}/...` anchoring; no relative paths rooted at the skill folder
 - [ ] Existing artifacts (if re-running) were overwritten only after explicit user confirmation
 
 ## Execution
 
-No input is required. Proceed with Phase 0: Setup, then walk Phases 1-4 in order.
+No input is required. Proceed with Phase 0: Setup, then walk Phases 1-5 in order.

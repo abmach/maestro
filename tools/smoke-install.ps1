@@ -50,7 +50,7 @@ try {
     if ($stray.Count -gt 0) { Fail ("unresolved {{MAESTRO_CONFIG}} in: " + (($stray | ForEach-Object { $_.Name }) -join ", ")) } else { Pass "placeholders: zero unresolved" }
 
     # --- agents land ---
-    foreach ($a in @("play.md", "tune.md")) {
+    foreach ($a in @("play.md", "tune.md", "critique.md")) {
         if (-not (Test-Path (Join-Path $tmp ".claude/agents/$a"))) { Fail "missing .claude/agents/$a" }
     }
 

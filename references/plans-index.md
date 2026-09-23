@@ -37,6 +37,7 @@ Use these status indicators for each plan:
   - `⏳` — Documentation needed but not yet updated (`Docs Affected: true`, `Docs Updated: false`)
   - `📝` — Documentation has been updated (`Docs Affected: true`, `Docs Updated: true`)
   - No marker — No documentation needed (`Docs Affected: false`)
+- **Approval marker** (Plans Index only): `🔒` — plan not yet approved (`Approved: pending` or missing); appended after the status emoji (e.g., `⏳🔒`); removed by `cue` on approval
 
 ### Ordering
 
@@ -74,7 +75,7 @@ Use these status indicators for each plan:
 - ⏳ **Admin Dashboard** *([UI-001-admin-dashboard.md](UI-001-admin-dashboard.md))*
   Build comprehensive admin interface for user and content management.
 
-- ⏳ **API Rate Limiting** *([API-001-rate-limiting.md](API-001-rate-limiting.md))*
+- ⏳🔒 **API Rate Limiting** *([API-001-rate-limiting.md](API-001-rate-limiting.md))*
   Implement rate limiting for all public API endpoints.
 
 ## Blocked
@@ -111,6 +112,13 @@ When plan status changes during orchestration:
 - **When documentation is completed**: Replace `⏳` with `📝` (e.g., `✅⏳` → `✅📝`)
 - **When `Docs Affected` is `false`**: No docs marker is appended (e.g., `✅`)
 - Batch mode scans for `✅⏳` entries to find plans needing documentation
+
+### Marking Approval Status
+
+- **When compose creates a plan:** entry is created with `⏳🔒` (pending, awaiting approval)
+- **When cue approves:** remove the marker — `⏳🔒` → `⏳`
+- **When elaborate modifies an approved plan:** re-append `🔒` (elaborate resets `Approved` to `pending`)
+- Marker order after the status emoji: approval (`🔒`) before docs (`⏳`/`📝`). An executed plan is always approved, so `🔒` never appears on a `✅` entry
 
 ### Cleaning Up
 

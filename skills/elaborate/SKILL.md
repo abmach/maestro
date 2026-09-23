@@ -1,6 +1,6 @@
 ---
 name: elaborate
-description: Elaborate plans - distill detail from higher-quality models into a Plan to fill gaps and simplify execution for simpler models; invoked via "/elaborate PLAN-001" after compose but before orchestrate to add implementation guidance and test strategy
+description: Elaborate plans - distill detail from higher-quality models into a Plan to fill gaps and simplify execution for simpler models; invoked via "/elaborate PLAN-001" after compose but before cue approval to complete Intent (FR coverage, EARS rules) and add implementation guidance and test strategy
 argument-hint: "[plan ID or plan file path]"
 ---
 
@@ -29,6 +29,8 @@ Read reference specs on-demand when the workflow requires them — do NOT read a
 - **Repo Fingerprint (working file):** Read `{{WORKSPACE}}/knowledge/repo-fingerprint.md` when checking the tech stack
 - **Stack Overrides (working file):** Read `{{WORKSPACE}}/knowledge/tech-preferences.md` if present — declared categories steer which technologies guidance targets
 - **Instruments (working file):** Read `{{WORKSPACE}}/knowledge/instruments.md` — if it exists, target the `composition` section's model as the quality bar and keep guidance executable by the `implementation` section's model (that is the whole point of elaboration)
+- **Principles (working file):** Read `{{WORKSPACE}}/knowledge/principles.md` if present — elaborations and code patterns must not contradict standing invariants
+- **System Behavior (working file):** Read `{{WORKSPACE}}/knowledge/system-behavior.md` if present — align elaborations with current capabilities
 - **`Testing Principles`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/testing-principles.md` — when elaborating test strategy
 - **`Design Principles`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/design-principles.md` — when elaborating code patterns
 - **`Tech Preferences`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/tech-preferences.md` — when elaborating tech choices
@@ -75,6 +77,8 @@ For how references relate to each other, see `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/r
 3. **Domain Alignment:** Ensure elaboration uses terminology from the working `knowledge/contexts.md`
 
 ### Phase 3: Elaboration Generation
+
+First, at Plan level: complete the `Intent` section per the Plan spec's Intent Depth table — every user-visible outcome numbered as an FR, every FR covered by at least one milestone's `Covers:` tag, Non-Goals populated with rationale, and conditional, error, or validation rules restated in EARS form with input/output tables where prose is vague. Elaboration that ignores the requirements layer is decoration.
 
 For **every** milestone — even ones needing no other elaboration — ensure a **`Why & Limits`** block exists (add it when missing; refine it when thin). This is mandatory: it is your constraint-transmission channel to cheaper executors, and constraints embedded in the milestone get read where rules in reference docs may not. Content:
 
@@ -133,15 +137,16 @@ For each milestone identified as needing elaboration, additionally add:
 
 1. **Apply Elaborations:** Update the `Plan` file with approved elaborations
 2. **Maintain Structure:** Ensure elaborations are added without breaking the existing `Plan` structure and DAG dependencies
-3. **Preserve Metadata:** Keep original `Plan` metadata (Test Tier, Docs Affected, Status, and every milestone's `Retries` count) unchanged
-4. **Update Index:** If elaborations significantly change the `Plan` scope, consider updating the description in `{{WORKSPACE}}/plans/index.md`
+3. **Preserve Metadata:** Keep original `Plan` metadata (Test Tier, Docs Affected, Status, every milestone's `Retries` count, and `Approved`) unchanged — except the required reset in the next step when the Plan was approved
+4. **Reset Approval When Applicable:** if the `Approved` field read `approved` before your edits, set it to `pending` and re-append `🔒` to the Plan's Plans Index entry — approved content changed, so re-approval is required. Tell the user to re-run `/cue {plan-id}`.
+5. **Update Index:** If elaborations significantly change the `Plan` scope, consider updating the description in `{{WORKSPACE}}/plans/index.md`
 
 ## Elaboration Format
 
 Add elaborations as nested bullet points under each milestone, preserving the canonical milestone header exactly as defined in the `Plan` spec (including `Retries`):
 
 ```markdown
-- ⏳ **Milestone 1 (ID: 1, Dependencies: [], Retries: 0)**: [Short Title] - Specific detailed task description.
+- ⏳ **Milestone 1 (ID: 1, Dependencies: [], Retries: 0, Covers: [FR-001])**: [Short Title] - Specific detailed task description.
   **Why & Limits:**
   - Why: [Rationale the executor cannot infer — what breaks if done differently]
   - Must not: [Files owned by other milestones, forbidden actions — each with a one-clause reason]
@@ -181,6 +186,7 @@ Before completing the elaboration:
 - [ ] Gaps identified in existing milestones
 - [ ] Knowledge gathered from documentation and codebase
 - [ ] `Why & Limits` present on **every** milestone (mandatory — even milestones that needed no other elaboration)
+- [ ] `Intent` complete per tier: FR-numbered Outcomes, every FR covered by a `Covers:` tag, Non-Goals with rationale, EARS where behavior is conditional
 - [ ] Elaborations follow project conventions and patterns
 - [ ] Code examples match existing codebase style
 - [ ] Domain language from the working `contexts.md` used correctly
@@ -190,6 +196,7 @@ Before completing the elaboration:
 - [ ] User approval obtained for elaborations
 - [ ] `Plan` structure and DAG dependencies preserved
 - [ ] Original `Plan` metadata maintained, including per-milestone `Retries`
+- [ ] `Approved` preserved — or reset to `pending` with the index `🔒` re-appended when the Plan was approved
 
 ## Error Handling
 

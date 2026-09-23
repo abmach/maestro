@@ -1,6 +1,6 @@
 ---
 name: orchestrate
-description: Orchestrate feature implementation - execute an existing Plan as a parallel DAG by spawning play subagents, then arrange + audition for tests, route visual regressions to tune; invoked via "/orchestrate PLAN-001"
+description: Orchestrate feature implementation - execute an approved Plan as a parallel DAG by spawning play subagents, run the critique review in a fresh context, then arrange + audition for tests, route visual regressions to tune; invoked via "/orchestrate PLAN-001"
 argument-hint: "[plan ID/code]"
 ---
 
@@ -51,7 +51,9 @@ Follow this streamlined pipeline for every `Plan` execution:
 3. Read the `Plans Index` at `{{WORKSPACE}}/plans/index.md` to find the full `Plan` filename for the given `Plan` ID/code
 4. Construct the full `Plan` file path: `{{WORKSPACE}}/plans/{full_filename}.md`
 5. Read the `Plan` file to understand the implementation requirements
-6. **Pre-flight Git State Check:** Before any `play` subagent modifies code, check the user's working tree and warn about risky state — but do **not** mutate git state:
+6. **Approval Gate:** Check the Plan's `Approved` field. If it does not read `approved` — **including when the field is missing entirely** — abort with: "Plan {plan-id} is not approved. Review it and run `/cue {plan-id}`." Do not offer to approve it yourself; approval is `cue`'s act, not orchestrate's.
+
+7. **Pre-flight Git State Check:** Before any `play` subagent modifies code, check the user's working tree and warn about risky state — but do **not** mutate git state:
    - Run `git status --porcelain` to detect uncommitted changes
    - If any exist, check for **overlap with files the Plan mentions** (from the Plan's file paths, milestone specs, and Development Specifications)
    - **If uncommitted work overlaps with Plan-touched files:** warn the user — "Uncommitted changes overlap with files this orchestration will modify ([file list]). On failure, discarding a `play`'s modifications would also discard your changes to those files. Commit or stash first? [Abort / Continue at your own risk]"
@@ -96,18 +98,23 @@ Execute the `Plan` as a Directed Acyclic Graph (DAG) of development milestones t
 
 ### Phase 2: Integration Testing
 
-1. **User Gate:** Ask the user: "All development milestones are complete. Run integration testing? [Yes / No]"
+1. **Critique Gate:** Spawn the `critique` subagent with only the `Plan` ID/code as its prompt — a fresh context reviews the milestone implementations against the Plan (FR coverage, boundary violations, silent deviations) and returns a structured gap report. If `knowledge/instruments.md` assigns a model to a review section and the harness supports per-spawn model selection, apply it. Route the report:
+   - **Implementation gaps** (code deviates from the approved Plan) → treat exactly like failing non-visual tests: create or extend an `Issue` and route to `tune` per step 7
+   - **Spec gaps** (the Plan itself was wrong) → surface to the user with the fix-forward recommendation (successor plan via `compose` referencing the Issue); do not silently re-plan
+   - A clean report → proceed to the user gate
+
+2. **User Gate:** Ask the user: "All development milestones are complete and reviewed. Run integration testing? [Yes / No]"
    - If "No", skip to Phase 3
-2. Read the `Plan`'s `Test Tier` metadata
-3. If `Test Tier` is `smoke` or `none`, run the `Verify Cmd` from the `Plan`
-4. If `Test Tier` is `integration`:
+3. Read the `Plan`'s `Test Tier` metadata
+4. If `Test Tier` is `smoke` or `none`, run the `Verify Cmd` from the `Plan`
+5. If `Test Tier` is `integration`:
    - First, invoke the `arrange` skill for integration specs only (API contracts, service interactions — no browser flows, no visual regression baselines)
    - Second, invoke the `audition` skill and capture results
-   - Non-visual failures route per step 6
-5. If `Test Tier` is `e2e`:
+   - Non-visual failures route per step 7
+6. If `Test Tier` is `e2e`:
    - First, invoke the `arrange` skill to write or update the required test files based on the `Plan` specifications
    - Second, invoke the `audition` skill to execute the tests and capture results
-6. **Non-visual failure routing:** treat failing non-visual tests exactly like visual regressions — create a `TEST-NNN` Issue capturing the failing test names, error output, and audition's reported artifact paths, then ask "Fix now (spawns `tune`) or defer?" On "Fix now", spawn `tune` with the Issue ID and re-run `audition` on the affected tests when it returns (same loop as Visual Regression Routing steps 3–4). Never route failures back to `play`: its contract is `{plan-id} {milestone-id}` and the milestone is already Done — regressions in implemented behavior belong to `tune`.
+7. **Non-visual failure routing:** treat failing non-visual tests exactly like visual regressions — create a `TEST-NNN` Issue capturing the failing test names, error output, and audition's reported artifact paths, then ask "Fix now (spawns `tune`) or defer?" On "Fix now", spawn `tune` with the Issue ID and re-run `audition` on the affected tests when it returns (same loop as Visual Regression Routing steps 3–4). Never route failures back to `play`: its contract is `{plan-id} {milestone-id}` and the milestone is already Done — regressions in implemented behavior belong to `tune`. The same routing applies to implementation gaps from the Critique Gate.
 
 #### Visual Regression Routing
 
@@ -145,8 +152,8 @@ Do not spawn `play` for visual regressions. `play` implements new milestones; vi
    - If `Docs Affected` is `true`: append `⏳` after the status emoji (e.g., `✅⏳`) to indicate documentation is pending
    - If `Docs Affected` is `false`: no docs marker (e.g., `✅`)
 2. **Update Repo Fingerprint:** If the `Plan` introduced new technologies now in the codebase, update the working file `{{WORKSPACE}}/knowledge/repo-fingerprint.md` following its spec; when a newly adopted technology contradicts a built-in default, also record a category-level entry in `{{WORKSPACE}}/knowledge/tech-preferences.md` (*Project Overrides*)
-3. **User Gate:** If `Docs Affected` is `true`, ask the user: "Documentation update is needed. Run the `score` skill now? [Yes / No]"
-   - If "Yes": Invoke the `score` skill with the `Plan` ID/code (this will update `⏳` → `📝` in the index)
+3. **User Gate:** Ask the user: "Run the `score` skill now? [Yes / No]" — ask when `Docs Affected` is `true` (documentation update needed) **or** the Plan shipped user-visible behavior (the `knowledge/system-behavior.md` harvest — behavior changes even when user docs don't). Name which reason applies.
+   - If "Yes": Invoke the `score` skill with the `Plan` ID/code (this updates `⏳` → `📝` in the index when docs were affected, and distills shipped behavior into `knowledge/system-behavior.md`)
    - If "No": Inform the user they can run `/score {plan-id}` later, or run `/score` without arguments to process all pending finished plans at once
 4. If any `Issue`s were created during execution, ensure they are properly documented in `{{WORKSPACE}}/issues/` and indexed in `{{WORKSPACE}}/issues/index.md`
 
@@ -162,11 +169,12 @@ Do not spawn `play` for visual regressions. `play` implements new milestones; vi
 ### Subagents
 - **play**: Implements `Plan` milestones using test-driven development. Spawn with the `Plan` ID/code plus milestone ID as the prompt. Returns structured status (Done/Failed) — orchestrate handles Plan file and Issues Index bookkeeping based on the returned status.
 - **tune**: Resolves `Issue`s through systematic debugging and fixes. Spawn with the `Issue` ID as the prompt. Spawned in Phase 2's Visual Regression Routing when the user chooses "Fix now"; can also be invoked manually by users via `@tune {issue-id}` outside orchestration.
+- **critique**: Reviews milestone implementations against the Plan in a fresh context — FR coverage, boundary violations, silent deviations. Spawn with the `Plan` ID/code as the prompt. Returns a structured gap report (format defined by `agents/critique.md` Phase 4); orchestrate routes implementation gaps to `tune` and spec gaps to the user.
 
 ### Skills
 - **arrange**: Creates integration and E2E test specifications
 - **audition**: Executes test suites and captures results
-- **score**: Updates documentation based on completed features
+- **score**: Updates documentation and distills shipped behavior into `knowledge/system-behavior.md` based on completed features
 
 ## Operational Approach
 

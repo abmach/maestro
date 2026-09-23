@@ -147,6 +147,23 @@ foreach ($p in $retryTargets) {
 }
 if (-not $retryBad) { Pass "retries: spawn-counting rule present in conventions/plan/orchestrate" }
 
+# --- 6b. Approval gate consistency ----------------------------------------------
+$approvalTargets = @(
+    (Join-Path $Root "references/conventions.md"),
+    (Join-Path $Root "references/plan.md"),
+    (Join-Path $Root "skills/cue/SKILL.md"),
+    (Join-Path $Root "skills/orchestrate/SKILL.md")
+)
+$approvalBad = $false
+foreach ($p in $approvalTargets) {
+    $t = ([System.IO.File]::ReadAllText($p)) -replace "\*", ""
+    if (-not $t.Contains("Approved") -or -not ($t -match "pending")) {
+        Fail ((Split-Path -Leaf $p) + ": approval-gate wording missing (expected 'Approved' + 'pending' language)")
+        $approvalBad = $true
+    }
+}
+if (-not $approvalBad) { Pass "approval: gate rule present in conventions/plan/cue/orchestrate" }
+
 # --- 7. References map completeness -------------------------------------------
 $mapBad = $false
 $mapText = [System.IO.File]::ReadAllText((Join-Path $Root "references/references-map.md"))

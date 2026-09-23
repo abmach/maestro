@@ -21,6 +21,17 @@ Everything here concerns *developing the Maestro bundle itself*. End users only 
    ```
 4. Update `CHANGELOG.md` (newest section on top) and bump `VERSION`.
 
+## Workflow repair loop
+
+Issues in consuming repos can carry a **Spec Gap** class (`surfacing` / `capture` / `construction` / `verification` — see the Issue spec). When the same class recurs, fold the repair into the bundle itself instead of fixing Plans one by one:
+
+- `surfacing` → strengthen compose/rehearse interview questions
+- `capture` → tighten the Plan spec's format (EARS rules, validation tables, Non-Goals)
+- `construction` → strengthen conventions/ownership wording or the Principles spec's promotion path
+- `verification` → tighten test-spec wording in the Plan spec or `arrange`'s assertion checks
+
+The local bundle copy in each consuming repo is editable; upstream the fix here when it generalizes.
+
 ## Code signing (release scripts)
 
 User-facing scripts should be Authenticode-signed so execution policy and AV reputation treat them kindly. Two routes:

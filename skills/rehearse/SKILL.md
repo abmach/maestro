@@ -1,6 +1,6 @@
 ---
 name: rehearse
-description: Rehearse - stress-test a plan against the project's domain model by challenging assumptions, sharpening terminology, and updating contexts/ADRs inline; invoked via "/rehearse <plan or feature>" to refine language before orchestrate or after compose flags ambiguity
+description: Rehearse - stress-test a plan against the project's domain model by challenging assumptions, sharpening terminology, and updating contexts/ADRs/principles inline; invoked via "/rehearse <plan or feature>" to refine intent and language before cue approval or after compose flags ambiguity
 argument-hint: "[plan or feature description]"
 ---
 
@@ -25,6 +25,7 @@ Read reference specs on-demand when the workflow requires them — do NOT read a
 
 ### On-demand (read only when needed)
 - **`ADRs`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/adrs.md` — only when an architectural decision meets ADR criteria during the interview (3 criteria already inlined in workflow step 8). Read for the ADR format template at that moment.
+- **`Principles`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/principles.md` — when an invariant crystallizes during the interview (format and promotion rules)
 
 ### Cross-references
 For how references relate to each other, see `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/references-map.md`.
@@ -48,6 +49,8 @@ For how references relate to each other, see `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/r
 6. **Code Verification:** When the user states how something works, check whether the code agrees. If you find a contradiction, surface it: "Your code cancels entire Orders, but you just said partial cancellation is possible — which is right?"
 7. **Inline Documentation Updates:** When a term is resolved, update `{{WORKSPACE}}/knowledge/contexts.md` right there. Don't batch these up — capture them as they happen. Follow the format specified in the `Contexts` specification
 8. **ADR Creation:** Only offer to create an `ADR` in `{{WORKSPACE}}/knowledge/adrs/` when the criteria in the `ADRs` specification are met (hard to reverse, surprising without context, result of real trade-off). Follow the format specified in the `ADRs` specification
+9. **Purpose Probing:** Ask what the change is *for* — the "so that" behind the feature. If the Plan's `Intent` Purpose is missing or thin, name the gap for `compose`/`elaborate` to capture (you target `knowledge/`, not `plans/` — suggest, don't write)
+10. **Principle Crystallization:** When an invariant crystallizes in dialogue — a rule that must hold for every future change — offer to append it to `{{WORKSPACE}}/knowledge/principles.md` following the `Principles` spec (load-bearing one-liners only, confirmed by the user)
 
 ## Documentation Constraints
 
@@ -61,6 +64,7 @@ Before completing:
 - [ ] Every ADR offered met all three criteria (hard to reverse, surprising without context, real trade-off)
 - [ ] User wording captured verbatim for edited definitions and rationales
 - [ ] `contexts.md` contains zero implementation details
+- [ ] Invariants crystallized during the interview were promoted to `principles.md` (or none emerged)
 
 ## Execution
 

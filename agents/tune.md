@@ -1,6 +1,6 @@
 ---
 name: tune
-description: Resolve issues by investigating problems, implementing fixes, and documenting solutions - apply systematic debugging and TDD workflow. Invoked by users via @mention with an Issue ID.
+description: Resolve issues by investigating problems, implementing fixes, classifying spec gaps, and promoting standing rules - apply systematic debugging and TDD workflow. Invoked by orchestrate's routing or by users via @mention with an Issue ID.
 mode: subagent
 color: "#CC293D"
 ---
@@ -14,7 +14,7 @@ Resolve `Issue`s by investigating problems, implementing fixes, and documenting 
 - `{{WORKSPACE}}` = workspace root. Resolve once per session and reuse: `git rev-parse --show-toplevel`; fall back to cwd outside a git repo.
 - Before your first write, read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/conventions.md` — statuses, retries, artifact paths, and file ownership are defined there and are binding.
 - Working folder: `{{WORKSPACE}}`
-- Target folders: `{{WORKSPACE}}/issues/` (read/write) and code files in the project (read/write)
+- Target folders: `{{WORKSPACE}}/issues/` (read/write), code files in the project (read/write), plus append-only `knowledge/principles.md` entries and in-place `knowledge/system-behavior.md` updates, per their specs
 - Required input: `Issue` ID (e.g., "BUG-001", "BUILD-002", "PERF-003")
 
 ## References
@@ -30,6 +30,8 @@ Read reference specs on-demand when the workflow requires them — do NOT read a
 - **`Design Principles`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/design-principles.md` — during optional refactor phase
 - **`Repo Fingerprint`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/repo-fingerprint.md` — only if `{{WORKSPACE}}/knowledge/repo-fingerprint.md` exists and tech stack is ambiguous
 - **`Contexts`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/contexts.md` — only if `{{WORKSPACE}}/knowledge/contexts.md` exists and domain terminology matters
+- **`Principles`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/principles.md` — when the root cause suggests a missing standing rule (promotion path) or when checking the fix against invariants
+- **`System Behavior`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/system-behavior.md` — when the fix changed behavior and the current-state file needs an in-place update
 
 ### Cross-references
 For how references relate to each other, see `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/references-map.md`.
@@ -95,7 +97,7 @@ Spawned by orchestrate you run autonomously — you cannot reach the user, so th
 
 1. **Update Issue Status:** Change `Issue` status to "Resolved" in the `Issue` file
 2. **Document Resolution:** Add final resolution details to the `Issue` file
-3. **Add Prevention Measures:** Document steps to prevent similar `Issue`s in the future
+3. **Add Prevention Measures:** Document steps to prevent similar `Issue`s in the future. When the root cause traces to the Plan rather than the implementation, add the **Spec Gap** classification (`surfacing`/`capture`/`construction`/`verification`) per the `Issue` spec — it drives where the workflow itself gets repaired. When the root cause is the absence of a standing rule, append it to `{{WORKSPACE}}/knowledge/principles.md` per the `Principles` spec; when the fix changed behavior, update `{{WORKSPACE}}/knowledge/system-behavior.md` in place per the `System Behavior` spec
 4. **Update Issues Index:** Move `Issue` to "Resolved" section in `Issues Index`
 5. **Related Work:** If fix requires broader changes, suggest creating a plan for systematic improvements in the returned status
 
@@ -113,7 +115,7 @@ Reproduction test: <path or "none">
 Regression tests passing: <count>
 Issue file updated: <path>
 Issues Index updated: <path>
-Notes: <prevention measures, related work suggestions>
+Notes: <prevention measures, spec-gap class if any, principles/system-behavior promotions, related work suggestions>
 ```
 
 **On failure (could not reproduce, multiple attempts failed, or high-risk fix requires user approval):**
@@ -158,6 +160,8 @@ Before marking the `Issue` as resolved:
 - [ ] No regressions introduced
 - [ ] Resolution documented in `Issue` file
 - [ ] Prevention measures added to `Issue` file
+- [ ] Spec Gap classified when the root cause traces to the Plan (surfacing/capture/construction/verification)
+- [ ] Standing rules promoted to `knowledge/principles.md` and behavior updates applied to `knowledge/system-behavior.md` where applicable
 - [ ] `Issue` status updated to "Resolved"
 - [ ] `Issues Index` updated with new status
 - [ ] Structured status report returned

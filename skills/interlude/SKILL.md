@@ -33,6 +33,7 @@ Read reference specs on-demand when the workflow requires them — do NOT read a
 1. Read `{{WORKSPACE}}/plans/index.md` — every status section
 2. Read `{{WORKSPACE}}/issues/index.md` — every status section
 3. If a focus argument was given, limit the report to that area (still scan both files for the Next recommendation)
+4. **Signal Sourcing:** when the Pending, Blocked, or Failed sections are non-empty, read those `Plan` files for per-milestone statuses and `Retries` counts — read-only; the index alone does not carry per-plan state. Skip cleanly when the sections are empty
 
 ### Phase 1: Report
 
@@ -51,16 +52,24 @@ Issues:
 
 Docs: <plans marked ✅⏳ awaiting /score, or "none pending">
 
+Signals:
+  <underspecification and regression flags, each traced to a specific entry>
+  - <failed milestones with Retries >= 3 — plan-quality signal: revise the spec, don't re-spawn>
+  - <open Issues linked to ✅ Done plans — alignment regression: shipped behavior broke after the fact>
+  - <entries carrying 🔒 — unapproved drafts awaiting /cue>
+  - <✅⏳ backlog count — docs and behavior harvest owed>
+
 Next: <single suggested action + one-line why>
 ```
 
-Next-action guidance, in priority order: a 🔄 In-progress plan exists (resume it — re-run `/orchestrate`; crash recovery reconciles — before starting anything else); open P1/P2 issues (`@tune` them); failed milestones flagged twice or more (plan-quality signal — revise the spec via compose/elaborate before re-running); plans ✅⏳ (`/score`); otherwise the oldest Pending plan (`/orchestrate`).
+Next-action guidance, in priority order: a 🔄 In-progress plan exists (resume it — re-run `/orchestrate`; crash recovery reconciles — before starting anything else); open P1/P2 issues (`@tune` them); failed milestones flagged twice or more (plan-quality signal — revise the spec via compose/elaborate before re-running); a `⏳🔒` plan exists (review it, then `/cue` — orchestrate refuses unapproved Plans); plans ✅⏳ (`/score`); otherwise the oldest Pending plan (`/orchestrate`).
 
 ## Quality Checklist
 
 - [ ] Every index section visited; nothing reported that isn't in the files
 - [ ] The Next recommendation cites a specific entry as grounds
 - [ ] Zero modifications made to any file
+- [ ] Every Signal traces to a specific Plan or Issue entry — nothing estimated
 
 ## Execution
 

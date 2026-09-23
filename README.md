@@ -1,6 +1,6 @@
 # Maestro
 
-A bundle of [Agent Skills](https://agentskills.io) for AI-assisted software development. Maestro gives AI coding agents (Oh My Pi, OpenCode, Claude Code, and other Agent-Skills-compatible harnesses) a structured workflow for planning, implementing, testing, and documenting features — built to spend premium models on design reasoning and cheap ones on volume work — without locking you to a single platform.
+A bundle of [Agent Skills](https://agentskills.io) for AI-assisted software development. Maestro gives AI coding agents (Oh My Pi, OpenCode, Claude Code, and other Agent-Skills-compatible harnesses) a structured workflow for planning, approving, implementing, testing, and documenting features — built to spend premium models on design reasoning and cheap ones on volume work — without locking you to a single platform.
 
 [![pipeline status](https://gitlab.com/abmach/maestro/badges/main/pipeline.svg)](https://gitlab.com/abmach/maestro/-/commits/main)
 [![Supporters](https://img.shields.io/badge/Backers-SUPPORTERS.md-8a3ab5)](SUPPORTERS.md)
@@ -13,10 +13,11 @@ maestro/
 ├── VERSION                  # Bundle version (read by installer)
 ├── CHANGELOG.md             # Version history + upgrade/migration notes
 ├── skills/                  # Agent Skills (loaded on-demand when invoked)
-│   ├── prelude/             # Bootstrap a non-Maestro workspace (Repo Fingerprint, Contexts, ADRs)
+│   ├── prelude/             # Bootstrap a non-Maestro workspace (Repo Fingerprint, Contexts, ADRs, Principles)
 │   ├── compose/             # Create technical Plans from feature requests
 │   ├── rehearse/            # Stress-test plans against domain language
 │   ├── elaborate/           # Distill detail from stronger models into plans
+│   ├── cue/                 # Approve a Plan: readiness audit + explicit human sign-off
 │   ├── orchestrate/         # Execute plans via parallel subagents
 │   ├── arrange/             # Write integration & E2E test specs
 │   ├── audition/            # Run test suites and capture results
@@ -25,7 +26,8 @@ maestro/
 │   └── interlude/           # Read-only status report: plans, issues, docs, next action
 ├── agents/                  # Subagent definitions (spawned by orchestrate or @mention)
 │   ├── play.md              # Implements plan milestones via TDD
-│   └── tune.md              # Resolves issues via systematic debugging
+│   ├── tune.md              # Resolves issues via systematic debugging
+│   └── critique.md          # Fresh-context review of milestones against the Plan (read-only)
 ├── references/              # Specs for plan/issue/ADR/contexts formats
 │   ├── conventions.md       # Shared contract: statuses, retries, artifact paths, ownership
 │   ├── plan.md
@@ -39,6 +41,8 @@ maestro/
 │   ├── testing-principles.md
 │   ├── tech-preferences.md
 │   ├── testing-tech-preferences.md
+│   ├── principles.md
+│   ├── system-behavior.md
 │   └── references-map.md
 └── tools/
     ├── validate-bundle.ps1  # Dev-time validator: frontmatter, links, contract consistency
@@ -48,7 +52,7 @@ maestro/
 │   └── sync-supporters.ps1  # Rebuild SUPPORTERS.md from live GitHub Sponsors data
 ```
 
-**10 skills** + **2 agents** + **13 reference specs** + dev-time tooling (bundle validator, install smoke test, MaestroKit module builder).
+**11 skills** + **3 agents** + **15 reference specs** + dev-time tooling (bundle validator, install smoke test, MaestroKit module builder).
 
 ## Installation
 
@@ -98,7 +102,7 @@ Supported locations and what they enable:
 | `.claude`   | yes    | yes    | Claude Code; skills also discovered by OpenCode and Oh My Pi             |
 | `.opencode` | yes    | yes    | OpenCode native (highest precedence on OpenCode)                         |
 
-Maestro is **all-or-nothing**: every supported location delivers the full bundle, including the markdown-defined `play`/`tune` subagents. Harnesses that cannot discover subagent definitions (Codex CLI, Gemini CLI, GitHub Copilot, Cursor, …) are not supported — a skills-only install would silently break `orchestrate`'s delegation model. On Oh My Pi, prefer `.omp`; `.agents` delivers skills natively there but its `agents/` folder is ignored.
+Maestro is **all-or-nothing**: every supported location delivers the full bundle, including the markdown-defined `play`/`tune`/`critique` subagents. Harnesses that cannot discover subagent definitions (Codex CLI, Gemini CLI, GitHub Copilot, Cursor, …) are not supported — a skills-only install would silently break `orchestrate`'s delegation model. On Oh My Pi, prefer `.omp`; `.agents` delivers skills natively there but its `agents/` folder is ignored.
 
 ### Scope: project or user
 
@@ -183,11 +187,15 @@ Once when adopting Maestro into an existing project, run `/prelude` first to cre
    elaborate ──▶ (optional) Adds detail distilled from stronger models
        │
        ▼
+   cue ──▶ Readiness audit + explicit user sign-off (mandatory: Approved → approved)
+       │
+       ▼
    orchestrate ──── spawns ──▶ play (parallel, one per ready milestone)
        │                         │
        │                         ▼
        │                    Returns structured status (Done/Failed)
        │
+       ├──▶ critique (fresh-context review: FR coverage, boundaries, deviations)
        ├──▶ arrange (writes E2E tests from Plan)
        ├──▶ audition (runs tests, captures results)
        │
@@ -214,7 +222,7 @@ Maestro is built for the current generation of strong models and capable harness
 
 1. **Cost arbitrage.** Cost is tokens × price, and implementation dominates token volume while design reasoning is small-batch. Maestro's Plans mandate exact file paths, API shapes, and test cases — and a precise spec needs a competent executor, not a premium one. Run `compose`/`rehearse`/`elaborate` on a reasoning-heavy model, `play` on a cheap fast one, and the dominant cost term drops by roughly an order of magnitude at unchanged ceiling quality. `/instruments` records the assignments; Oh My Pi applies them to spawns natively (`task.agentModelOverrides`), Claude Code and OpenCode via agent frontmatter.
 2. **Parallel throughput.** Milestones form a DAG; every ready wave spawns one worker per milestone regardless of model strength. Wall-clock savings are orthogonal to how smart your models are.
-3. **Review checkpoints before code exists.** Auditing a 200-line plan costs minutes; reviewing a 2,000-line diff costs hours. compose front-loads expensive-to-reverse decisions into the cheapest artifact to inspect.
+3. **Review checkpoints before code exists.** Auditing a 200-line plan costs minutes; reviewing a 2,000-line diff costs hours. compose front-loads expensive-to-reverse decisions into the cheapest artifact to inspect — and `/cue` makes the review a named gate: a readiness audit, a one-screen digest, and an explicit sign-off that `orchestrate` cannot skip.
 4. **Durable, portable process state.** Plans, issues, retries, glossary, ADRs live in your repo — they survive compaction, crashes, harness switches, and teammates. Harness features are session-scoped; this layer is repo-scoped, which is why they compose rather than compete.
 
 One rule of thumb governs the economics: **when milestones fail repeatedly, escalate the plan, not just the worker.** Three failed attempts usually mean an under-specified spec, and re-spawning stronger workers on it burns the savings the tiering created.
@@ -230,6 +238,7 @@ Native plan mode is the incumbent this competes with: Claude Code, OpenCode, and
 3. Skills are discovered automatically. Invoke any skill by typing `/skill-name` or letting the agent load it when relevant:
    - `/compose Add user authentication with JWT`
    - `/rehearse the auth plan I just composed`
+   - `/cue AUTH-001`
    - `/orchestrate AUTH-001`
 4. `play` and `tune` are subagents — invoke them via the agent menu (`Tab` to cycle, or `@mention`), or let `orchestrate` spawn them automatically.
 
@@ -239,6 +248,7 @@ Native plan mode is the incumbent this competes with: Claude Code, OpenCode, and
 2. Open Claude Code in your project.
 3. Skills are discovered from `.claude/skills/`. Invoke with `/skill-name`:
    - `/compose Add user authentication with JWT`
+   - `/cue AUTH-001` (approve the plan)
    - `/orchestrate AUTH-001`
 4. `play` and `tune` are subagents — invoke with `@play` / `@tune`, or let `orchestrate` spawn them automatically.
 
@@ -246,7 +256,7 @@ Native plan mode is the incumbent this competes with: Claude Code, OpenCode, and
 
 ```
 0. /prelude                            → scans the workspace and creates
-                                          Repo Fingerprint, Contexts, ADRs
+                                          Repo Fingerprint, Contexts, ADRs, Principles
                                           (one-time setup; re-run only to refresh)
 ```
 
@@ -256,17 +266,18 @@ Native plan mode is the incumbent this competes with: Claude Code, OpenCode, and
 1. /compose <feature request>          → creates a Plan (DAG of milestones)
 2. /rehearse <feature >                → (optional) refine domain language
 3. /elaborate <plan-id>                → (optional) add detail for execution
-4. /orchestrate <plan-id>              → executes the plan:
+4. /cue <plan-id>                     → readiness audit + your explicit sign-off (Approved → approved)
+5. /orchestrate <plan-id>              → executes the approved plan:
                                           spawns play subagents in parallel,
                                           then arrange + audition for tests,
                                           routes visual regressions to tune
-5. /score <plan-id>                    → updates docs (if Docs Affected=true)
-6. /instruments                        → (optional) assign models per section
+6. /score <plan-id>                    → updates docs (if Docs Affected=true) and harvests system behavior
+7. /instruments                        → (optional) assign models per section
                                           (cheap implementation, reasoning-heavy
                                           composition) with per-harness guidance
 ```
 
-Step 0 is once-per-project. Items 2, 3, and 5 are optional. `orchestrate` is the main entry point for execution.
+Step 0 is once-per-project. Items 2 and 3 are optional; item 4 is the human approval gate — `orchestrate` refuses to run a Plan `/cue` has not approved. `orchestrate` is the main entry point for execution.
 
 ## What Maestro creates in your repo
 
@@ -276,10 +287,12 @@ When you compose a Plan, Maestro lazily creates these directories in your projec
 your-repo/
 ├── plans/                    # Plans (DAG of milestones) and index.md
 ├── issues/                   # Issues (bugs, build failures) and index.md
-├── knowledge/                # Domain language, ADRs, repo fingerprint
+├── knowledge/                # Domain language, ADRs, fingerprint, principles, current behavior
 │   ├── contexts.md           # Ubiquitous language glossary
 │   ├── adrs/                 # Architectural Decision Records
 │   ├── repo-fingerprint.md   # Tech stack snapshot
+│   ├── principles.md         # Standing invariants (load-bearing rules)
+│   ├── system-behavior.md    # Living current-state view of shipped capabilities
 │   └── tech-preferences.md   # Stack overrides (category-level)
 ├── tests/                    # E2E test specs (flat, no subdirectories)
 ├── tests/screenshots/baselines/  # Visual regression baselines (committed)
@@ -291,9 +304,9 @@ All file formats are specified in the `references/` folder of the installed bund
 
 ## Multi-platform design
 
-Maestro targets the [Agent Skills](https://agentskills.io) open standard. The bundle is skills **plus** markdown-defined subagents (`play`, `tune`) **plus** an orchestrator that spawns them in parallel — so a harness either supports all of that, or it is not supported:
+Maestro targets the [Agent Skills](https://agentskills.io) open standard. The bundle is skills **plus** markdown-defined subagents (`play`, `tune`, `critique`) **plus** an orchestrator that spawns them in parallel — so a harness either supports all of that, or it is not supported:
 
-| Harness | Install to | Parallel orchestration (`orchestrate` → `play`/`tune`) | Model routing (`/instruments`) |
+| Harness | Install to | Parallel orchestration (`orchestrate` → `play`/`critique`/`tune`) | Model routing (`/instruments`) |
 | ------- | ---------- | ------------------------------------------------------ | ------------------------------ |
 | Oh My Pi | `.omp` (full) or `.agents` (OpenCode only) | yes — `.omp/agents/` is its native subagent root | yes — `task.agentModelOverrides` / `modelRoles` |
 | Claude Code | `.claude` | yes — `.claude/agents/` | yes — `model:` frontmatter on agents |

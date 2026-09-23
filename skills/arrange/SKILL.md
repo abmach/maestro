@@ -1,6 +1,6 @@
 ---
 name: arrange
-description: Arrange tests - design and create integration and E2E test specs from a Plan for features about to enter integration testing; invoked by orchestrate or via "/arrange PLAN-001"
+description: Arrange tests - design and create integration and E2E test specs from a Plan (deriving cases from its FR outcomes and validation tables) for features about to enter integration testing; invoked by orchestrate or via "/arrange PLAN-001"
 argument-hint: "[plan ID/code]"
 ---
 
@@ -49,6 +49,7 @@ For how references relate to each other, see `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/r
 2. **Test Type Determination:** Based on the `Plan` specifications, determine the types of integration and E2E tests needed
 3. **Framework Selection:** Apply testing-category overrides from `{{WORKSPACE}}/knowledge/tech-preferences.md` first (they replace matching defaults), then consult `Testing Tech Preferences` to select appropriate testing frameworks for integration and E2E testing
 4. **Test Design:** Apply the test design cycle based on `Plan` specifications and selected frameworks:
+   - **FR Derivation:** where the Plan carries `Intent` Outcomes, derive error-code and validation test cases directly from the FR list and its input/output tables — one test per boundary row, asserting the exact expected result
    - **Test Structure:** Create E2E test files flat in the root `tests/` directory (e.g., `tests/auth.spec.ts`) — do NOT nest in subdirectories. Unit tests are co-located with source code by the `play` agent
    - **Visual Regression:** Include `expect(page).toHaveScreenshot('{name}.png')` calls in E2E tests for each user flow and viewport specified in the `Plan`. Baselines capture to `tests/screenshots/baselines/` via the framework's snapshot-path configuration; runtime artifacts (actuals, diffs) go to `test-results/`
    - **Test Isolation:** Ensure tests are independent and can run in any order
@@ -97,6 +98,7 @@ Before completing the test writing task, execute and verify these steps:
 2. **Relative Reference Validation:** Ensure all relative path references, imports, and helper files inside `{{WORKSPACE}}/tests/` are correct
 3. **Framework-Specific Validation:** Verify that framework-specific configurations are applied and would take effect (option names exist in the framework version in use)
 4. **Common Checklist Compliance:** Run the common pre-handoff checks from your general instructions
+5. **Assertion Strength:** every test asserts exact expected outcomes, not non-emptiness or absence-of-error — a test that still passes when the behavior is wrong is worse than no test
 
 ## Execution
 
