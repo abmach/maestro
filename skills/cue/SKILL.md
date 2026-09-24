@@ -48,7 +48,7 @@ For how references relate to each other, see `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/r
 
 ### Phase 1: Readiness Audit
 
-Run every check; collect passes, warnings, and failures:
+Run every check; collect passes, warnings, and failures. The audit is the Smart Kid test applied mechanically: the Plan passes when a competent executor with none of the author's intent context could build the right thing from it alone. The checks below catch what that test catches mechanically; anything it cannot reach, surface as a warning for your own judgment:
 
 1. **Intent completeness (per Test Tier):** per the Plan spec's *Intent Depth by Test Tier* — e2e/integration: Purpose + FR-numbered Outcomes + at least 3 Non-Goals with rationale; smoke: Purpose + at least 3 Non-Goals; none: Purpose (one line)
 2. **EARS in conditional/error rules:** Outcomes and Business Logic rules covering conditional, error, or validation behavior read in EARS form (`WHEN`/`IF`/`WHILE` + `THE SYSTEM SHALL`) or as input/output tables — flag adjective-only rules ("handles errors gracefully", "validates the title")

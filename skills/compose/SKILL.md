@@ -67,11 +67,12 @@ Before completing the `Plan`:
 3. **Context Alignment:** Use terminology from `{{WORKSPACE}}/knowledge/contexts.md` if it exists
 4. **Technical Compatibility:** Match existing codebase patterns and frameworks
 5. **No Ambiguity:** Define specific implementations, not placeholders
-6. **Intent Depth Met:** Purpose, Outcomes (EARS where conditional), and Non-Goals match the Test Tier's row in the Plan spec's Intent Depth table
-7. **FR Coverage:** every FR in Intent Outcomes appears in at least one milestone's `Covers:` list
-8. **Specification Compliance:** Follow the exact structure from the `Plan` specification, including `Approved: pending`
-9. **Index Updated:** Ensure `{{WORKSPACE}}/plans/index.md` includes the new `Plan` with `⏳🔒` (following `Plans Index` specification)
-10. **Issues Considered:** Relevant existing `Issue`s from `{{WORKSPACE}}/issues/index.md` are considered in `Plan` design
+6. **Smart Kid bar:** no milestone requires the executor to guess intent — rules, failure paths, and boundaries are all explicit (the Plan spec's quality bar)
+7. **Intent Depth Met:** Purpose, Outcomes (EARS where conditional), and Non-Goals match the Test Tier's row in the Plan spec's Intent Depth table
+8. **FR Coverage:** every FR in Intent Outcomes appears in at least one milestone's `Covers:` list
+9. **Specification Compliance:** Follow the exact structure from the `Plan` specification, including `Approved: pending`
+10. **Index Updated:** Ensure `{{WORKSPACE}}/plans/index.md` includes the new `Plan` with `⏳🔒` (following `Plans Index` specification)
+11. **Issues Considered:** Relevant existing `Issue`s from `{{WORKSPACE}}/issues/index.md` are considered in `Plan` design
 
 ## Execution
 

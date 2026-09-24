@@ -2,6 +2,13 @@
 
 All notable changes to the Maestro bundle. Installed repos record the version as `MAESTRO_VERSION`; check here before upgrading.
 
+## 0.10.1 — 2026-09-23
+
+### Added
+
+- Plan spec: the **Smart Kid test** is now the named authoring quality bar under *Be Specific and Unambiguous* — a competent executor with full technical skill, full repo access, and none of the author's intent context must be able to build the right thing from the Plan alone; if they would have to guess (a rule, a failure path, a boundary), the spec, not the executor, is what needs work. Not a simplification rule — a tacit-knowledge extraction rule.
+- compose checklist gains the Smart Kid bar item; `cue`'s readiness audit is now explicitly framed as the Smart Kid test applied mechanically, with non-mechanical residue surfaced as warnings for the human reviewer.
+
 ## 0.10.0 — 2026-09-22
 
 ### Added

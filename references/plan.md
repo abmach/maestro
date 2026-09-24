@@ -114,6 +114,8 @@ The DAG should only contain **development milestones** — things the `play` age
 - Specify exact unit test file paths and test cases
 - Provide precise component hierarchies, props, and state definitions
 
+The quality bar for everything below: a competent executor with full technical skill, full repo access, and none of the author's intent context must be able to build the right thing from this Plan alone. If they would have to guess — a rule, a failure path, a boundary — the spec, not the executor, is what needs work. (Smart Kid test: the point is not to simplify; it is to drag tacit knowledge into the open.)
+
 ### State Rules in EARS
 
 Conditional, error, and validation rules — in `Intent` Outcomes and in `Business Logic` — use EARS (Easy Approach to Requirements Syntax) sentence patterns. The grammar closes the interpretation space an executor would otherwise fill with its most common training pattern:
