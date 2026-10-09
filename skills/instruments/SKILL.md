@@ -50,6 +50,7 @@ Sections are fixed; do not invent new ones. If a workflow stage seems unrepresen
 
 1. Read `{{WORKSPACE}}/knowledge/instruments.md` if it exists — current assignments
 2. **Detect Harness:** Check which config directories exist under `{{WORKSPACE}}`: `.omp`, `.claude`, `.opencode`, `.agents`. All detected harnesses get application guidance in Phase 3.
+3. **Detect Execution Substrate:** apply the substrate detection ladder from the orchestrate skill — the session's tool surface is authoritative (batch/multi-spawn primitive or persistent eval kernel or jobs barrier → OMP; Agent/Task tool with per-agent worktree isolation and background-by-default → Claude Code; task tool instructing multiple agents in a single message with no isolation params → OpenCode), config directories are a confirming signal only. Record the detected substrate in the Application Notes so model assignments and spawn mechanics agree.
 
 ### Phase 1: Assignment Interview
 

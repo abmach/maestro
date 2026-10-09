@@ -2,6 +2,23 @@
 
 All notable changes to the Maestro bundle. Installed repos record the version as `MAESTRO_VERSION`; check here before upgrading.
 
+## 0.11.0 — 2026-10-09
+
+### Changed
+
+- `orchestrate`: Phase 1 rebuilt from static wave scheduling into a frontier loop over dependency-ordered milestones — the frontier expands after every return; all ready milestones spawn together per the harness's Execution Substrate (new per-harness appendix: OMP batch/async/isolation, Claude Code parallel agents + worktree isolation, OpenCode multi-call foreground; capability-based detection ladder, portable baseline as default).
+- Conflict scans and serialize-or-risk prompts replaced by write-safety classes: disjoint write units run in parallel, overlapping units are ordered by construction, isolated spawns are exempt.
+- Re-plan revision rule: at Retries >= 3 orchestrate attempts exactly one milestone revision (spec change + Decision Log entry + Retries reset) before failing a milestone; a second exhausted revision marks it Failed and halts dependents. Intent-touching failures are never re-planned — they halt for the user (fix-forward).
+- Plan spec: Dependencies are ordering hints for frontier selection, not an execution contract; new append-only Decision Log section (orchestrate-written); file-overlap rule reframed as write-safety.
+- Approval scope narrowed: cue approves the Intent plus the initial milestone set; execution-time re-plan revisions do not require re-approval while the Intent is unchanged.
+- play: sequencing boundary reworded — the caller owns ordering and frontier decisions; dependencies are ordering hints.
+- instruments: reports the detected execution substrate alongside model assignments; interlude signals re-worded around re-plan revision exhaustion.
+
+### Migration
+
+- Existing Plans run unchanged: milestone header format, Retries, and Approved fields are untouched — Dependencies are simply read as ordering hints.
+- Already-approved Plans keep their approval; no re-run of cue is required.
+
 ## 0.10.1 — 2026-09-23
 
 ### Added

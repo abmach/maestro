@@ -178,7 +178,7 @@ Once when adopting Maestro into an existing project, run `/prelude` first to cre
   User request
        │
        ▼
-   compose ──▶ Creates a Plan (DAG of milestones)
+   compose ──▶ Creates a Plan (dependency-ordered milestones)
        │
        ▼
    rehearse ──▶ (optional) Sharpens domain language, challenges assumptions
@@ -190,7 +190,7 @@ Once when adopting Maestro into an existing project, run `/prelude` first to cre
    cue ──▶ Readiness audit + explicit user sign-off (mandatory: Approved → approved)
        │
        ▼
-   orchestrate ──── spawns ──▶ play (parallel, one per ready milestone)
+   orchestrate ──── spawns ──▶ play (parallel — one spawn per ready frontier milestone)
        │                         │
        │                         ▼
        │                    Returns structured status (Done/Failed)
@@ -218,16 +218,16 @@ Around the pipeline: `/instruments` (once — model assignments), `/interlude` (
 
 ## Why Maestro
 
-Maestro is built for the current generation of strong models and capable harnesses, and it earns its keep through four value pillars, in order of durability:
+Maestro is built for the current generation of strong models and capable harnesses, and it earns its keep through four value pillars, in order of how long each keeps paying as models improve:
 
-1. **Cost arbitrage.** Cost is tokens × price, and implementation dominates token volume while design reasoning is small-batch. Maestro's Plans mandate exact file paths, API shapes, and test cases — and a precise spec needs a competent executor, not a premium one. Run `compose`/`rehearse`/`elaborate` on a reasoning-heavy model, `play` on a cheap fast one, and the dominant cost term drops by roughly an order of magnitude at unchanged ceiling quality. `/instruments` records the assignments; Oh My Pi applies them to spawns natively (`task.agentModelOverrides`), Claude Code and OpenCode via agent frontmatter.
-2. **Parallel throughput.** Milestones form a DAG; every ready wave spawns one worker per milestone regardless of model strength. Wall-clock savings are orthogonal to how smart your models are.
-3. **Review checkpoints before code exists.** Auditing a 200-line plan costs minutes; reviewing a 2,000-line diff costs hours. compose front-loads expensive-to-reverse decisions into the cheapest artifact to inspect — and `/cue` makes the review a named gate: a readiness audit, a one-screen digest, and an explicit sign-off that `orchestrate` cannot skip.
-4. **Durable, portable process state.** Plans, issues, retries, glossary, ADRs live in your repo — they survive compaction, crashes, harness switches, and teammates. Harness features are session-scoped; this layer is repo-scoped, which is why they compose rather than compete.
+1. **Durable, portable process state.** Plans, issues, retries, glossary, ADRs live in your repo — they survive compaction, crashes, harness switches, and teammates. Harness features are session-scoped; this layer is repo-scoped, which is why they compose rather than compete.
+2. **Review checkpoints before code exists.** Auditing a 200-line plan costs minutes; reviewing a 2,000-line diff costs hours. compose front-loads expensive-to-reverse decisions into the cheapest artifact to inspect — and `/cue` makes the review a named gate: a readiness audit, a one-screen digest, and an explicit sign-off that `orchestrate` cannot skip.
+3. **Cost arbitrage.** Cost is tokens × price, and implementation dominates token volume while design reasoning is small-batch. Maestro's Plans mandate exact file paths, API shapes, and test cases — and a precise spec needs a competent executor, not a premium one. Run `compose`/`rehearse`/`elaborate` on a reasoning-heavy model, `play` on a cheap fast one, and the dominant cost term drops by roughly an order of magnitude at unchanged ceiling quality. `/instruments` records the assignments; Oh My Pi applies them to spawns natively (`task.agentModelOverrides`), Claude Code and OpenCode via agent frontmatter.
+4. **Parallel throughput.** Milestones carry ordering hints, not a rigid schedule: the orchestrator expands the frontier — every ready milestone spawns together on the harness's native parallelism (OMP batch subagents, Claude Code parallel agents, OpenCode multi-call), with write-safety rules standing in for static-schedule bookkeeping. Wall-clock savings are orthogonal to how smart your models are.
 
 One rule of thumb governs the economics: **when milestones fail repeatedly, escalate the plan, not just the worker.** Three failed attempts usually mean an under-specified spec, and re-spawning stronger workers on it burns the savings the tiering created.
 
-Native plan mode is the incumbent this competes with: Claude Code, OpenCode, and Oh My Pi all ship one — but those plans die with the session and execute serially in a single context. Maestro's Plans are committed to your repo, indexed, resumable after crashes, and executed as a parallel milestone DAG on tiered models.
+Native plan mode is the incumbent this competes with: Claude Code, OpenCode, and Oh My Pi all ship one — but those plans die with the session and execute serially in a single context. Maestro's Plans are committed to your repo, indexed, resumable after crashes, and executed as a parallel frontier on tiered models over each harness's native subagent machinery.
 
 ## Usage
 
@@ -263,12 +263,12 @@ Native plan mode is the incumbent this competes with: Claude Code, OpenCode, and
 ### Typical flow
 
 ```
-1. /compose <feature request>          → creates a Plan (DAG of milestones)
+1. /compose <feature request>          → creates a Plan (dependency-ordered milestones)
 2. /rehearse <feature >                → (optional) refine domain language
 3. /elaborate <plan-id>                → (optional) add detail for execution
 4. /cue <plan-id>                     → readiness audit + your explicit sign-off (Approved → approved)
 5. /orchestrate <plan-id>              → executes the approved plan:
-                                          spawns play subagents in parallel,
+                                          spawns play subagents in parallel across the ready frontier,
                                           then arrange + audition for tests,
                                           routes visual regressions to tune
 6. /score <plan-id>                    → updates docs (if Docs Affected=true) and harvests system behavior
@@ -285,7 +285,7 @@ When you compose a Plan, Maestro lazily creates these directories in your projec
 
 ```
 your-repo/
-├── plans/                    # Plans (DAG of milestones) and index.md
+├── plans/                    # Plans (dependency-ordered milestones) and index.md
 ├── issues/                   # Issues (bugs, build failures) and index.md
 ├── knowledge/                # Domain language, ADRs, fingerprint, principles, current behavior
 │   ├── contexts.md           # Ubiquitous language glossary
@@ -306,7 +306,7 @@ All file formats are specified in the `references/` folder of the installed bund
 
 Maestro targets the [Agent Skills](https://agentskills.io) open standard. The bundle is skills **plus** markdown-defined subagents (`play`, `tune`, `critique`) **plus** an orchestrator that spawns them in parallel — so a harness either supports all of that, or it is not supported:
 
-| Harness | Install to | Parallel orchestration (`orchestrate` → `play`/`critique`/`tune`) | Model routing (`/instruments`) |
+| Harness | Install to | Parallel execution (`orchestrate` frontier → `play`/`critique`/`tune`) | Model routing (`/instruments`) |
 | ------- | ---------- | ------------------------------------------------------ | ------------------------------ |
 | Oh My Pi | `.omp` (full) or `.agents` (OpenCode only) | yes — `.omp/agents/` is its native subagent root | yes — `task.agentModelOverrides` / `modelRoles` |
 | Claude Code | `.claude` | yes — `.claude/agents/` | yes — `model:` frontmatter on agents |
@@ -324,7 +324,7 @@ Skills use only standard Agent-Skills frontmatter (`name`, `description`). Agent
 - **One-shot throwaway scripts** — nothing here outlives the session enough to pay for itself.
 - **Teams that won't read plans** — unreviewed Plans are pure overhead; the value collapses without the human checkpoint.
 
-It earns its keep with batch feature work (parallel waves), cost-sensitive volume (model tiering), team settings (plans as async collaboration currency), mixed fleets including local/cheap models, and long-lived repos where the glossary/ADR layer compounds.
+It earns its keep with batch feature work (parallel frontier), cost-sensitive volume (model tiering), team settings (plans as async collaboration currency), mixed fleets including local/cheap models, and long-lived repos where the glossary/ADR layer compounds.
 
 ## License
 

@@ -136,7 +136,7 @@ For each milestone identified as needing elaboration, additionally add:
 ### Phase 5: Plan Enhancement
 
 1. **Apply Elaborations:** Update the `Plan` file with approved elaborations
-2. **Maintain Structure:** Ensure elaborations are added without breaking the existing `Plan` structure and DAG dependencies
+2. **Maintain Structure:** Ensure elaborations are added without breaking the existing `Plan` structure and dependency ordering
 3. **Preserve Metadata:** Keep original `Plan` metadata (Test Tier, Docs Affected, Status, every milestone's `Retries` count, and `Approved`) unchanged — except the required reset in the next step when the Plan was approved
 4. **Reset Approval When Applicable:** if the `Approved` field read `approved` before your edits, set it to `pending` and re-append `🔒` to the Plan's Plans Index entry — approved content changed, so re-approval is required. Tell the user to re-run `/cue {plan-id}`.
 5. **Update Index:** If elaborations significantly change the `Plan` scope, consider updating the description in `{{WORKSPACE}}/plans/index.md`
@@ -194,7 +194,7 @@ Before completing the elaboration:
 - [ ] Error handling covers common scenarios
 - [ ] Best practices are relevant to the tech stack
 - [ ] User approval obtained for elaborations
-- [ ] `Plan` structure and DAG dependencies preserved
+- [ ] `Plan` structure and dependency ordering preserved
 - [ ] Original `Plan` metadata maintained, including per-milestone `Retries`
 - [ ] `Approved` preserved — or reset to `pending` with the index `🔒` re-appended when the Plan was approved
 

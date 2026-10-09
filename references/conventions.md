@@ -36,10 +36,12 @@ Issues (Issue file and Issues Index):
 
 `Retries` counts **spawns, not failures**:
 
-1. Immediately **before** spawning `play` for a milestone, orchestrate increments that milestone's `Retries` in the Plan file. Crash-safe: an in-flight attempt is always counted.
+1. orchestrate increments that milestone's `Retries` in the Plan file immediately before spawning `play` for it — crash-safe: an in-flight attempt is always counted.
 2. If `Retries >= 3`, orchestrate refuses to spawn; it marks the milestone `❌ Failed` and creates an `Issue`.
 3. Never reset `Retries` to `0` during crash recovery; resume preserves it.
 4. On a `play` return, orchestrate writes **only the status** (Done/Failed). It does not touch `Retries`.
+5. When `Retries` reaches 3, orchestrate attempts exactly one re-plan revision: revise the milestone spec, append a Decision Log entry (Plan spec), reset `Retries` to 0, and re-spawn once. A revision that again reaches 3 spawns is marked ❌ Failed with its episode Issue and downstream dependencies halted.
+6. Failures that require changing the Plan's Intent are never re-planned — they surface to the user with the fix-forward recommendation.
 
 ## Plan Approval (binding on orchestrate)
 
@@ -48,6 +50,7 @@ Every Plan carries an `Approved` header field (`pending` or `approved`). Field s
 1. `orchestrate` refuses to execute a Plan unless `Approved` reads `approved`. A **missing field counts as not approved** — fail closed; never infer approval from the Plan's existence or completeness.
 2. Only the `cue` skill flips `pending` → `approved`, after its readiness audit and the user's explicit approval in that session. `elaborate` is the one reverse exception: it resets `approved` → `pending` when it modifies an already-approved Plan — the spec changed, so re-approval is required.
 3. The Plans Index mirrors the gate: `🔒` appended after the status emoji while unapproved; `cue` removes it.
+4. Approval covers the Intent plus the initial milestone set; execution-time re-plan revisions do not re-trigger the gate while the Intent is unchanged.
 
 ## Artifact and Directory Map
 
@@ -73,7 +76,7 @@ Every Plan carries an `Approved` header field (`pending` or `approved`). Field s
 | prelude, rehearse | `knowledge/**` | `plans/`, code |
 | elaborate | the chosen Plan in `plans/**` | code, `knowledge/` |
 | play | project source + co-located unit tests | `plans/**`, `issues/**`, git commits |
-| orchestrate | `plans/**`, `issues/**` (bookkeeping only) + `knowledge/repo-fingerprint.md` refresh at finalization | any code/test/doc *content*; git state mutations beyond the surgical discard in its Phase 1 |
+| orchestrate | `plans/**` (milestone statuses, `Retries`, Decision Log entries, re-plan revisions — never the Intent sections) + `issues/**` (bookkeeping) + `knowledge/repo-fingerprint.md` refresh at finalization | any code/test/doc *content*; the Plan's Intent sections (Purpose, Outcomes, Non-Goals) — Intent changes route to the user; git state mutations beyond the surgical discard in its Phase 1 |
 | critique | nothing — returns a structured review report; the caller routes it | any write, anywhere |
 | tune | `issues/**` + fix code + append-only `knowledge/principles.md` entries + in-place updates to `knowledge/system-behavior.md` | `plans/**` (recommend a plan instead) |
 | arrange | `tests/**` + root framework configs (e.g. `playwright.config.ts`, `vitest.config.*`, `.gitignore` entries) | `src/**` |
@@ -90,10 +93,10 @@ Workspace artifacts — Plans, Issues, investigation notes, even `knowledge/` fi
 
 ## Index Write Protocol (parallel safety)
 
-- **One active orchestration per workspace.** Concurrent `orchestrate` runs race the shared working tree, the Plans Index, and the Issues Index no matter how correct each DAG is. If the Plans Index shows 🔄 In progress, resolve it first (re-run `/orchestrate` — crash recovery reconciles — or abort).
+- **One active orchestration per workspace.** Concurrent `orchestrate` runs race the shared working tree, the Plans Index, and the Issues Index no matter how correct each frontier is. If the Plans Index shows 🔄 In progress, resolve it first (re-run `/orchestrate` — crash recovery reconciles — or abort).
 - **Per-milestone status:** written to the Plan *file* immediately on each `play` return. Safe because orchestrate is the single writer of Plan files.
 - **Spawn prompt:** `{plan-id} {milestone-id}` for play; `{issue-id}` for tune. When the driving session's cwd differs from `{{WORKSPACE}}`, prefix an explicit first line `Workspace: <absolute path>` — subagents resolve `{{WORKSPACE}}` from their own session cwd, not the caller's intent.
-- **Plans Index:** one batched read-modify-write per wave, after all plays in the wave settle.
+- **Plans Index:** one batched read-modify-write per spawn batch, after all plays in that batch settle.
 - **Approval marker:** `cue`'s 🔒 update is its own single read-modify-write at approval time. It never races orchestration — orchestrate runs only after the marker is gone (its Phase-0 gate enforces it).
 - **Crash recovery** reconciles the Plans Index *from* the Plan file. The Plan file is per-milestone ground truth.
 
@@ -103,3 +106,4 @@ Workspace artifacts — Plans, Issues, investigation notes, even `knowledge/` fi
 - Spawn prompts are narrow: `{plan-id} {milestone-id}` for play; `{issue-id}` for tune; `{plan-id}` for critique.
 - **Subagents cannot reach the user.** Anything requiring user judgment is returned in the structured status (format defined by the producer: `agents/play.md` Phase 4, `agents/tune.md` Phase 6, `agents/critique.md` Phase 4); the caller asks the user.
 - Agents invoked directly by a user (`@play`, `@tune`) MAY interact with that user interactively.
+- Where the harness offers one-call batch spawning or background subagents, orchestrate uses them; spawn prompts stay narrow either way.

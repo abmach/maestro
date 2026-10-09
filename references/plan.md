@@ -1,6 +1,6 @@
 # Plan
 
-> Defines the execution strategy for a feature: the intent it serves, milestones as a DAG, test tiers, and development specifications.
+> Defines the execution strategy for a feature: the intent it serves, dependency-ordered milestones, test tiers, and development specifications.
 
 ## File Location and Naming
 
@@ -18,6 +18,8 @@ Every Plan carries an `Approved` header field — the human gate between composi
 - `orchestrate` refuses to execute a Plan whose `Approved` field does not read `approved`. A **missing field counts as not approved** — Plans created before this field existed must pass through `/cue` once before orchestration will run them.
 - `elaborate` runs pre-approval (it is part of authoring). If it modifies an already-approved Plan, it MUST reset `Approved` to `pending` — the spec changed, so re-approval is required.
 - While unapproved, the Plans Index entry carries the `🔒` marker; `cue` removes it on approval.
+
+Approval covers the Plan's Intent (Purpose, FR Outcomes, Non-Goals) plus its initial milestone set. orchestrate's execution-time re-plan revisions do not require re-approval while the Intent is unchanged. A change that touches the Intent — Purpose, Outcomes, or Non-Goals — halts execution and routes to the user (fix-forward recommendation) instead of being re-planned in-session.
 
 ## Intent
 
@@ -91,21 +93,21 @@ Each plan may specify a `Verify Cmd` — a single shell command that orchestrate
 
 Always use relative paths (e.g., `src/`, `tests/`, `package.json`) instead of absolute repository paths.
 
-### Define Milestones as a DAG
+### Define Milestones with Dependency Ordering
 
-Structure the plan as a Directed Acyclic Graph where each milestone has:
+Dependencies are **ordering hints for frontier selection**, not a rigid batch schedule: a milestone is *ready* when every milestone in its `Dependencies` list is Done, and a milestone with an empty dependency list is immediately ready. orchestrate expands the frontier by spawning every ready milestone together, then re-expands as milestones complete and unlock their dependents. Each milestone has:
 - A unique numeric ID
 - A list of dependencies (referencing preceding milestone IDs)
-- A `retry_count` field (default `0`, written as `Retries: 0` in the milestone header) — counts spawns, not failures: orchestrate increments it immediately BEFORE each `play` spawn and refuses to spawn when `Retries >= 3`, marking the milestone `❌ Failed`. Persists across compaction. Canonical rule: `conventions.md`.
+- A `retry_count` field (default `0`, written as `Retries: 0` in the milestone header) — counts spawns, not failures: orchestrate increments it immediately BEFORE each `play` spawn and refuses to spawn when `Retries >= 3`, marking the milestone `❌ Failed`. Persists across compaction. When `Retries` reaches 3, orchestrate attempts exactly one re-plan revision: revise the milestone spec, append a Decision Log entry, reset `Retries` to 0, and re-spawn once. A revision that again exhausts 3 spawns is marked `❌ Failed` and halts its dependents. Canonical rule: `conventions.md`.
 - A `Covers` list (FR IDs from `Intent` Outcomes that this milestone implements) — required in every milestone header whenever the Plan defines Outcomes; `Covers: []` marks an enabling or infrastructure milestone. Every FR must appear in at least one milestone's `Covers`.
 
-Independent milestones (empty dependencies) can execute in parallel. Integration milestones depend on completion of their prerequisites.
+Independent milestones (empty dependencies) enter the frontier immediately and execute in parallel. Integration milestones become ready when their prerequisites are Done.
 
-### DAG Milestone Requirements
+### Milestone Requirements
 
-The DAG should only contain **development milestones** — things the `play` agent can implement (features, components, API endpoints, schema changes, etc.). Do not include testing or documentation as milestones.
+The Plan should only contain **development milestones** — things the `play` agent can implement (features, components, API endpoints, schema changes, etc.). Do not include testing or documentation as milestones.
 
-**File-overlap rule:** milestones whose *Files to modify/create* lists overlap must either be merged into one milestone or ordered via an explicit dependency. Shared read-only references (imported types, consumed helpers) don't count — only files both milestones WRITE. orchestrate enforces this at spawn time; a well-formed Plan never triggers that warning.
+**write-safety rule:** milestones whose *Files to modify/create* lists overlap are ordered by construction — an explicit dependency puts one after the other — or merged into a single milestone; they never run in parallel on a shared working tree. Shared read-only references (imported types, consumed helpers) don't count — only files both milestones WRITE. Isolated spawns (a per-subagent worktree or cloned workspace) are exempt from the disjointness requirement. orchestrate enforces this at spawn time on shared-tree runs; a well-formed Plan never triggers that warning.
 
 ### Be Specific and Unambiguous
 
@@ -189,6 +191,15 @@ Use the standard status legend for both the overall plan and individual mileston
 - ⚠️ Blocked
 - ❌ Failed
 
+### Decision Log
+
+A Plan MAY carry an optional `## Decision Log` section — the audit trail that keeps dynamic re-planning transparent.
+
+- **Append-only:** entries are never edited or removed once written.
+- **Written only by orchestrate, during execution** — never by compose, elaborate, cue, or play.
+- **Entry format:** `- [YYYY-MM-DD] M{id} re-planned: {what changed} — {why} (Intent unchanged)`
+- **Absent until the first execution-time change:** a Plan with no re-plan revisions simply omits the section.
+
 ### Numbering Strategy
 
 1. Choose a meaningful feature code (e.g., `AUTH` for authentication, `PAY` for payments, `UI` for user interface)
@@ -230,6 +241,8 @@ Use the standard status legend for both the overall plan and individual mileston
 {Depth per Test Tier: e2e/integration full; smoke Purpose + Non-Goals with FRs optional; none Purpose only. See Intent.}
 
 ## Status: ✅ Done/🔄 In progress/⏳ Pending/⚠️ Blocked/❌ Failed
+
+## Decision Log (optional — appended by orchestrate during execution; absent until the first re-plan)
 
 ## Assumptions & Open Questions (optional)
 
@@ -362,6 +375,10 @@ Authentication is the app's trust boundary: registration must not leak whether a
 - [deferred] Rate limiting on the login endpoint — needs a store decision; out of this slice.
 
 ## Status: ⏳ Pending
+
+## Decision Log
+
+(none — no execution-time re-plans yet)
 
 ## Milestones
 

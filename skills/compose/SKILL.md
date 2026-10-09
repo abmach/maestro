@@ -1,6 +1,6 @@
 ---
 name: compose
-description: Compose technical solutions - map a feature request to a Plan with an Intent layer (purpose, FR outcomes, non-goals), milestones as a DAG, test tiers, and development specs; invoked via "/compose <feature>" to design before cue approves and orchestrate executes
+description: Compose technical solutions - map a feature request to a Plan with an Intent layer (purpose, FR outcomes, non-goals), dependency-ordered milestones, test tiers, and development specs; invoked via "/compose <feature>" to design before cue approves and orchestrate executes
 argument-hint: "[feature description]"
 ---
 
@@ -21,7 +21,7 @@ Analyze requirements and create structured technical `Plan`s with precise specif
 Read reference specs on-demand when the workflow requires them — do NOT read all upfront.
 
 ### Always needed
-- **`Plan`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/plan.md` — for Plan format, milestone DAG, and development specifications (compose creates Plans)
+- **`Plan`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/plan.md` — for Plan format, milestone ordering, and development specifications (compose creates Plans)
 - **`Plans Index`:** Read `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/plans-index.md` — for index format (compose updates the index every invocation)
 
 ### On-demand (read only when needed)

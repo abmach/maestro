@@ -8,7 +8,7 @@ All reference specs live in `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/`:
 
 | Reference | File | Defines |
 | --------- | ---- | ------- |
-| `Plan` | `plan.md` | Execution strategy: milestones as DAG, test tiers, dev specs |
+| `Plan` | `plan.md` | Execution strategy: dependency-ordered milestones, test tiers, dev specs |
 | `Plans Index` | `plans-index.md` | Index file format for tracking all plans |
 | `Issue` | `issue.md` | Problem tracking: types, severity, resolution workflow |
 | `Issues Index` | `issues-index.md` | Index file format for tracking all issues |
@@ -21,7 +21,7 @@ All reference specs live in `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/references/`:
 | `Testing Principles` | `testing-principles.md` | TDD methodology and test design rules |
 | `Testing Tech Preferences` | `testing-tech-preferences.md` | Preferred testing frameworks and tools |
 | `Design Principles` | `design-principles.md` | Interface design and dependency patterns |
-| `Conventions` | `conventions.md` | Shared contract: workspace rule, placeholders, status vocabularies, retry semantics, artifact paths, file ownership, index-write protocol |
+| `Conventions` | `conventions.md` | Shared contract: workspace rule, placeholders, status vocabularies, retry semantics, re-plan revision rule, artifact paths, file ownership, index-write protocol |
 | `References Map` | `references-map.md` | This file: how references relate to each other and to workspace content |
 
 ## Workspace Content

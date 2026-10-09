@@ -1,6 +1,6 @@
 ---
 name: cue
-description: Approve a plan for execution - run the readiness audit (intent completeness, FR coverage, blocking questions, DAG integrity), present a one-screen review digest, and flip the Plan's Approved field to approved on the user's explicit sign-off; invoked via "/cue PLAN-001" after compose/rehearse/elaborate and before orchestrate
+description: Approve a plan for execution - run the readiness audit (intent completeness, FR coverage, blocking questions, ordering integrity), present a one-screen review digest, and flip the Plan's Approved field to approved on the user's explicit sign-off; invoked via "/cue PLAN-001" after compose/rehearse/elaborate and before orchestrate
 argument-hint: "[plan ID/code]"
 ---
 
@@ -54,7 +54,7 @@ Run every check; collect passes, warnings, and failures. The audit is the Smart 
 2. **EARS in conditional/error rules:** Outcomes and Business Logic rules covering conditional, error, or validation behavior read in EARS form (`WHEN`/`IF`/`WHILE` + `THE SYSTEM SHALL`) or as input/output tables — flag adjective-only rules ("handles errors gracefully", "validates the title")
 3. **FR coverage:** every FR in Intent Outcomes appears in at least one milestone's `Covers:` list; flag orphaned FRs and milestone headers missing `Covers` while Outcomes exist
 4. **Blocking questions:** no unresolved `[blocking]` question in Assumptions & Open Questions (deferred ones are fine)
-5. **DAG integrity:** unique milestone IDs; dependencies reference existing IDs; no cycles; file-overlap rule holds (milestones sharing written files are ordered or merged)
+5. **Ordering integrity:** unique milestone IDs; dependencies reference existing IDs; no cycles; file-overlap rule holds (milestones sharing written files are ordered via an explicit dependency or merged)
 6. **`Why & Limits`:** present on every milestone when `elaborate` has run (mandatory post-elaboration); at compose-only depth, absent blocks are a warning
 7. **Existing-behavior overlap:** if `knowledge/system-behavior.md` exists, flag Outcomes the Plan re-implements without acknowledging the existing capability
 8. **Principle surfacing:** if `knowledge/principles.md` exists, note invariants relevant to this Plan that no `Must not` line carries — a warning; the fix belongs to compose/elaborate
@@ -89,6 +89,8 @@ Audit
 2. Set the Plan's `Approved` field to `approved` (adding the field in its template position when the Plan predates it)
 3. Remove the `🔒` marker from the Plans Index entry in a single read-modify-write (`⏳🔒` → `⏳`)
 4. Report: "Approved. `/orchestrate {plan-id}` can execute it now."
+
+Approval covers the Plan's Intent (Purpose, FR Outcomes, Non-Goals) plus its initial milestone set. orchestrate's execution-time re-plan revisions do not require re-approval while the Intent is unchanged; a change that touches the Intent halts execution and routes to the user.
 
 ## Quality Checklist
 

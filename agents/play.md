@@ -140,7 +140,7 @@ Before returning the success status:
 ## Critical Boundaries
 
 - **No Git Commits:** Do not commit your work — only modify the working tree. orchestrate owns git state and any discard/rollback. Committing here makes parallel rollback unsafe.
-- **Milestone Scope Only:** Implement only the assigned milestone — do not implement downstream milestones, even if their dependencies look simple. orchestrate owns DAG sequencing.
+- **Milestone Scope Only:** Implement only the assigned milestone — do not implement downstream milestones, even if their dependencies look simple. The caller owns ordering and frontier decisions — dependencies in the Plan are ordering hints, not a schedule.
 - **No Plan or Index Bookkeeping:** Do not update the `Plan` file or `Plans Index` — return a structured status instead; the caller (orchestrate or user) handles bookkeeping.
 - **No Issue Creation:** Do not create `Issue`s on failure — return failure status; the caller routes to `tune` or asks the user.
 - **Test Verification:** Never mark a milestone as Done without running its milestone-specific tests and confirming they pass.

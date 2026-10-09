@@ -54,7 +54,7 @@ Docs: <plans marked ✅⏳ awaiting /score, or "none pending">
 
 Signals:
   <underspecification and regression flags, each traced to a specific entry>
-  - <failed milestones with Retries >= 3 — plan-quality signal: revise the spec, don't re-spawn>
+  - <failed milestones that exhausted a re-plan revision — plan-quality signal: revise the spec via compose/elaborate (fix-forward), don't re-spawn>
   - <open Issues linked to ✅ Done plans — alignment regression: shipped behavior broke after the fact>
   - <entries carrying 🔒 — unapproved drafts awaiting /cue>
   - <✅⏳ backlog count — docs and behavior harvest owed>
@@ -62,7 +62,7 @@ Signals:
 Next: <single suggested action + one-line why>
 ```
 
-Next-action guidance, in priority order: a 🔄 In-progress plan exists (resume it — re-run `/orchestrate`; crash recovery reconciles — before starting anything else); open P1/P2 issues (`@tune` them); failed milestones flagged twice or more (plan-quality signal — revise the spec via compose/elaborate before re-running); a `⏳🔒` plan exists (review it, then `/cue` — orchestrate refuses unapproved Plans); plans ✅⏳ (`/score`); otherwise the oldest Pending plan (`/orchestrate`).
+Next-action guidance, in priority order: a 🔄 In-progress plan exists (resume it — re-run `/orchestrate`; crash recovery reconciles — before starting anything else); open P1/P2 issues (`@tune` them); failed milestones that exhausted a re-plan revision (plan-quality signal — revise the spec via compose/elaborate before re-running); a `⏳🔒` plan exists (review it, then `/cue` — orchestrate refuses unapproved Plans); plans ✅⏳ (`/score`); otherwise the oldest Pending plan (`/orchestrate`).
 
 ## Quality Checklist
 
