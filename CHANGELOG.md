@@ -2,6 +2,17 @@
 
 All notable changes to the Maestro bundle. Installed repos record the version as `MAESTRO_VERSION`; check here before upgrading.
 
+## 0.12.1 — 2026-10-09
+
+### Added
+
+- Testing Tech Preferences: two-layer browser-testing guidance — Playwright specs plus committed baselines are the only verification layer that counts toward Test Tiers and Done/Passed verdicts; harness-native browser tools (Claude-in-Chrome, OpenCode desktop browser, OMP eval browser) and `@playwright/mcp` are the ephemeral exploration layer — sanctioned for one-off investigation, never a substitute for a committed spec.
+- critique agent: live-behavior spot checks via harness browser tools are permitted as orientation only — never verification evidence, and never grounds for a Clean verdict on an FR; behaviors lacking a committed spec are flagged for `arrange`.
+
+### Migration
+
+- None; additive reference and agent guidance.
+
 ## 0.12.0 — 2026-10-09
 
 ### Added

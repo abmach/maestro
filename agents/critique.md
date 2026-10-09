@@ -57,6 +57,7 @@ For how references relate to each other, see `{{WORKSPACE}}/{{MAESTRO_CONFIG}}/r
 2. **Silent deviations:** compare each `play` status block's `Notes:` (assumptions, deviations) against the Plan. A deviation the Plan cannot absorb is a gap.
 3. **Principles compliance:** if `knowledge/principles.md` exists, check the changed code against every rule
 4. **Contract drift:** Development Specifications (API routes, data models, business rules) versus actual code — exact shapes, not approximate ones
+5. **Live-behavior spot checks:** where your harness provides a native browser tool (or `@playwright/mcp`), you MAY drive it for one-off interactive investigation — confirming a flow actually behaves as an FR describes. Such checks are orientation for your gap report, never verification: cite file:line evidence for every gap, and flag behaviors that lack a committed spec (they belong to `arrange`). A live-browser observation is never grounds for a Clean verdict on an FR.
 
 ### Phase 3: Classification
 

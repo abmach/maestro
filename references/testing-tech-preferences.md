@@ -65,6 +65,15 @@ Configure the framework's baseline location explicitly (Playwright: `snapshotDir
 - **Selenium:** Legacy support, widely adopted (free, but complex)
   - Use only when maintaining existing Selenium test suites
 
+#### Exploration vs Regression: Browser Tools in AI-agent Workflows
+
+Two distinct layers — never substitute one for the other:
+
+- **Committed regression oracle (the default and the only verification layer):** Playwright specs and screenshot baselines live in the repo (`tests/`, `tests/screenshots/baselines/`). They are deterministic, effectively free to re-run, produce the baseline/actual/diff artifacts orchestrate's routing consumes, and run in CI. Only this layer counts toward the Plan's Test Tier and toward Done/Passed verdicts.
+- **Ephemeral exploration layer:** harness-native browser tools (Claude-in-Chrome, OpenCode's desktop-attached browser, OMP's eval browser prelude) and `@playwright/mcp` drive a live browser for one-off interactive investigation — "does this actually render/behave as described?" They are nondeterministic, cost tokens per run, produce no committed baseline, and die with the session. Sanctioned for critique-style spot checks; never a substitute for a committed spec.
+
+Rule of thumb: exploration tools find gaps; committed tests prove their absence. If an observed behavior matters to the Plan's outcomes, it must be expressible as a committed Playwright test by the time `arrange` finishes.
+
 #### Playwright Configuration
 
 When initializing or configuring Playwright (`playwright.config.ts`), use this canonical configuration. Option placement matters — browser-context features live under `use:`, and the snapshot baseline path is a TOP-LEVEL option:
