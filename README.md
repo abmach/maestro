@@ -314,7 +314,7 @@ Maestro targets the [Agent Skills](https://agentskills.io) open standard. The bu
 
 On Oh My Pi, run sessions from the target repo root (or install agent definitions at user level, `~/.omp/agent/agents/`) — project-agent discovery is session-cwd-bound, so `play`/`tune` resolve only when the session lives in the workspace that has them installed.
 
-Skills use only standard Agent-Skills frontmatter (`name`, `description`). Agents use Claude-Code/OpenCode-compatible frontmatter (`name`, `description`, `mode: subagent`) — Oh My Pi reads the same files and ignores the extra fields. No platform-specific tooling assumptions are baked into the workflow text; only the installer is PowerShell.
+Skills use only standard Agent-Skills frontmatter (`name`, `description`). Agents use Claude-Code/OpenCode-compatible frontmatter (name, description, mode: subagent) plus per-harness enforcement fields the others ignore: OpenCode honors a permission block of bash-pattern denies and Claude Code honors hooks PreToolUse frontmatter hooks — both mechanically deny git commit/stash/push/reset from the play and tune subagents (on OMP the rule is prompt-only; the instruments skill documents an opt-in session-wide deny). No platform-specific tooling assumptions are baked into the workflow text; only the installer is PowerShell.
 
 **Mirrors & contributions:** development happens on GitLab; the GitHub repository (if present) is an automated read-only mirror — please open issues and pull requests on GitLab. Maintainers and contributors: see CONTRIBUTING.md for validation gates, code signing, module packaging and the release flow.
 

@@ -92,10 +92,11 @@ Execute the `Plan` as a frontier loop over dependency-ordered milestones: comput
 8. **Failure Handling:** If a `play` subagent returns a failure status:
    - Terminate that `play` subagent instance
    - **Discard only the files the failed `play` modified** — read `Files modified:` from its STATUS block, then restore exactly those paths: `git restore --staged <files> && git restore <files> && git clean -fd <untracked-files-this-play-created>` (do NOT use `git restore .` — other parallel `play` instances are still mid-flight on the same working tree and their work must be preserved)
-   - **If the failed `play` unexpectedly committed its work** (forbidden by `play`'s spec but cheap models sometimes do), do NOT auto-undo the commit — `git reset` could affect the user's prior commit. Surface the unexpected commit to the user and ask how to proceed
+   - **If the failed `play` unexpectedly committed its work** (forbidden by `play`'s spec but cheap models sometimes do), do NOT auto-undo the commit — `git reset` could affect the user's prior commit. Surface the unexpected commit to the user and ask how to proceed (This should be rare on OpenCode and Claude Code installs, where play/tune frontmatter denies git commit/stash/push/reset mechanically; on OMP the rule is prompt-only.)
    - Mark the milestone as `❌ Failed` in the Plan file (immediate per-milestone write) and in the Plans Index (deferred per-batch write — see the Plans Index batch write step)
    - If the `play` subagent returned error details, create **one** `Issue` for this milestone-failure episode (`BUILD` or `TEST` type per failure mode) and add it to the Issues Index. If an episode Issue already exists from an earlier attempt on this milestone, append this attempt to its Resolution Attempts instead of creating a duplicate
    - Downstream milestones halt (they depend on a failed milestone). Other parallel units continue running unaffected.
+   - Isolated spawns (per the Execution Substrate) need no discard: a failed isolated `play` never touched the shared tree — the harness discards its workspace. The discard procedure above applies to shared-tree spawns only.
 9. **Re-plan Revision:** When a milestone's `Retries` reaches 3, attempt exactly ONE re-plan revision:
    - Revise the milestone's spec in place, append a Decision Log entry in the format `- [YYYY-MM-DD] M{id} re-planned: {what changed} — {why} (Intent unchanged)`, reset `Retries` to 0, and re-spawn it like any other newly ready unit. Re-plan revisions do not require re-approval: `cue` approved the Plan's Intent and initial milestone set, and the Intent is unchanged.
    - If the revision again exhausts 3 spawns → mark the milestone `❌ Failed`, link its existing episode Issue (or create one if no attempt produced error details), and halt its downstream dependencies. When reporting the halt to the user, name it as a plan-quality signal: three failed attempts usually mean the milestone's spec is under-specified or mis-scoped — recommend revising via the fix-forward convention (`issue.md`: successor plan referencing the Issue) before re-running, not just re-spawning a stronger worker.
@@ -205,6 +206,7 @@ The mechanics of spawning and parallelism vary per harness. The portable baselin
 - Use `isolated: true`-style workspace-isolated spawns for write units where enabled — isolation replaces the disjointness requirement for those units
 - Respect the harness concurrency bound; the frontier naturally stays under it
 - If the session's user prompt triggered the harness's generic orchestration contract, treat it as complementary — this skill's boundaries govern on conflict
+- Isolated spawns: a failed isolated play never touched the shared tree — no surgical discard; the harness discards the workspace
 
 ### Claude Code
 - Emit all ready spawn calls in one message
@@ -212,6 +214,7 @@ The mechanics of spawning and parallelism vary per harness. The portable baselin
 - Use per-agent worktree isolation for write units
 - Stay under the harness's concurrent-subagent cap; the frontier loop naturally batches below it
 - Do not use harness batch-migration commands — they target mechanical migrations, not feature work
+- Worktree-isolated spawns: a failed isolated play's changes live only in its worktree — no surgical discard; drop the worktree
 
 ### OpenCode
 - Single message with multiple task calls

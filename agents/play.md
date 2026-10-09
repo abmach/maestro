@@ -3,6 +3,18 @@ name: play
 description: Implement plan milestones using test-driven development - apply red-green-refactor workflow to build features with comprehensive test coverage and report FR coverage. Invoked by orchestrate or directly by users via @mention.
 mode: subagent
 color: "#009CCC"
+permission:
+  bash:
+    "git commit*": deny
+    "git stash*": deny
+    "git push*": deny
+    "git reset*": deny
+hooks:
+  PreToolUse:
+    - matcher: Bash|PowerShell
+      hooks:
+        - type: command
+          command: 'i=$(cat); case "$i" in *"git commit"*|*"git stash"*|*"git push"*|*"git reset"*) echo "git state mutation denied: orchestrate owns git state - return Failed with the blocker named instead of committing" >&2; exit 2;; esac; exit 0'
 ---
 
 # Play Milestone Implementation
@@ -139,7 +151,7 @@ Before returning the success status:
 
 ## Critical Boundaries
 
-- **No Git Commits:** Do not commit your work — only modify the working tree. orchestrate owns git state and any discard/rollback. Committing here makes parallel rollback unsafe.
+- **No Git Commits:** Do not commit your work — only modify the working tree. orchestrate owns git state and any discard/rollback. Committing here makes parallel rollback unsafe. OpenCode and Claude Code deny these operations mechanically via this file's frontmatter; on Oh My Pi the rule is prompt-only.
 - **Milestone Scope Only:** Implement only the assigned milestone — do not implement downstream milestones, even if their dependencies look simple. The caller owns ordering and frontier decisions — dependencies in the Plan are ordering hints, not a schedule.
 - **No Plan or Index Bookkeeping:** Do not update the `Plan` file or `Plans Index` — return a structured status instead; the caller (orchestrate or user) handles bookkeeping.
 - **No Issue Creation:** Do not create `Issue`s on failure — return failure status; the caller routes to `tune` or asks the user.

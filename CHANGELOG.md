@@ -2,6 +2,20 @@
 
 All notable changes to the Maestro bundle. Installed repos record the version as `MAESTRO_VERSION`; check here before upgrading.
 
+## 0.12.0 — 2026-10-09
+
+### Added
+
+- Mechanical git-state enforcement for the play and tune subagents, replacing prompt-only rules where harnesses support it: OpenCode reads per-agent `permission` bash-pattern denies (git commit/stash/push/reset) from the agent frontmatter — agent-scoped and enforced even in auto mode; Claude Code runs per-agent `hooks` PreToolUse frontmatter hooks that block those commands while the subagent is live (subject to the usual workspace trust for frontmatter hooks). OMP ignores both fields — the no-commit rule stays prompt-only there; instruments documents the opt-in session-wide `bash.patterns` deny with its caveats (blocks main-session commits too; project patterns replace global ones).
+
+### Changed
+
+- orchestrate failure handling: isolated spawns (OMP workspace isolation, Claude Code worktree isolation) skip the surgical discard — a failed isolated play never touched the shared tree; the harness discards the workspace. The Execution Substrate blocks document this per harness.
+
+### Migration
+
+- Frontmatter additions are inert on existing installs until the next installer run copies the updated agents; re-run the installer to gain enforcement. No Plan format or skill behavior changes otherwise.
+
 ## 0.11.0 — 2026-10-09
 
 ### Changed

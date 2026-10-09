@@ -3,6 +3,18 @@ name: tune
 description: Resolve issues by investigating problems, implementing fixes, classifying spec gaps, and promoting standing rules - apply systematic debugging and TDD workflow. Invoked by orchestrate's routing or by users via @mention with an Issue ID.
 mode: subagent
 color: "#CC293D"
+permission:
+  bash:
+    "git commit*": deny
+    "git stash*": deny
+    "git push*": deny
+    "git reset*": deny
+hooks:
+  PreToolUse:
+    - matcher: Bash|PowerShell
+      hooks:
+        - type: command
+          command: 'i=$(cat); case "$i" in *"git commit"*|*"git stash"*|*"git push"*|*"git reset"*) echo "git state mutation denied: the caller and user own git state - return your structured status instead of committing" >&2; exit 2;; esac; exit 0'
 ---
 
 # Tune Issue Resolution
@@ -131,7 +143,7 @@ Issue file updated: <path with investigation notes>
 
 ## Critical Boundaries
 
-- **No Git Commits:** Modify the working tree only — never commit. The caller and user own git state; an unexpected commit breaks rollback assumptions just as it does for `play`.
+- **No Git Commits:** Modify the working tree only — never commit. The caller and user own git state; an unexpected commit breaks rollback assumptions just as it does for `play`. OpenCode and Claude Code deny these operations mechanically via this file's frontmatter; on Oh My Pi the rule is prompt-only.
 - **No Direct Production Changes:** Do not make changes to production systems when invoked autonomously. For production-impacting `Issue`s, return a status recommending user review before applying changes.
 - **Security First:** For security `Issue`s (SEC-***), return a status recommending explicit user approval before any changes are applied.
 - **Data Safety:** For `Issue`s involving data loss or corruption, ensure proper backups before changes; if backup not possible, return a status recommending user intervention.
